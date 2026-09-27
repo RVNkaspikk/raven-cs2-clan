@@ -1,1048 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>RAVEN | CS2 CLAN</title>
-
-<style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #050505;
-    color: white;
-    overflow-x: hidden;
-}
-
-/* BACKGROUND */
-
-.background {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: -2;
-    background:
-        radial-gradient(circle at 50% 20%, #300000 0%, #090000 25%, #050505 60%);
-}
-
-.dot {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    opacity: .35;
-    animation: float 12s linear infinite;
-}
-
-.dot:nth-child(1) { left: 5%; animation-duration: 10s; }
-.dot:nth-child(2) { left: 12%; animation-duration: 15s; }
-.dot:nth-child(3) { left: 20%; animation-duration: 12s; }
-.dot:nth-child(4) { left: 29%; animation-duration: 18s; }
-.dot:nth-child(5) { left: 38%; animation-duration: 13s; }
-.dot:nth-child(6) { left: 47%; animation-duration: 16s; }
-.dot:nth-child(7) { left: 56%; animation-duration: 11s; }
-.dot:nth-child(8) { left: 65%; animation-duration: 17s; }
-.dot:nth-child(9) { left: 74%; animation-duration: 14s; }
-.dot:nth-child(10) { left: 83%; animation-duration: 19s; }
-.dot:nth-child(11) { left: 91%; animation-duration: 12s; }
-.dot:nth-child(12) { left: 96%; animation-duration: 16s; }
-
-@keyframes float {
-    from {
-        transform: translateY(110vh);
-    }
-
-    to {
-        transform: translateY(-20vh);
-    }
-}
-
-/* NAVBAR */
-
-nav {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: min(1100px, 92%);
-
-    padding: 15px 25px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background: rgba(10,10,10,.75);
-    backdrop-filter: blur(15px);
-
-    border: 1px solid rgba(255,0,0,.25);
-    border-radius: 18px;
-
-    box-shadow: 0 0 35px rgba(255,0,0,.12);
-
-    z-index: 100;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: 900;
-    letter-spacing: 5px;
-    color: #ff1b1b;
-    text-shadow: 0 0 20px red;
-}
-
-nav a {
-    color: #aaa;
-    text-decoration: none;
-    margin-left: 25px;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    transition: .25s;
-}
-
-nav a:hover {
-    color: red;
-    text-shadow: 0 0 15px red;
-}
-
-/* HERO */
-
-.hero {
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-    padding: 120px 20px 80px;
-}
-
-.hero h1 {
-    font-size: clamp(70px, 15vw, 170px);
-    font-weight: 1000;
-    letter-spacing: 15px;
-
-    color: #fff;
-
-    text-shadow:
-        0 0 10px #ff0000,
-        0 0 40px #ff0000,
-        0 0 90px rgba(255,0,0,.5);
-
-    animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-    50% {
-        text-shadow:
-            0 0 20px red,
-            0 0 70px red,
-            0 0 120px rgba(255,0,0,.4);
-    }
-}
-
-.hero p {
-    color: #999;
-    letter-spacing: 7px;
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.hero-button {
-    margin-top: 35px;
-
-    padding: 15px 35px;
-
-    border: 1px solid red;
-    border-radius: 10px;
-
-    background: rgba(255,0,0,.08);
-
-    color: white;
-
-    font-weight: bold;
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    transition: .3s;
-}
-
-.hero-button:hover {
-    background: red;
-    box-shadow: 0 0 30px red;
-    transform: translateY(-3px);
-}
-
-/* SECTIONS */
-
-section {
-    width: min(1100px, 92%);
-    margin: auto;
-    padding: 100px 0;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.section-title h2 {
-    font-size: 42px;
-    letter-spacing: 5px;
-}
-
-.section-title h2 span {
-    color: red;
-}
-
-.section-title p {
-    margin-top: 10px;
-    color: #666;
-}
-
-/* MEMBERS */
-
-.members {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-}
-
-.member-card {
-    position: relative;
-
-    padding: 40px 25px;
-
-    text-align: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(40,0,0,.75),
-            rgba(10,10,10,.8)
-        );
-
-    border: 1px solid rgba(255,0,0,.2);
-    border-radius: 20px;
-
-    backdrop-filter: blur(15px);
-
-    cursor: pointer;
-
-    transition: .35s;
-
-    overflow: hidden;
-}
-
-.member-card::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-
-    background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,0,0,.3),
-        transparent
-    );
-
-    opacity: 0;
-    transition: .35s;
-}
-
-.member-card:hover {
-    transform: translateY(-10px);
-    border-color: red;
-    box-shadow: 0 0 35px rgba(255,0,0,.25);
-}
-
-.member-card:hover::before {
-    opacity: 1;
-}
-
-/* CROWN */
-
-.crown {
-    font-size: 35px;
-    margin-bottom: 8px;
-    filter: drop-shadow(0 0 10px gold);
-}
-
-/* MEMBER BADGE */
-
-.member-badge {
-    display: inline-block;
-
-    margin-bottom: 20px;
-
-    padding: 7px 16px;
-
-    border-radius: 50px;
-
-    color: #ddd;
-
-    background: rgba(255,255,255,.04);
-
-    border: 1px solid rgba(255,255,255,.12);
-
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 3px;
-}
-
-.avatar {
-    width: 90px;
-    height: 90px;
-
-    margin: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #120000;
-
-    border: 2px solid red;
-
-    color: red;
-
-    font-size: 35px;
-    font-weight: 900;
-
-    box-shadow:
-        0 0 20px rgba(255,0,0,.35);
-
-    position: relative;
-    z-index: 2;
-}
-
-.member-card h3 {
-    margin-top: 20px;
-
-    font-size: 27px;
-    letter-spacing: 3px;
-
-    position: relative;
-    z-index: 2;
-}
-
-.member-role {
-    color: red;
-
-    font-size: 11px;
-    font-weight: bold;
-
-    letter-spacing: 3px;
-
-    margin-top: 8px;
-
-    position: relative;
-    z-index: 2;
-}
-
-.instagram {
-    color: #666;
-
-    font-size: 12px;
-
-    margin-top: 15px;
-
-    position: relative;
-    z-index: 2;
-}
-
-/* JOIN */
-
-.join-box,
-.staff-box {
-
-    max-width: 700px;
-
-    margin: auto;
-
-    padding: 35px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30,0,0,.8),
-            rgba(8,8,8,.9)
-        );
-
-    border: 1px solid rgba(255,0,0,.25);
-
-    border-radius: 20px;
-
-    box-shadow: 0 0 40px rgba(255,0,0,.08);
-
-    backdrop-filter: blur(15px);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-input,
-textarea {
-
-    width: 100%;
-
-    padding: 15px;
-
-    border-radius: 9px;
-
-    border: 1px solid #252525;
-
-    background: #090909;
-
-    color: white;
-
-    outline: none;
-
-    font-size: 14px;
-
-    transition: .25s;
-}
-
-textarea {
-    min-height: 130px;
-    resize: vertical;
-}
-
-input:focus,
-textarea:focus {
-    border-color: red;
-
-    box-shadow:
-        0 0 15px rgba(255,0,0,.12);
-}
-
-.submit-button,
-.staff-button {
-
-    width: 100%;
-
-    padding: 15px;
-
-    border: 0;
-
-    border-radius: 9px;
-
-    background: red;
-
-    color: white;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    transition: .3s;
-}
-
-.submit-button:hover,
-.staff-button:hover {
-    background: #c40000;
-
-    box-shadow:
-        0 0 25px rgba(255,0,0,.5);
-
-    transform: translateY(-2px);
-}
-
-/* STAFF */
-
-.staff-title {
-
-    text-align: center;
-
-    font-size: 25px;
-
-    font-weight: bold;
-
-    letter-spacing: 4px;
-
-    color: red;
-
-    margin-bottom: 25px;
-}
-
-#staffPanel {
-    margin-top: 30px;
-}
-
-.application {
-
-    margin-bottom: 20px;
-
-    padding: 25px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #140000,
-            #080808
-        );
-
-    border: 1px solid #420000;
-
-    border-radius: 15px;
-
-    box-shadow:
-        0 0 25px rgba(255,0,0,.08);
-}
-
-.application-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 10px;
-
-    margin-bottom: 15px;
-}
-
-.application-header h3 {
-    font-size: 23px;
-}
-
-.pending {
-
-    color: #ff2222;
-
-    font-size: 10px;
-
-    font-weight: bold;
-
-    letter-spacing: 2px;
-}
-
-.application p {
-
-    color: #999;
-
-    margin-bottom: 10px;
-
-    line-height: 1.5;
-}
-
-.application strong {
-    color: white;
-}
-
-.clip-button {
-
-    display: block;
-
-    width: 100%;
-
-    padding: 13px;
-
-    margin: 15px 0;
-
-    text-align: center;
-
-    text-decoration: none;
-
-    color: white;
-
-    background: #191919;
-
-    border: 1px solid #600000;
-
-    border-radius: 8px;
-
-    font-weight: bold;
-
-    transition: .25s;
-}
-
-.clip-button:hover {
-    background: #8b0000;
-}
-
-.application-buttons {
-
-    display: flex;
-
-    gap: 10px;
-}
-
-.accept,
-.reject {
-
-    flex: 1;
-
-    padding: 13px;
-
-    border: 0;
-
-    border-radius: 8px;
-
-    color: white;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: .25s;
-}
-
-.accept {
-    background: #07963b;
-}
-
-.reject {
-    background: #9b0000;
-}
-
-.accept:hover {
-    background: #0bc94e;
-}
-
-.reject:hover {
-    background: #d00000;
-}
-
-.no-applications {
-
-    text-align: center;
-
-    padding: 30px;
-
-    color: #555;
-
-    border: 1px solid #222;
-
-    border-radius: 12px;
-}
-
-.date {
-    color: #444;
-    font-size: 11px;
-    margin-top: 12px;
-}
-
-/* FOOTER */
-
-footer {
-
-    text-align: center;
-
-    padding: 50px 20px;
-
-    color: #444;
-
-    border-top: 1px solid #111;
-
-    letter-spacing: 2px;
-
-    font-size: 11px;
-}
-
-footer span {
-    color: red;
-}
-
-/* MOBILE */
-
-@media(max-width: 700px) {
-
-    nav {
-        padding: 13px 15px;
-    }
-
-    nav a {
-        margin-left: 8px;
-        font-size: 9px;
-    }
-
-    .hero h1 {
-        letter-spacing: 8px;
-    }
-
-    section {
-        padding: 70px 0;
-    }
-
-    .join-box,
-    .staff-box {
-        padding: 22px;
-    }
-
-}
-
-</style>
-</head>
-
-
-<body>
-
-
-<!-- MOVING DOTS -->
-
-<div class="background">
-
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-
-</div>
-
-
-<!-- NAV -->
-
-<nav>
-
-    <div class="logo">
-        RAVEN
-    </div>
-
-    <div>
-
-        <a href="#home">HOME</a>
-
-        <a href="#members">MEMBERS</a>
-
-        <a href="#join">JOIN</a>
-
-        <a href="#staff">STAFF</a>
-
-    </div>
-
-</nav>
-
-
-<!-- HERO -->
-
-<section class="hero" id="home">
-
-    <h1>RAVEN</h1>
-
-    <p>CS2 CLAN</p>
-
-    <button
-        class="hero-button"
-        onclick="document.getElementById('join').scrollIntoView()"
-    >
-        JOIN RAVEN
-    </button>
-
-</section>
-
-
-<!-- MEMBERS -->
-
-<section id="members">
-
-    <div class="section-title">
-
-        <h2>
-            <span>RAVEN</span> MEMBERS
-        </h2>
-
-        <p>
-            The people behind the clan.
-        </p>
-
-    </div>
-
-
-    <div class="members">
-
-
-        <!-- MONARCH -->
-
-        <div
-            class="member-card"
-            onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')"
-        >
-
-            <div class="crown">
-                👑
-            </div>
-
-            <div class="member-badge">
-                OWNER
-            </div>
-
-            <div class="avatar">
-                M
-            </div>
-
-            <h3>
-                MONARCH
-            </h3>
-
-            <div class="member-role">
-                RAVEN OWNER
-            </div>
-
-            <div class="instagram">
-                @owner_monarch._fihh
-            </div>
-
-        </div>
-
-
-        <!-- RENOX -->
-
-        <div
-            class="member-card"
-            onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')"
-        >
-
-            <div class="member-badge">
-                MEMBER
-            </div>
-
-            <div class="avatar">
-                R
-            </div>
-
-            <h3>
-                RENOX
-            </h3>
-
-            <div class="member-role">
-                RAVEN MEMBER
-            </div>
-
-            <div class="instagram">
-                @member_rvn_renox
-            </div>
-
-        </div>
-
-
-        <!-- KASPIKK -->
-
-        <div
-            class="member-card"
-            onclick="openInstagram('https://www.instagram.com/RVN_kaspikk/')"
-        >
-
-            <div class="member-badge">
-                MEMBER
-            </div>
-
-            <div class="avatar">
-                K
-            </div>
-
-            <h3>
-                KASPIKK
-            </h3>
-
-            <div class="member-role">
-                RAVEN MEMBER
-            </div>
-
-            <div class="instagram">
-                @RVN_kaspikk
-            </div>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-<!-- JOIN -->
-
-<section id="join">
-
-    <div class="section-title">
-
-        <h2>
-            <span>JOIN</span> RAVEN
-        </h2>
-
-        <p>
-            Think you have what it takes?
-        </p>
-
-    </div>
-
-
-    <div class="join-box">
-
-        <form onsubmit="sendApplication(event)">
-
-            <input
-                type="text"
-                placeholder="CS2 Nickname"
-                required
-            >
-
-            <input
-                type="text"
-                placeholder="Discord"
-                required
-            >
-
-            <input
-                type="url"
-                placeholder="Clip URL"
-                required
-            >
-
-            <textarea
-                placeholder="Tell us about yourself..."
-                required
-            ></textarea>
-
-            <button
-                type="submit"
-                class="submit-button"
-            >
-                SEND APPLICATION
-            </button>
-
-        </form>
-
-    </div>
-
-</section>
-
-
-<!-- STAFF -->
-
-<section id="staff">
-
-    <div class="section-title">
-
-        <h2>
-            <span>STAFF</span> PANEL
-        </h2>
-
-        <p>
-            Manage RAVEN applications.
-        </p>
-
-    </div>
-
-
-    <div class="staff-box">
-
-        <div class="staff-title">
-            STAFF LOGIN
-        </div>
-
-
-        <input
-            type="password"
-            id="staffPassword"
-            placeholder="Staff password"
-        >
-
-
-        <br><br>
-
-
-        <button
-            class="staff-button"
-            onclick="staffLogin()"
-        >
-            LOGIN
-        </button>
-
-
-        <div id="staffMessage"
-             style="
-                text-align:center;
-                margin-top:20px;
-                color:#777;
-             ">
-        </div>
-
-
-        <div
-            id="staffPanel"
-            style="display:none;"
-        >
-
-            <div
-                style="
-                    margin-top:30px;
-                    padding-top:25px;
-                    border-top:1px solid #292929;
-                "
-            >
-
-                <h3 style="
-                    color:red;
-                    margin-bottom:20px;
-                    letter-spacing:2px;
-                ">
-                    APPLICATIONS
-                </h3>
-
-
-                <div id="applications">
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- FOOTER -->
-
-<footer>
-
-    RAVEN CS2 CLAN © 2026
-
-    <br><br>
-
-    <span>RAVEN ON TOP</span>
-
-</footer>
-
-
 <script>
 
-/* APPLICATION STORAGE */
+/* =========================================
+   RAVEN APPLICATION SYSTEM
+========================================= */
 
 let applications =
     JSON.parse(
@@ -1050,7 +10,39 @@ let applications =
     ) || [];
 
 
-/* INSTAGRAM */
+/* =========================================
+   RAVEN CLAN MEMBERS
+========================================= */
+
+let clanMembers =
+    JSON.parse(
+        localStorage.getItem("ravenClanMembers")
+    ) || [
+
+        {
+            name: "MONARCH",
+            role: "OWNER",
+            protected: true
+        },
+
+        {
+            name: "RENOX",
+            role: "MEMBER",
+            protected: false
+        },
+
+        {
+            name: "KASPIKK",
+            role: "MEMBER",
+            protected: false
+        }
+
+    ];
+
+
+/* =========================================
+   INSTAGRAM
+========================================= */
 
 function openInstagram(url) {
 
@@ -1062,7 +54,9 @@ function openInstagram(url) {
 }
 
 
-/* SEND APPLICATION */
+/* =========================================
+   SEND APPLICATION
+========================================= */
 
 function sendApplication(event) {
 
@@ -1111,7 +105,9 @@ function sendApplication(event) {
 }
 
 
-/* STAFF LOGIN */
+/* =========================================
+   STAFF LOGIN
+========================================= */
 
 function staffLogin() {
 
@@ -1135,6 +131,10 @@ function staffLogin() {
         message.innerHTML =
             "✕ WRONG PASSWORD";
 
+        document.getElementById(
+            "staffPanel"
+        ).style.display = "none";
+
         return;
 
     }
@@ -1155,10 +155,14 @@ function staffLogin() {
 
     showApplications();
 
+    showClanMembers();
+
 }
 
 
-/* SHOW APPLICATIONS */
+/* =========================================
+   SHOW APPLICATIONS
+========================================= */
 
 function showApplications() {
 
@@ -1166,6 +170,9 @@ function showApplications() {
         document.getElementById(
             "applications"
         );
+
+
+    if (!box) return;
 
 
     box.innerHTML = "";
@@ -1235,6 +242,7 @@ function showApplications() {
                     ${
                         app.clip
                         ?
+
                         `
 
                         <a
@@ -1243,11 +251,15 @@ function showApplications() {
                             rel="noopener noreferrer"
                             class="clip-button"
                         >
+
                             🎬 WATCH CLIP
+
                         </a>
 
                         `
+
                         :
+
                         `
 
                         <div class="clip-button">
@@ -1262,11 +274,14 @@ function showApplications() {
 
                     <div class="application-buttons">
 
+
                         <button
                             class="accept"
                             onclick="acceptApplication(${index})"
                         >
+
                             ✓ ACCEPT
+
                         </button>
 
 
@@ -1274,15 +289,20 @@ function showApplications() {
                             class="reject"
                             onclick="rejectApplication(${index})"
                         >
+
                             ✕ REJECT
+
                         </button>
+
 
                     </div>
 
 
                     <div class="date">
 
-                        ${escapeHTML(app.date || "")}
+                        ${escapeHTML(
+                            app.date || ""
+                        )}
 
                     </div>
 
@@ -1296,7 +316,9 @@ function showApplications() {
 }
 
 
-/* ACCEPT */
+/* =========================================
+   ACCEPT APPLICATION
+========================================= */
 
 function acceptApplication(index) {
 
@@ -1307,11 +329,49 @@ function acceptApplication(index) {
     if (!app) return;
 
 
-    alert(
-        app.nick +
-        " has been ACCEPTED!"
-    );
+    const confirmed =
+        confirm(
+            "Accept " +
+            app.nick +
+            " into RAVEN?"
+        );
 
+
+    if (!confirmed) return;
+
+
+    /*
+       Add accepted player
+       to clan members.
+    */
+
+    const alreadyMember =
+        clanMembers.some(
+            member =>
+                member.name.toLowerCase()
+                ===
+                app.nick.toLowerCase()
+        );
+
+
+    if (!alreadyMember) {
+
+        clanMembers.push({
+
+            name: app.nick,
+
+            role: "MEMBER",
+
+            protected: false
+
+        });
+
+    }
+
+
+    /*
+       Remove application.
+    */
 
     applications.splice(
         index,
@@ -1319,18 +379,38 @@ function acceptApplication(index) {
     );
 
 
+    /*
+       Save everything.
+    */
+
     localStorage.setItem(
         "ravenApplications",
         JSON.stringify(applications)
     );
 
 
+    localStorage.setItem(
+        "ravenClanMembers",
+        JSON.stringify(clanMembers)
+    );
+
+
+    alert(
+        app.nick +
+        " has been ACCEPTED into RAVEN!"
+    );
+
+
     showApplications();
+
+    showClanMembers();
 
 }
 
 
-/* REJECT */
+/* =========================================
+   REJECT APPLICATION
+========================================= */
 
 function rejectApplication(index) {
 
@@ -1341,10 +421,15 @@ function rejectApplication(index) {
     if (!app) return;
 
 
-    alert(
-        app.nick +
-        " has been REJECTED!"
-    );
+    const confirmed =
+        confirm(
+            "Reject " +
+            app.nick +
+            "'s application?"
+        );
+
+
+    if (!confirmed) return;
 
 
     applications.splice(
@@ -1359,26 +444,267 @@ function rejectApplication(index) {
     );
 
 
+    alert(
+        app.nick +
+        " has been REJECTED!"
+    );
+
+
     showApplications();
 
 }
 
 
-/* SECURITY */
+/* =========================================
+   SHOW CLAN MEMBERS
+========================================= */
+
+function showClanMembers() {
+
+    const box =
+        document.getElementById(
+            "clanMembers"
+        );
+
+
+    if (!box) return;
+
+
+    box.innerHTML = "";
+
+
+    if (clanMembers.length === 0) {
+
+        box.innerHTML = `
+
+            <div class="no-applications">
+
+                NO CLAN MEMBERS
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    clanMembers.forEach(
+        (member, index) => {
+
+            box.innerHTML += `
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    padding:18px;
+                    margin-bottom:10px;
+                    background:#0d0d0d;
+                    border:1px solid #252525;
+                    border-radius:10px;
+                ">
+
+
+                    <div>
+
+                        <strong style="
+                            color:white;
+                            font-size:18px;
+                        ">
+
+                            ${
+                                member.protected
+                                ? "👑 "
+                                : ""
+                            }
+
+                            ${escapeHTML(
+                                member.name
+                            )}
+
+                        </strong>
+
+
+                        <div style="
+                            color:#777;
+                            font-size:11px;
+                            margin-top:5px;
+                            letter-spacing:2px;
+                        ">
+
+                            ${escapeHTML(
+                                member.role
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    ${
+                        member.protected
+
+                        ?
+
+                        `
+
+                        <span style="
+                            color:#555;
+                            font-size:10px;
+                            letter-spacing:2px;
+                            font-weight:bold;
+                        ">
+
+                            OWNER
+
+                        </span>
+
+                        `
+
+                        :
+
+                        `
+
+                        <button
+                            onclick="kickMember(${index})"
+                            style="
+                                padding:10px 18px;
+                                border:0;
+                                border-radius:7px;
+                                background:#9b0000;
+                                color:white;
+                                font-weight:bold;
+                                cursor:pointer;
+                            "
+                        >
+
+                            KICK
+
+                        </button>
+
+                        `
+                    }
+
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   KICK MEMBER
+========================================= */
+
+function kickMember(index) {
+
+    const member =
+        clanMembers[index];
+
+
+    if (!member) return;
+
+
+    /*
+       OWNER PROTECTION
+    */
+
+    if (member.protected) {
+
+        alert(
+            "👑 MONARCH IS THE OWNER AND CANNOT BE KICKED!"
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "KICK " +
+            member.name +
+            " FROM RAVEN?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    /*
+       Remove member.
+    */
+
+    clanMembers.splice(
+        index,
+        1
+    );
+
+
+    /*
+       Save updated clan.
+    */
+
+    localStorage.setItem(
+        "ravenClanMembers",
+        JSON.stringify(clanMembers)
+    );
+
+
+    alert(
+        member.name +
+        " HAS BEEN KICKED FROM RAVEN!"
+    );
+
+
+    /*
+       Refresh member list.
+    */
+
+    showClanMembers();
+
+}
+
+
+/* =========================================
+   SECURITY
+========================================= */
 
 function escapeHTML(text) {
 
     return String(text)
 
-        .replace(/&/g, "&amp;")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-        .replace(/</g, "&lt;")
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-        .replace(/>/g, "&gt;")
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/'/g, "&#039;");
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
@@ -1387,14 +713,16 @@ function escapeAttribute(text) {
 
     return String(text)
 
-        .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/'/g, "&#039;");
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 </script>
-
-
-</body>
-</html>
