@@ -1,600 +1,1238 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAVEN | CS2 CLAN</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: #050505;
-            color: white;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        /* NAVBAR */
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 45px;
-
-            background: rgba(5,5,5,0.95);
-            border-bottom: 1px solid #330000;
-
-            z-index: 999;
-        }
-
-        nav a {
-            color: #aaa;
-            text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 2px;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: #ff0000;
-        }
-
-        /* HERO */
-
-        .hero {
-            min-height: 100vh;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            text-align: center;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RAVEN | CS2 CLAN</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #030303;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* =========================
+   MOVING BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -5;
+}
+
+.dot {
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    background: white;
+    border-radius: 50%;
+
+    opacity: 0.65;
+
+    box-shadow:
+        0 0 8px white,
+        0 0 15px rgba(255,255,255,0.4);
+
+    animation: float linear infinite;
+}
+
+.dot:nth-child(1) {
+    left: 5%;
+    animation-duration: 13s;
+    animation-delay: -2s;
+}
+
+.dot:nth-child(2) {
+    left: 15%;
+    animation-duration: 17s;
+    animation-delay: -8s;
+}
+
+.dot:nth-child(3) {
+    left: 25%;
+    animation-duration: 12s;
+    animation-delay: -4s;
+}
+
+.dot:nth-child(4) {
+    left: 35%;
+    animation-duration: 20s;
+    animation-delay: -12s;
+}
+
+.dot:nth-child(5) {
+    left: 45%;
+    animation-duration: 15s;
+    animation-delay: -5s;
+}
+
+.dot:nth-child(6) {
+    left: 55%;
+    animation-duration: 18s;
+    animation-delay: -10s;
+}
+
+.dot:nth-child(7) {
+    left: 65%;
+    animation-duration: 14s;
+    animation-delay: -3s;
+}
+
+.dot:nth-child(8) {
+    left: 75%;
+    animation-duration: 19s;
+    animation-delay: -7s;
+}
+
+.dot:nth-child(9) {
+    left: 85%;
+    animation-duration: 16s;
+    animation-delay: -11s;
+}
+
+.dot:nth-child(10) {
+    left: 95%;
+    animation-duration: 22s;
+    animation-delay: -15s;
+}
+
+.dot:nth-child(11) {
+    left: 10%;
+    animation-duration: 21s;
+    animation-delay: -13s;
+}
+
+.dot:nth-child(12) {
+    left: 30%;
+    animation-duration: 16s;
+    animation-delay: -9s;
+}
+
+.dot:nth-child(13) {
+    left: 60%;
+    animation-duration: 23s;
+    animation-delay: -16s;
+}
 
-            background:
-                radial-gradient(circle at center, #420000 0%, #120000 25%, #050505 65%);
-        }
+.dot:nth-child(14) {
+    left: 80%;
+    animation-duration: 13s;
+    animation-delay: -6s;
+}
 
-        .logo {
-            font-size: clamp(80px, 15vw, 170px);
-            font-weight: 900;
-            letter-spacing: 15px;
+@keyframes float {
 
-            color: #ff1111;
+    0% {
+        transform:
+            translateY(110vh)
+            translateX(0)
+            scale(0.5);
+        opacity: 0;
+    }
 
-            text-shadow:
-                0 0 15px red,
-                0 0 40px red,
-                0 0 80px rgba(255,0,0,0.5);
-        }
+    15% {
+        opacity: 0.7;
+    }
 
-        .subtitle {
-            margin-top: 10px;
-            color: #888;
-            letter-spacing: 8px;
-            font-size: 18px;
-        }
+    50% {
+        transform:
+            translateY(50vh)
+            translateX(35px)
+            scale(1);
+    }
 
-        .line {
-            width: 160px;
-            height: 2px;
-            background: red;
-            margin: 25px;
-            box-shadow: 0 0 15px red;
-        }
+    85% {
+        opacity: 0.7;
+    }
 
-        .hero p {
-            color: #aaa;
-            max-width: 600px;
-            line-height: 1.7;
-        }
+    100% {
+        transform:
+            translateY(-10vh)
+            translateX(-30px)
+            scale(0.5);
+        opacity: 0;
+    }
+}
 
-        .join-button {
-            margin-top: 30px;
+/* red glow */
 
-            padding: 16px 40px;
+body::before {
+    content: "";
+    position: fixed;
+    width: 600px;
+    height: 600px;
 
-            background: linear-gradient(135deg, #ff0000, #8b0000);
+    left: 50%;
+    top: 10%;
 
-            color: white;
-            text-decoration: none;
+    transform: translateX(-50%);
 
-            font-weight: bold;
+    background: rgba(255,0,0,0.08);
 
-            border-radius: 8px;
+    filter: blur(120px);
 
-            box-shadow: 0 0 25px rgba(255,0,0,0.25);
+    border-radius: 50%;
 
-            transition: 0.25s;
-        }
+    pointer-events: none;
+    z-index: -4;
+}
 
-        .join-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 40px rgba(255,0,0,0.5);
-        }
+/* =========================
+   NAVBAR
+========================= */
 
-        /* SECTIONS */
+nav {
+    position: fixed;
 
-        section {
-            padding: 110px 8%;
-        }
+    top: 15px;
+    left: 50%;
 
-        .title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+    transform: translateX(-50%);
 
-        .title h2 {
-            font-size: 45px;
-            letter-spacing: 4px;
-        }
+    width: calc(100% - 40px);
+    max-width: 1100px;
 
-        .title span {
-            color: red;
-        }
+    height: 65px;
 
-        .title p {
-            color: #666;
-            margin-top: 12px;
-        }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        /* OWNER */
+    gap: 42px;
 
-        .owner-area {
-            display: flex;
-            justify-content: center;
-        }
+    background: rgba(12,12,12,0.72);
 
-        .owner {
-            width: 400px;
+    backdrop-filter: blur(18px);
 
-            padding: 45px 30px;
+    border: 1px solid rgba(255,0,0,0.18);
 
-            text-align: center;
+    border-radius: 18px;
 
-            background: linear-gradient(145deg, #1a0000, #080808);
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.5);
 
-            border: 1px solid #700000;
-            border-radius: 20px;
+    z-index: 1000;
+}
 
-            cursor: pointer;
+nav a {
+    color: #aaa;
 
-            transition: 0.3s;
-        }
+    text-decoration: none;
 
-        .owner:hover {
-            transform: translateY(-10px);
-            border-color: red;
+    font-size: 13px;
 
-            box-shadow:
-                0 0 50px rgba(255,0,0,0.3);
-        }
+    font-weight: bold;
 
-        .crown {
-            font-size: 60px;
-            margin-bottom: 15px;
-        }
+    letter-spacing: 2px;
 
-        .owner h3 {
-            font-size: 40px;
-            letter-spacing: 4px;
-        }
+    transition: 0.25s;
+}
 
-        .owner .role {
-            color: red;
-            font-weight: bold;
-            letter-spacing: 5px;
-            margin-top: 10px;
-        }
+nav a:hover {
+    color: white;
 
-        .instagram {
-            color: #ff3333;
-            margin-top: 18px;
-            font-size: 14px;
-        }
+    text-shadow:
+        0 0 10px red,
+        0 0 20px red;
+}
 
-        /* MEMBERS */
+/* =========================
+   HERO
+========================= */
 
-        .members {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
+.hero {
+    min-height: 100vh;
 
-        .member {
-            width: 280px;
+    display: flex;
 
-            padding: 35px 25px;
+    flex-direction: column;
 
-            text-align: center;
+    justify-content: center;
 
-            background: #0c0c0c;
+    align-items: center;
 
-            border: 1px solid #292929;
-            border-radius: 16px;
+    text-align: center;
 
-            cursor: pointer;
+    padding: 100px 20px;
 
-            transition: 0.3s;
-        }
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(90,0,0,0.55),
+            rgba(10,0,0,0.25) 30%,
+            transparent 65%
+        );
+}
 
-        .member:hover {
-            transform: translateY(-10px);
+.logo {
+    font-size: clamp(75px, 15vw, 180px);
 
-            border-color: red;
+    font-weight: 900;
 
-            box-shadow:
-                0 0 35px rgba(255,0,0,0.2);
-        }
+    letter-spacing: 18px;
 
-        .avatar {
-            width: 80px;
-            height: 80px;
+    color: #ff1010;
 
-            margin: 0 auto 20px;
+    text-shadow:
+        0 0 10px red,
+        0 0 30px red,
+        0 0 70px rgba(255,0,0,0.7);
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    animation: logoGlow 2.5s ease-in-out infinite alternate;
+}
 
-            border-radius: 50%;
+@keyframes logoGlow {
 
-            background: #180000;
-            border: 1px solid #700000;
+    from {
+        text-shadow:
+            0 0 10px red,
+            0 0 30px red;
+    }
 
-            color: red;
+    to {
+        text-shadow:
+            0 0 20px red,
+            0 0 60px red,
+            0 0 100px rgba(255,0,0,0.5);
+    }
+}
 
-            font-size: 30px;
-            font-weight: bold;
-        }
+.subtitle {
+    margin-top: 10px;
 
-        .member h3 {
-            font-size: 26px;
-            letter-spacing: 3px;
-        }
+    color: #888;
 
-        .member .role {
-            color: #666;
-            margin-top: 8px;
-        }
+    letter-spacing: 9px;
 
-        /* JOIN FORM */
+    font-size: 17px;
+}
 
-        .form-box {
-            max-width: 650px;
-            margin: auto;
+.hero-line {
+    width: 180px;
 
-            padding: 40px;
+    height: 2px;
 
-            background: #0b0b0b;
+    margin: 28px 0;
 
-            border: 1px solid #292929;
+    background: red;
 
-            border-radius: 18px;
-        }
+    box-shadow:
+        0 0 10px red,
+        0 0 25px red;
+}
 
-        input,
-        textarea {
-            width: 100%;
+.hero p {
+    max-width: 600px;
 
-            padding: 16px;
-            margin-bottom: 15px;
+    color: #999;
 
-            background: #030303;
+    line-height: 1.8;
 
-            color: white;
+    font-size: 15px;
+}
 
-            border: 1px solid #292929;
-            border-radius: 8px;
+.hero-button {
+    margin-top: 35px;
 
-            outline: none;
-        }
+    padding: 16px 42px;
 
-        input:focus,
-        textarea:focus {
-            border-color: red;
-        }
+    color: white;
 
-        textarea {
-            min-height: 130px;
-            resize: vertical;
-        }
+    text-decoration: none;
 
-        button {
-            width: 100%;
+    font-weight: bold;
 
-            padding: 16px;
+    letter-spacing: 1px;
 
-            background: linear-gradient(135deg, #ff0000, #8b0000);
+    border-radius: 10px;
 
-            color: white;
+    background:
+        linear-gradient(
+            135deg,
+            #ff1010,
+            #8b0000
+        );
 
-            border: 0;
-            border-radius: 8px;
+    box-shadow:
+        0 0 25px rgba(255,0,0,0.25);
 
-            font-size: 16px;
-            font-weight: bold;
+    transition: 0.3s;
+}
 
-            cursor: pointer;
-        }
+.hero-button:hover {
+    transform: translateY(-5px);
 
-        button:hover {
-            box-shadow: 0 0 25px rgba(255,0,0,0.4);
-        }
+    box-shadow:
+        0 0 20px red,
+        0 0 45px rgba(255,0,0,0.5);
+}
 
-        /* FOOTER */
+/* =========================
+   SECTIONS
+========================= */
 
-        footer {
-            padding: 35px;
+section {
+    padding: 120px 7%;
+}
 
-            text-align: center;
+.section-title {
+    text-align: center;
 
-            border-top: 1px solid #222;
+    margin-bottom: 65px;
+}
 
-            color: #555;
-        }
+.section-title h2 {
+    font-size: 43px;
 
-        footer strong {
-            color: red;
-        }
+    letter-spacing: 4px;
+}
 
-        /* MOBILE */
+.section-title span {
+    color: red;
 
-        @media (max-width: 700px) {
+    text-shadow:
+        0 0 15px rgba(255,0,0,0.5);
+}
 
-            nav {
-                gap: 15px;
-            }
+.section-title p {
+    color: #666;
 
-            nav a {
-                font-size: 11px;
-            }
+    margin-top: 14px;
+}
 
-            .logo {
-                letter-spacing: 7px;
-            }
+/* =========================
+   OWNER
+========================= */
 
-            section {
-                padding: 90px 5%;
-            }
-        }
-    </style>
+.owner-container {
+    display: flex;
+
+    justify-content: center;
+}
+
+.owner-card {
+    position: relative;
+
+    width: 410px;
+
+    padding: 45px 35px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40,0,0,0.7),
+            rgba(10,10,10,0.8)
+        );
+
+    backdrop-filter: blur(15px);
+
+    border:
+        1px solid rgba(255,0,0,0.45);
+
+    border-radius: 24px;
+
+    cursor: pointer;
+
+    transition: 0.35s;
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,0.5),
+        0 0 35px rgba(255,0,0,0.12);
+}
+
+.owner-card:hover {
+    transform:
+        translateY(-12px)
+        scale(1.02);
+
+    border-color: red;
+
+    box-shadow:
+        0 0 35px rgba(255,0,0,0.25),
+        0 0 80px rgba(255,0,0,0.12);
+}
+
+.crown {
+    font-size: 65px;
+
+    margin-bottom: 12px;
+
+    filter:
+        drop-shadow(0 0 8px red)
+        drop-shadow(0 0 20px rgba(255,0,0,0.5));
+}
+
+.owner-card h3 {
+    font-size: 42px;
+
+    letter-spacing: 5px;
+}
+
+.owner-role {
+    margin-top: 10px;
+
+    color: red;
+
+    font-weight: bold;
+
+    letter-spacing: 6px;
+}
+
+.owner-line {
+    width: 70px;
+
+    height: 2px;
+
+    margin: 22px auto;
+
+    background: red;
+
+    box-shadow: 0 0 12px red;
+}
+
+.owner-desc {
+    color: #777;
+}
+
+.instagram {
+    margin-top: 18px;
+
+    color: #ff3333;
+
+    font-size: 14px;
+}
+
+/* =========================
+   MEMBERS
+========================= */
+
+.members {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    flex-wrap: wrap;
+}
+
+.member-card {
+    position: relative;
+
+    width: 300px;
+
+    padding: 38px 25px;
+
+    text-align: center;
+
+    background:
+        rgba(12,12,12,0.75);
+
+    backdrop-filter: blur(15px);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    transition: 0.35s;
+}
+
+.member-card:hover {
+    transform: translateY(-12px);
+
+    border-color: rgba(255,0,0,0.7);
+
+    box-shadow:
+        0 0 35px rgba(255,0,0,0.18);
+}
+
+.member-badge {
+    display: inline-block;
+
+    margin-bottom: 22px;
+
+    padding: 7px 16px;
+
+    border-radius: 50px;
+
+    color: #ddd;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+.avatar {
+    width: 82px;
+    height: 82px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #350000,
+            #100000
+        );
+
+    border:
+        1px solid #850000;
+
+    color: red;
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 0 25px rgba(255,0,0,0.15);
+}
+
+.member-card h3 {
+    margin-top: 20px;
+
+    font-size: 27px;
+
+    letter-spacing: 3px;
+}
+
+.member-role {
+    margin-top: 8px;
+
+    color: #666;
+
+    font-size: 13px;
+
+    letter-spacing: 3px;
+}
+
+/* =========================
+   JOIN
+========================= */
+
+.join-box {
+    max-width: 680px;
+
+    margin: auto;
+
+    padding: 45px;
+
+    background:
+        rgba(12,12,12,0.7);
+
+    backdrop-filter: blur(18px);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,0.4);
+}
+
+input,
+textarea {
+    width: 100%;
+
+    padding: 17px;
+
+    margin-bottom: 15px;
+
+    background:
+        rgba(0,0,0,0.6);
+
+    color: white;
+
+    border:
+        1px solid #292929;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+input:focus,
+textarea:focus {
+    border-color: red;
+
+    box-shadow:
+        0 0 15px rgba(255,0,0,0.15);
+}
+
+textarea {
+    min-height: 140px;
+
+    resize: vertical;
+}
+
+.submit {
+    width: 100%;
+
+    padding: 17px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff0000,
+            #850000
+        );
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.submit:hover {
+    box-shadow:
+        0 0 30px rgba(255,0,0,0.4);
+
+    transform: translateY(-2px);
+}
+
+/* =========================
+   STAFF
+========================= */
+
+.staff-box {
+    max-width: 680px;
+
+    margin: auto;
+
+    padding: 40px;
+
+    background:
+        rgba(12,12,12,0.7);
+
+    backdrop-filter: blur(18px);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 22px;
+}
+
+.staff-title {
+    color: red;
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    letter-spacing: 3px;
+}
+
+.staff-button {
+    width: 100%;
+
+    padding: 16px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff0000,
+            #850000
+        );
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 40px;
+
+    text-align: center;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+
+    color: #444;
+}
+
+footer strong {
+    color: red;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    nav {
+        gap: 13px;
+    }
+
+    nav a {
+        font-size: 10px;
+    }
+
+    .logo {
+        letter-spacing: 7px;
+    }
+
+    section {
+        padding: 90px 5%;
+    }
+
+    .owner-card {
+        width: 100%;
+    }
+
+    .join-box,
+    .staff-box {
+        padding: 25px;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-    <!-- NAVIGATION -->
 
-    <nav>
-        <a href="#home">HOME</a>
-        <a href="#members">MEMBERS</a>
-        <a href="#join">JOIN</a>
-    </nav>
+<!-- MOVING DOTS -->
+
+<div class="background">
+
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+
+</div>
 
 
-    <!-- HOME -->
+<!-- NAV -->
 
-    <section class="hero" id="home">
+<nav>
 
-        <div class="logo">RAVEN</div>
+    <a href="#home">HOME</a>
 
-        <div class="subtitle">
-            CS2 CLAN
-        </div>
+    <a href="#members">MEMBERS</a>
 
-        <div class="line"></div>
+    <a href="#join">JOIN</a>
+
+    <a href="#staff">STAFF</a>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="logo">
+        RAVEN
+    </div>
+
+    <div class="subtitle">
+        CS2 CLAN
+    </div>
+
+    <div class="hero-line"></div>
+
+    <p>
+        Competitive Counter-Strike 2 clan.
+        <br>
+        Built to compete. Ready to dominate.
+    </p>
+
+    <a
+        class="hero-button"
+        href="#join"
+    >
+        JOIN RAVEN
+    </a>
+
+</section>
+
+
+<!-- MEMBERS -->
+
+<section id="members">
+
+    <div class="section-title">
+
+        <h2>
+            THE <span>RAVEN</span> SQUAD
+        </h2>
 
         <p>
-            Competitive Counter-Strike 2 clan.
-            Built to compete. Ready to dominate.
+            Click a player to visit their Instagram.
         </p>
 
-        <a class="join-button" href="#join">
-            JOIN RAVEN
-        </a>
+    </div>
 
-    </section>
+
+    <!-- OWNER -->
+
+    <div class="owner-container">
+
+        <div
+            class="owner-card"
+            onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')"
+        >
+
+            <div class="crown">
+                👑
+            </div>
+
+            <h3>
+                MONARCH
+            </h3>
+
+            <div class="owner-role">
+                OWNER
+            </div>
+
+            <div class="owner-line"></div>
+
+            <div class="owner-desc">
+                Founder & Owner of RAVEN
+            </div>
+
+            <div class="instagram">
+                @owner_monarch._fihh
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <br><br><br>
 
 
     <!-- MEMBERS -->
 
-    <section id="members">
-
-        <div class="title">
-
-            <h2>
-                RAVEN <span>MEMBERS</span>
-            </h2>
-
-            <p>
-                Click a player to visit their Instagram.
-            </p>
-
-        </div>
+    <div class="members">
 
 
-        <!-- MONARCH -->
+        <!-- RENOX -->
 
-        <div class="owner-area">
+        <div
+            class="member-card"
+            onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')"
+        >
 
-            <div
-                class="owner"
-                onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')"
-            >
+            <div class="member-badge">
+                MEMBER
+            </div>
 
-                <div class="crown">
-                    👑
-                </div>
+            <div class="avatar">
+                R
+            </div>
 
-                <h3>
-                    MONARCH
-                </h3>
+            <h3>
+                RENOX
+            </h3>
 
-                <div class="role">
-                    OWNER
-                </div>
+            <div class="member-role">
+                RAVEN MEMBER
+            </div>
 
-                <div class="instagram">
-                    @owner_monarch._fihh
-                </div>
-
+            <div class="instagram">
+                @member_rvn_renox
             </div>
 
         </div>
 
 
-        <br><br><br>
+        <!-- KASPIKK -->
 
+        <div
+            class="member-card"
+            onclick="openInstagram('https://www.instagram.com/RVN_kaspikk/')"
+        >
 
-        <!-- RENOX + KASPIKK -->
-
-        <div class="members">
-
-            <div
-                class="member"
-                onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')"
-            >
-
-                <div class="avatar">
-                    R
-                </div>
-
-                <h3>
-                    RENOX
-                </h3>
-
-                <div class="role">
-                    MEMBER
-                </div>
-
-                <div class="instagram">
-                    @member_rvn_renox
-                </div>
-
+            <div class="member-badge">
+                MEMBER
             </div>
 
+            <div class="avatar">
+                K
+            </div>
 
-            <div
-                class="member"
-                onclick="openInstagram('https://www.instagram.com/RVN_kaspikk/')"
-            >
+            <h3>
+                KASPIKK
+            </h3>
 
-                <div class="avatar">
-                    K
-                </div>
+            <div class="member-role">
+                RAVEN MEMBER
+            </div>
 
-                <h3>
-                    KASPIKK
-                </h3>
-
-                <div class="role">
-                    MEMBER
-                </div>
-
-                <div class="instagram">
-                    @RVN_kaspikk
-                </div>
-
+            <div class="instagram">
+                @RVN_kaspikk
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- JOIN -->
+<!-- JOIN -->
 
-    <section id="join">
+<section id="join">
 
-        <div class="title">
+    <div class="section-title">
 
-            <h2>
-                JOIN <span>RAVEN</span>
-            </h2>
+        <h2>
+            JOIN <span>RAVEN</span>
+        </h2>
 
-            <p>
-                Apply to become a member of the clan.
-            </p>
+        <p>
+            Think you have what it takes?
+            Send your application.
+        </p>
 
+    </div>
+
+
+    <div class="join-box">
+
+        <form
+            onsubmit="sendApplication(event)"
+        >
+
+            <input
+                type="text"
+                placeholder="CS2 Nickname"
+                required
+            >
+
+            <input
+                type="text"
+                placeholder="Discord"
+                required
+            >
+
+            <input
+                type="url"
+                placeholder="Best clip URL"
+            >
+
+            <textarea
+                placeholder="Tell us about yourself..."
+                required
+            ></textarea>
+
+            <button
+                class="submit"
+                type="submit"
+            >
+                SEND APPLICATION
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- STAFF -->
+
+<section id="staff">
+
+    <div class="section-title">
+
+        <h2>
+            <span>STAFF</span> PANEL
+        </h2>
+
+        <p>
+            RAVEN administration.
+        </p>
+
+    </div>
+
+
+    <div class="staff-box">
+
+        <div class="staff-title">
+            STAFF LOGIN
         </div>
 
+        <input
+            type="password"
+            id="staffPassword"
+            placeholder="Staff password"
+        >
 
-        <div class="form-box">
+        <button
+            class="staff-button"
+            onclick="staffLogin()"
+        >
+            LOGIN
+        </button>
 
-            <form onsubmit="sendApplication(event)">
+        <div
+            id="staffMessage"
+            style="
+                text-align:center;
+                margin-top:20px;
+                color:#777;
+            "
+        ></div>
 
-                <input
-                    type="text"
-                    placeholder="CS2 Nickname"
-                    required
-                >
+    </div>
 
-                <input
-                    type="text"
-                    placeholder="Discord"
-                    required
-                >
-
-                <input
-                    type="url"
-                    placeholder="Clip URL"
-                >
-
-                <textarea
-                    placeholder="Tell us about yourself..."
-                    required
-                ></textarea>
-
-                <button type="submit">
-                    SEND APPLICATION
-                </button>
-
-            </form>
-
-        </div>
-
-    </section>
+</section>
 
 
-    <!-- FOOTER -->
+<!-- FOOTER -->
 
-    <footer>
-        <strong>RAVEN</strong> CS2 CLAN © 2026
-    </footer>
+<footer>
+
+    <strong>RAVEN</strong>
+
+    CS2 CLAN © 2026
+
+</footer>
 
 
-    <script>
+<script>
 
-        function openInstagram(url) {
-            window.open(url, "_blank");
-        }
+/* INSTAGRAM */
 
-        function sendApplication(event) {
+function openInstagram(url) {
 
-            event.preventDefault();
+    window.open(
+        url,
+        "_blank"
+    );
 
-            alert("APPLICATION SENT!");
+}
 
-            event.target.reset();
-        }
 
-    </script>
+/* JOIN */
+
+function sendApplication(event) {
+
+    event.preventDefault();
+
+    alert(
+        "APPLICATION SENT!"
+    );
+
+    event.target.reset();
+
+}
+
+
+/* STAFF */
+
+function staffLogin() {
+
+    const password =
+        document.getElementById(
+            "staffPassword"
+        ).value;
+
+    const message =
+        document.getElementById(
+            "staffMessage"
+        );
+
+
+    if (password === "raven123") {
+
+        message.style.color = "#00ff66";
+
+        message.innerHTML =
+            "✓ STAFF ACCESS GRANTED";
+
+    } else {
+
+        message.style.color = "#ff2222";
+
+        message.innerHTML =
+            "✕ WRONG PASSWORD";
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>
