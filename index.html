@@ -1,546 +1,177 @@
-<script>
-/* =====================================================
-   RAVEN CS2 CLAN SYSTEM
-===================================================== */
+const express = require("express");
+const cors = require("cors");
 
-/* ---------- DATA ---------- */
+const app = express();
 
-let applications = JSON.parse(
-    localStorage.getItem("ravenApplications") || "[]"
-);
+app.use(cors());
+app.use(express.json());
 
-let clanMembers = JSON.parse(
-    localStorage.getItem("ravenClanMembers") || "null"
-);
+const PORT = process.env.PORT || 3000;
 
+/* =========================================
+   RAVEN DATA
+========================================= */
 
-/* ---------- DEFAULT MEMBERS ---------- */
+let members = [
+    {
+        id: 1,
+        name: "MONARCH",
+        role: "OWNER",
+        emoji: "👑",
+        protected: true,
+        instagram: "https://www.instagram.com/owner_monarch._fihh/"
+    },
 
-if (!Array.isArray(clanMembers)) {
-    clanMembers = [
-        {
-            name: "MONARCH",
-            role: "OWNER",
-            protected: true,
-            emoji: "👑",
-            instagram: "https://www.instagram.com/owner_monarch._fihh/"
-        },
-        {
-            name: "RENOX",
-            role: "MEMBER",
-            protected: false,
-            emoji: "🗿",
-            instagram: "https://www.instagram.com/member_rvn_renox/"
-        },
-        {
-            name: "KASPIKK",
-            role: "MEMBER",
-            protected: false,
-            emoji: "🗿",
-            instagram: "https://www.instagram.com/RVN_kaspikk/"
-        }
-    ];
+    {
+        id: 2,
+        name: "RENOX",
+        role: "MEMBER",
+        emoji: "🗿",
+        protected: false,
+        instagram: "https://www.instagram.com/member_rvn_renox/"
+    },
 
-    saveClan();
-}
-
-
-/* ---------- SAVE ---------- */
-
-function saveClan() {
-    localStorage.setItem(
-        "ravenClanMembers",
-        JSON.stringify(clanMembers)
-    );
-}
-
-function saveApplications() {
-    localStorage.setItem(
-        "ravenApplications",
-        JSON.stringify(applications)
-    );
-}
-
-
-/* =====================================================
-   MEMBER EMOJI
-===================================================== */
-
-function getMemberEmoji(member) {
-
-    if (member.name.toUpperCase() === "MONARCH") {
-        return "👑";
+    {
+        id: 3,
+        name: "KASPIKK",
+        role: "MEMBER",
+        emoji: "🗿",
+        protected: false,
+        instagram: "https://www.instagram.com/RVN_kaspikk/"
     }
+];
 
-    if (member.name.toUpperCase() === "RENOX") {
-        return "🗿";
-    }
-
-    if (member.name.toUpperCase() === "KASPIKK") {
-        return "🗿";
-    }
-
-    return "💀";
-}
+let applications = [];
 
 
-/* =====================================================
-   TOP MEMBERS
-===================================================== */
+/* =========================================
+   GET MEMBERS
+========================================= */
 
-function showTopMembers() {
+app.get("/api/members", (req, res) => {
 
-    const box = document.getElementById("membersList");
+    res.json(members);
 
-    if (!box) return;
-
-    box.innerHTML = "";
-
-    clanMembers.forEach(function(member) {
-
-        const card = document.createElement("div");
-
-        card.className = "member-card";
-
-        const emoji = getMemberEmoji(member);
-
-        const avatarLetter =
-            member.name.charAt(0).toUpperCase();
+});
 
 
-        /* EMOJI */
+/* =========================================
+   GET APPLICATIONS
+========================================= */
 
-        const emojiBox = document.createElement("div");
+app.get("/api/applications", (req, res) => {
 
-        emojiBox.className = "crown";
+    res.json(applications);
 
-        emojiBox.textContent = emoji;
-
-
-        /* BADGE */
-
-        const badge = document.createElement("div");
-
-        badge.className = "member-badge";
-
-        badge.textContent =
-            member.protected
-            ? "OWNER"
-            : "MEMBER";
+});
 
 
-        /* AVATAR */
-
-        const avatar = document.createElement("div");
-
-        avatar.className = "avatar";
-
-        avatar.textContent = avatarLetter;
-
-
-        /* NAME */
-
-        const name = document.createElement("h3");
-
-        name.textContent = member.name;
-
-
-        /* ROLE */
-
-        const role = document.createElement("div");
-
-        role.className = "member-role";
-
-        role.textContent =
-            member.protected
-            ? "RAVEN OWNER"
-            : "RAVEN MEMBER";
-
-
-        /* INSTAGRAM */
-
-        const instagram = document.createElement("div");
-
-        instagram.className = "instagram";
-
-        if (member.instagram) {
-
-            instagram.textContent =
-                member.instagram;
-
-        } else {
-
-            instagram.textContent =
-                "RAVEN MEMBER";
-
-        }
-
-
-        /* BUILD CARD */
-
-        card.appendChild(emojiBox);
-        card.appendChild(badge);
-        card.appendChild(avatar);
-        card.appendChild(name);
-        card.appendChild(role);
-        card.appendChild(instagram);
-
-
-        /* INSTAGRAM CLICK */
-
-        if (member.instagram) {
-
-            card.addEventListener(
-                "click",
-                function() {
-
-                    window.open(
-                        member.instagram,
-                        "_blank"
-                    );
-
-                }
-            );
-
-            card.style.cursor = "pointer";
-        }
-
-
-        box.appendChild(card);
-
-    });
-
-}
-
-
-/* =====================================================
+/* =========================================
    SEND APPLICATION
-===================================================== */
+========================================= */
 
-function sendApplication(event) {
+app.post("/api/applications", (req, res) => {
 
-    event.preventDefault();
-
-    const form = event.target;
-
-    const inputs =
-        form.querySelectorAll("input");
-
-    const textarea =
-        form.querySelector("textarea");
+    const {
+        nick,
+        discord,
+        clip,
+        about
+    } = req.body;
 
 
-    const nickname =
-        inputs[0]
-        ? inputs[0].value.trim()
-        : "";
+    if (!nick || !discord) {
 
+        return res.status(400).json({
+            error: "Nickname and Discord are required."
+        });
 
-    const discord =
-        inputs[1]
-        ? inputs[1].value.trim()
-        : "";
-
-
-    const clip =
-        inputs[2]
-        ? inputs[2].value.trim()
-        : "";
-
-
-    const about =
-        textarea
-        ? textarea.value.trim()
-        : "";
-
-
-    if (!nickname || !discord) {
-
-        alert(
-            "PLEASE FILL IN YOUR NICKNAME AND DISCORD!"
-        );
-
-        return;
     }
 
 
-    applications.push({
+    const application = {
 
-        nick: nickname,
+        id: Date.now(),
 
-        discord: discord,
+        nick,
 
-        clip: clip,
+        discord,
 
-        about: about,
+        clip: clip || "",
 
-        date: new Date().toLocaleString()
+        about: about || "",
+
+        date: new Date().toISOString()
+
+    };
+
+
+    applications.push(application);
+
+
+    res.json({
+
+        success: true,
+
+        application
 
     });
 
-
-    saveApplications();
-
-
-    alert(
-        "APPLICATION SENT TO RAVEN!"
-    );
+});
 
 
-    form.reset();
+/* =========================================
+   ACCEPT APPLICATION
+========================================= */
 
-}
+app.post("/api/applications/:id/accept", (req, res) => {
+
+    const id =
+        Number(req.params.id);
 
 
-/* =====================================================
-   STAFF LOGIN
-===================================================== */
-
-function staffLogin() {
-
-    const password =
-        document.getElementById(
-            "staffPassword"
+    const application =
+        applications.find(
+            app => app.id === id
         );
 
 
-    const message =
-        document.getElementById(
-            "staffMessage"
-        );
+    if (!application) {
 
-
-    const panel =
-        document.getElementById(
-            "staffPanel"
-        );
-
-
-    if (!password) return;
-
-
-    if (password.value !== "raven123") {
-
-        if (message) {
-
-            message.textContent =
-                "✕ WRONG PASSWORD";
-
-            message.style.color =
-                "#ff2222";
-
-        }
-
-        if (panel) {
-
-            panel.style.display =
-                "none";
-
-        }
-
-        return;
-    }
-
-
-    if (message) {
-
-        message.textContent =
-            "✓ STAFF ACCESS GRANTED";
-
-        message.style.color =
-            "#00ff66";
+        return res.status(404).json({
+            error: "Application not found."
+        });
 
     }
-
-
-    if (panel) {
-
-        panel.style.display =
-            "block";
-
-    }
-
-
-    showApplications();
-
-    showClanMembers();
-
-}
-
-
-/* =====================================================
-   APPLICATIONS
-===================================================== */
-
-function showApplications() {
-
-    const box =
-        document.getElementById(
-            "applications"
-        );
-
-
-    if (!box) return;
-
-
-    box.innerHTML = "";
-
-
-    if (applications.length === 0) {
-
-        box.innerHTML = `
-            <div class="no-applications">
-                NO APPLICATIONS
-            </div>
-        `;
-
-        return;
-    }
-
-
-    applications.forEach(
-        function(app, index) {
-
-            const application =
-                document.createElement(
-                    "div"
-                );
-
-            application.className =
-                "application";
-
-
-            application.innerHTML = `
-
-                <div class="application-header">
-
-                    <h3>
-                        ${escapeHTML(app.nick)}
-                    </h3>
-
-                    <span class="pending">
-                        PENDING
-                    </span>
-
-                </div>
-
-                <p>
-                    <strong>Discord:</strong>
-                    ${escapeHTML(app.discord)}
-                </p>
-
-                <p>
-                    <strong>About:</strong><br>
-                    ${escapeHTML(app.about)}
-                </p>
-
-                ${
-                    app.clip
-                    ?
-                    `
-                    <a
-                        class="clip-button"
-                        href="${escapeAttribute(app.clip)}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        🎬 WATCH CLIP
-                    </a>
-                    `
-                    :
-                    `
-                    <div class="clip-button">
-                        NO CLIP PROVIDED
-                    </div>
-                    `
-                }
-
-                <div class="application-buttons">
-
-                    <button
-                        class="accept"
-                        onclick="acceptApplication(${index})"
-                    >
-                        ✓ ACCEPT
-                    </button>
-
-                    <button
-                        class="reject"
-                        onclick="rejectApplication(${index})"
-                    >
-                        ✕ REJECT
-                    </button>
-
-                </div>
-
-                <div class="date">
-                    ${escapeHTML(app.date || "")}
-                </div>
-            `;
-
-
-            box.appendChild(
-                application
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   ACCEPT
-===================================================== */
-
-function acceptApplication(index) {
-
-    const app =
-        applications[index];
-
-
-    if (!app) return;
-
-
-    if (
-        !confirm(
-            "ACCEPT " +
-            app.nick +
-            " INTO RAVEN?"
-        )
-    ) return;
 
 
     const alreadyMember =
-        clanMembers.some(
-            function(member) {
-
-                return (
-                    member.name.toLowerCase()
-                    ===
-                    app.nick.toLowerCase()
-                );
-
-            }
+        members.some(
+            member =>
+                member.name.toLowerCase()
+                ===
+                application.nick.toLowerCase()
         );
 
 
     if (!alreadyMember) {
 
-        clanMembers.push({
+        members.push({
 
-            name: app.nick,
+            id: Date.now(),
+
+            name: application.nick,
 
             role: "MEMBER",
 
-            protected: false,
-
             /*
-             * EVERY NEW MEMBER
-             * AUTOMATICALLY GETS 💀
-             */
+               EVERY NEW PLAYER
+               AUTOMATICALLY GETS 💀
+            */
 
             emoji: "💀",
+
+            protected: false,
 
             instagram: ""
 
@@ -549,344 +180,110 @@ function acceptApplication(index) {
     }
 
 
-    applications.splice(
-        index,
-        1
-    );
-
-
-    saveClan();
-
-    saveApplications();
-
-
-    alert(
-        app.nick +
-        " JOINED RAVEN! 💀"
-    );
-
-
-    showApplications();
-
-    showClanMembers();
-
-    showTopMembers();
-
-}
-
-
-/* =====================================================
-   REJECT
-===================================================== */
-
-function rejectApplication(index) {
-
-    const app =
-        applications[index];
-
-
-    if (!app) return;
-
-
-    if (
-        !confirm(
-            "REJECT " +
-            app.nick +
-            "'S APPLICATION?"
-        )
-    ) return;
-
-
-    applications.splice(
-        index,
-        1
-    );
-
-
-    saveApplications();
-
-
-    showApplications();
-
-
-    alert(
-        "APPLICATION REJECTED."
-    );
-
-}
-
-
-/* =====================================================
-   STAFF MEMBER LIST
-===================================================== */
-
-function showClanMembers() {
-
-    const box =
-        document.getElementById(
-            "clanMembers"
+    applications =
+        applications.filter(
+            app => app.id !== id
         );
 
 
-    if (!box) return;
+    res.json({
+
+        success: true,
+
+        members
+
+    });
+
+});
 
 
-    box.innerHTML = "";
+/* =========================================
+   REJECT APPLICATION
+========================================= */
+
+app.delete("/api/applications/:id", (req, res) => {
+
+    const id =
+        Number(req.params.id);
 
 
-    clanMembers.forEach(
-        function(member, index) {
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-            row.className =
-                "clan-member";
+    applications =
+        applications.filter(
+            app => app.id !== id
+        );
 
 
-            const info =
-                document.createElement(
-                    "div"
-                );
+    res.json({
+
+        success: true
+
+    });
+
+});
 
 
-            const name =
-                document.createElement(
-                    "div"
-                );
+/* =========================================
+   KICK MEMBER
+========================================= */
 
-            name.className =
-                "clan-member-name";
+app.delete("/api/members/:id", (req, res) => {
 
+    const id =
+        Number(req.params.id);
 
-            name.textContent =
-                getMemberEmoji(member)
-                + " "
-                + member.name;
-
-
-            const role =
-                document.createElement(
-                    "div"
-                );
-
-            role.className =
-                "clan-member-role";
-
-
-            role.textContent =
-                member.role;
-
-
-            info.appendChild(name);
-
-            info.appendChild(role);
-
-
-            row.appendChild(info);
-
-
-            /* OWNER */
-
-            if (member.protected) {
-
-                const owner =
-                    document.createElement(
-                        "div"
-                    );
-
-                owner.className =
-                    "owner-label";
-
-                owner.textContent =
-                    "OWNER";
-
-                row.appendChild(owner);
-
-            }
-
-            /* NORMAL MEMBER */
-
-            else {
-
-                const kick =
-                    document.createElement(
-                        "button"
-                    );
-
-                kick.className =
-                    "kick-button";
-
-                kick.textContent =
-                    "KICK";
-
-
-                kick.addEventListener(
-                    "click",
-                    function() {
-
-                        kickMember(index);
-
-                    }
-                );
-
-
-                row.appendChild(
-                    kick
-                );
-
-            }
-
-
-            box.appendChild(
-                row
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   KICK
-===================================================== */
-
-function kickMember(index) {
 
     const member =
-        clanMembers[index];
+        members.find(
+            member => member.id === id
+        );
 
 
-    if (!member) return;
+    if (!member) {
+
+        return res.status(404).json({
+            error: "Member not found."
+        });
+
+    }
 
 
     if (member.protected) {
 
-        alert(
-            "MONARCH CANNOT BE KICKED! 👑"
-        );
+        return res.status(403).json({
+            error: "OWNER cannot be kicked."
+        });
 
-        return;
     }
 
 
-    if (
-        !confirm(
-            "KICK " +
-            member.name +
-            " FROM RAVEN?"
-        )
-    ) return;
-
-
-    const name =
-        member.name;
-
-
-    clanMembers.splice(
-        index,
-        1
-    );
-
-
-    saveClan();
-
-
-    showClanMembers();
-
-    showTopMembers();
-
-
-    alert(
-        name +
-        " HAS BEEN KICKED FROM RAVEN! 💀"
-    );
-
-}
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHTML(text) {
-
-    return String(text)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
+    members =
+        members.filter(
+            member => member.id !== id
         );
 
-}
+
+    res.json({
+
+        success: true,
+
+        members
+
+    });
+
+});
 
 
-function escapeAttribute(text) {
+/* =========================================
+   SERVER
+========================================= */
 
-    return String(text)
+app.listen(
+    PORT,
+    () => {
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
+        console.log(
+            `🔥 RAVEN SERVER RUNNING ON PORT ${PORT}`
         );
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        showTopMembers();
 
     }
 );
-
-</script>
