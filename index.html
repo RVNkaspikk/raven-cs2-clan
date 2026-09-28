@@ -1,770 +1,611 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RÆVEN — CS2 CLAN</title>
+<title>RÆVEN — CS2 Clan</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#050505;
-    color:white;
-    overflow-x:hidden;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050505;
+    color: white;
+    overflow-x: hidden;
 }
 
 /* BACKGROUND */
-
-#particles{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:-2;
+.bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -5;
     background:
-    radial-gradient(
-        circle at 50% 20%,
-        #260000 0%,
-        #090000 32%,
-        #050505 75%
-    );
+        radial-gradient(circle at 50% 20%, rgba(255,0,0,.15), transparent 35%),
+        #050505;
 }
 
-.dot{
-    position:absolute;
-    background:white;
-    border-radius:50%;
-    opacity:.7;
-    animation:float 8s linear infinite;
+.dot {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    opacity: .5;
+    animation: float 10s linear infinite;
 }
 
-@keyframes float{
-
-    0%{
-        transform:translateY(105vh);
-        opacity:0;
+@keyframes float {
+    from {
+        transform: translateY(110vh);
     }
-
-    15%{
-        opacity:.8;
+    to {
+        transform: translateY(-10vh);
     }
-
-    85%{
-        opacity:.8;
-    }
-
-    100%{
-        transform:translateY(-10vh);
-        opacity:0;
-    }
-
 }
 
-/* NAV */
-
-nav{
-    position:fixed;
-    top:15px;
-    left:50%;
-    transform:translateX(-50%);
-
-    width:92%;
-    max-width:1100px;
-
-    padding:15px 25px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    background:rgba(20,20,20,.75);
-
-    border:1px solid rgba(255,255,255,.1);
-
-    border-radius:18px;
-
-    backdrop-filter:blur(15px);
-
-    z-index:1000;
-
-    box-shadow:
-    0 0 30px rgba(255,0,0,.12);
+/* NAVBAR */
+nav {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1100px;
+    padding: 14px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15,15,15,.75);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    z-index: 1000;
+    box-shadow: 0 0 30px rgba(255,0,0,.08);
 }
 
-.logo{
-    font-size:25px;
-    font-weight:1000;
-    letter-spacing:4px;
-    color:#ff2020;
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: white;
 }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:25px;
-    font-size:14px;
-    font-weight:bold;
-    transition:.25s;
+.logo span {
+    color: #ff1a1a;
 }
 
-nav a:hover{
-    color:#ff2020;
+nav a {
+    color: #aaa;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: .2s;
+}
+
+nav a:hover {
+    color: #ff2222;
 }
 
 /* HERO */
-
-.hero{
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    text-align:center;
-
-    padding:120px 20px 60px;
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 20px 40px;
 }
 
-.hero-content{
-    max-width:950px;
+.hero-content {
+    animation: heroIn 1s ease;
 }
 
-.tag{
-    color:#ff2929;
-    font-weight:bold;
-    letter-spacing:5px;
-    margin-bottom:20px;
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.hero h1{
-    font-size:clamp(75px,17vw,190px);
-    line-height:.8;
-
-    letter-spacing:14px;
-
-    font-weight:1000;
-
+.hero h1 {
+    font-size: clamp(70px, 15vw, 190px);
+    line-height: .8;
+    font-weight: 1000;
+    letter-spacing: -8px;
+    color: white;
     text-shadow:
-    0 0 15px rgba(255,0,0,.8),
-    0 0 50px rgba(255,0,0,.35);
+        0 0 20px rgba(255,0,0,.3),
+        0 0 70px rgba(255,0,0,.12);
 }
 
-.hero p{
-    margin:30px 0;
-
-    color:#aaa;
-
-    letter-spacing:3px;
+.hero h1 span {
+    color: #ff1717;
 }
 
-.btn{
-    display:inline-block;
-
-    padding:15px 32px;
-
-    background:#e50909;
-
-    color:white;
-
-    text-decoration:none;
-
-    border-radius:10px;
-
-    font-weight:900;
-
-    border:1px solid #ff3b3b;
-
-    box-shadow:
-    0 0 25px rgba(255,0,0,.35);
-
-    transition:.25s;
-
-    cursor:pointer;
+.hero p {
+    margin-top: 30px;
+    color: #888;
+    font-size: 15px;
+    letter-spacing: 5px;
 }
 
-.btn:hover{
-    transform:
-    translateY(-3px)
-    scale(1.03);
+.btn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 15px 32px;
+    border-radius: 10px;
+    background: #ff1717;
+    color: white;
+    text-decoration: none;
+    font-weight: 900;
+    letter-spacing: 2px;
+    border: none;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 0 30px rgba(255,0,0,.25);
+}
 
-    background:#ff2020;
-
-    box-shadow:
-    0 0 40px rgba(255,0,0,.6);
+.btn:hover {
+    transform: translateY(-3px);
+    background: #ff3030;
+    box-shadow: 0 0 45px rgba(255,0,0,.4);
 }
 
 /* SECTIONS */
-
-section{
-    padding:100px 20px;
+section {
+    width: 100%;
+    max-width: 1150px;
+    margin: auto;
+    padding: 110px 25px;
 }
 
-.container{
-    max-width:1100px;
-    margin:auto;
+.section-title {
+    text-align: center;
+    margin-bottom: 55px;
 }
 
-.section-title{
-    text-align:center;
-
-    font-size:45px;
-
-    margin-bottom:55px;
-
-    letter-spacing:4px;
+.section-title h2 {
+    font-size: 45px;
+    font-weight: 1000;
+    letter-spacing: 3px;
 }
 
-.section-title span{
-    color:#ff2020;
+.section-title h2 span {
+    color: #ff1717;
+}
+
+.section-title p {
+    color: #777;
+    margin-top: 10px;
 }
 
 /* MEMBERS */
-
-.members{
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-
-    gap:25px;
+.members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
 }
 
-.member{
-    position:relative;
-
-    padding:35px 20px;
-
-    text-align:center;
-
-    background:
-    rgba(20,20,20,.72);
-
-    border:
-    1px solid rgba(255,255,255,.09);
-
-    border-radius:20px;
-
-    backdrop-filter:blur(12px);
-
-    transition:.3s;
-
-    cursor:pointer;
-
-    overflow:hidden;
+.member-card {
+    position: relative;
+    padding: 35px 20px;
+    text-align: center;
+    background: rgba(20,20,20,.65);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 18px;
+    backdrop-filter: blur(15px);
+    cursor: pointer;
+    transition: .3s;
+    overflow: hidden;
 }
 
-.member:hover{
-    transform:translateY(-8px);
-
-    border-color:#ff2020;
-
-    box-shadow:
-    0 15px 45px
-    rgba(255,0,0,.18);
+.member-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: #ff1717;
+    transition: .4s;
 }
 
-.member::before{
-    content:"";
-
-    position:absolute;
-
-    top:0;
-    left:0;
-    right:0;
-
-    height:2px;
-
-    background:#ff2020;
-
-    box-shadow:
-    0 0 20px #ff2020;
+.member-card:hover::before {
+    left: 0;
 }
 
-.member-emoji{
-    font-size:42px;
-    margin-bottom:10px;
+.member-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(255,0,0,.35);
+    box-shadow: 0 15px 50px rgba(255,0,0,.1);
 }
 
-.member-name{
-    font-size:25px;
-
-    font-weight:900;
-
-    letter-spacing:2px;
+.member-emoji {
+    font-size: 35px;
+    margin-bottom: 12px;
 }
 
-.member-role{
-    margin-top:8px;
+.member-name {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
 
-    color:#ff2929;
-
-    font-size:12px;
-
-    font-weight:bold;
-
-    letter-spacing:3px;
+.member-role {
+    color: #ff2020;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
 /* JOIN */
-
-.join-box{
-    max-width:650px;
-
-    margin:auto;
-
-    padding:35px;
-
-    background:
-    rgba(15,15,15,.82);
-
-    border:
-    1px solid rgba(255,255,255,.1);
-
-    border-radius:22px;
-
-    backdrop-filter:blur(15px);
+.join-box {
+    max-width: 650px;
+    margin: auto;
+    padding: 35px;
+    background: rgba(15,15,15,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
 }
 
-input,
-textarea{
-
-    width:100%;
-
-    margin-bottom:15px;
-
-    padding:15px;
-
-    border-radius:10px;
-
-    border:
-    1px solid #292929;
-
-    background:#090909;
-
-    color:white;
-
-    outline:none;
-
-    font-size:15px;
+.input {
+    width: 100%;
+    margin-bottom: 15px;
 }
 
-input:focus,
-textarea:focus{
-
-    border-color:#ff2020;
-
-    box-shadow:
-    0 0 15px
-    rgba(255,0,0,.15);
+.input input,
+.input textarea {
+    width: 100%;
+    padding: 15px;
+    background: #0b0b0b;
+    color: white;
+    border: 1px solid #222;
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    transition: .2s;
 }
 
-textarea{
-    min-height:130px;
-    resize:vertical;
+.input textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.input input:focus,
+.input textarea:focus {
+    border-color: #ff1717;
+    box-shadow: 0 0 15px rgba(255,0,0,.1);
+}
+
+.join-box .btn {
+    width: 100%;
 }
 
 /* STAFF */
-
-.staff-login{
-    max-width:450px;
-    margin:auto;
-    text-align:center;
+.staff-login {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
 }
 
-.staff-panel{
-    display:none;
-
-    max-width:1000px;
-
-    margin:30px auto 0;
+.staff-login input {
+    width: 100%;
+    padding: 15px;
+    background: #0b0b0b;
+    border: 1px solid #222;
+    color: white;
+    border-radius: 9px;
+    outline: none;
+    margin-bottom: 10px;
 }
 
-.panel-box{
-
-    background:
-    rgba(15,15,15,.88);
-
-    border:
-    1px solid rgba(255,255,255,.1);
-
-    border-radius:20px;
-
-    padding:25px;
-
-    margin-bottom:25px;
+.staff-panel {
+    display: none;
 }
 
-.application,
-.staff-member{
-
-    background:#0b0b0b;
-
-    border:
-    1px solid #222;
-
-    border-radius:14px;
-
-    padding:18px;
-
-    margin-bottom:15px;
+.panel-box {
+    background: rgba(15,15,15,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 25px;
 }
 
-.application h3,
-.staff-member h3{
-    margin-bottom:8px;
+.panel-box h3 {
+    margin-bottom: 20px;
+    color: #ff1717;
 }
 
-.application p{
-    color:#aaa;
-
-    margin:6px 0;
-
-    word-break:break-word;
+.application {
+    padding: 20px;
+    margin-bottom: 15px;
+    background: #0b0b0b;
+    border: 1px solid #222;
+    border-radius: 12px;
 }
 
-.application a{
-    color:#ff3030;
+.application:last-child {
+    margin-bottom: 0;
 }
 
-.small-btn{
-
-    border:0;
-
-    padding:10px 15px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    color:white;
-
-    font-weight:bold;
-
-    margin:
-    10px 8px 0 0;
+.application strong {
+    color: #ff2222;
 }
 
-.accept{
-    background:#0b8f38;
+.application p {
+    color: #aaa;
+    margin: 7px 0;
+    word-break: break-word;
 }
 
-.reject{
-    background:#b00000;
+.application a {
+    color: #ff4444;
 }
 
-.kick{
-    background:#9b0000;
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.small-btn:hover{
-    filter:brightness(1.25);
+.accept,
+.reject,
+.kick {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.status{
-    text-align:center;
+.accept {
+    background: #15803d;
+}
 
-    margin-top:15px;
+.reject,
+.kick {
+    background: #b91c1c;
+}
 
-    color:#777;
+.accept:hover,
+.reject:hover,
+.kick:hover {
+    filter: brightness(1.2);
+}
 
-    font-size:13px;
+.staff-member {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #0b0b0b;
+    border-radius: 10px;
+    border: 1px solid #222;
+}
+
+.staff-member-name {
+    font-weight: bold;
+}
+
+.staff-member-role {
+    color: #ff2222;
+    font-size: 11px;
+    margin-left: 5px;
 }
 
 /* FOOTER */
-
-footer{
-
-    padding:50px 20px;
-
-    text-align:center;
-
-    color:#777;
-
-    border-top:
-    1px solid #171717;
+footer {
+    text-align: center;
+    padding: 80px 20px;
+    border-top: 1px solid #151515;
+    color: #555;
+    letter-spacing: 5px;
+    font-weight: 900;
 }
 
-footer strong{
-    color:#ff2020;
+footer span {
+    color: #ff1717;
 }
 
 /* MOBILE */
-
-@media(max-width:700px){
-
-    nav{
-        padding:12px 15px;
+@media(max-width: 650px) {
+    nav {
+        width: calc(100% - 20px);
+        padding: 12px 15px;
     }
 
-    nav a{
-        margin-left:9px;
-        font-size:10px;
+    nav a {
+        margin-left: 10px;
+        font-size: 10px;
     }
 
-    .logo{
-        font-size:18px;
+    .logo {
+        font-size: 18px;
     }
 
-    .hero h1{
-        letter-spacing:7px;
+    .hero h1 {
+        letter-spacing: -4px;
     }
 
-    .section-title{
-        font-size:35px;
+    .join-box {
+        padding: 20px;
     }
 
-    .join-box{
-        padding:20px;
+    .actions {
+        flex-direction: column;
     }
-
 }
-
 </style>
 </head>
 
 <body>
 
-<div id="particles"></div>
+<div class="bg" id="background"></div>
 
 <nav>
-
-    <div class="logo">
-        RÆVEN
-    </div>
+    <div class="logo">R<span>Æ</span>VEN</div>
 
     <div>
-
-        <a href="#home">
-            HOME
-        </a>
-
-        <a href="#members">
-            MEMBERS
-        </a>
-
-        <a href="#join">
-            JOIN
-        </a>
-
-        <a href="#staff">
-            STAFF
-        </a>
-
+        <a href="#home">HOME</a>
+        <a href="#members">MEMBERS</a>
+        <a href="#join">JOIN</a>
+        <a href="#staff">STAFF</a>
     </div>
-
 </nav>
 
-
 <!-- HOME -->
-
-<section
-    class="hero"
-    id="home"
->
-
+<div class="hero" id="home">
     <div class="hero-content">
+        <h1>R<span>Æ</span>VEN</h1>
+        <p>CS2 CLAN • NO MERCY</p>
 
-        <div class="tag">
-            CS2 CLAN
-        </div>
-
-        <h1>
-            RÆVEN
-        </h1>
-
-        <p>
-            PLAY HARD. AIM HARDER.
-        </p>
-
-        <a
-            href="#join"
-            class="btn"
-        >
-            JOIN RÆVEN
-        </a>
-
+        <a class="btn" href="#join">JOIN RÆVEN</a>
     </div>
-
-</section>
-
+</div>
 
 <!-- MEMBERS -->
-
 <section id="members">
 
-    <div class="container">
+    <div class="section-title">
+        <h2>OUR <span>MEMBERS</span></h2>
+        <p>Meet the RÆVEN squad.</p>
+    </div>
 
-        <h2 class="section-title">
-            RÆVEN
-            <span>MEMBERS</span>
-        </h2>
-
-        <div
-            class="members"
-            id="membersList"
-        ></div>
-
-        <div
-            class="status"
-            id="membersStatus"
-        ></div>
-
+    <div class="members" id="membersList">
+        <p style="color:#777;text-align:center;">Loading members...</p>
     </div>
 
 </section>
 
-
 <!-- JOIN -->
-
 <section id="join">
 
-    <div class="container">
+    <div class="section-title">
+        <h2>JOIN <span>RÆVEN</span></h2>
+        <p>Think you have what it takes?</p>
+    </div>
 
-        <h2 class="section-title">
-            JOIN
-            <span>RÆVEN</span>
-        </h2>
+    <div class="join-box">
 
-        <div class="join-box">
+        <form id="joinForm">
 
-            <form id="joinForm">
-
+            <div class="input">
                 <input
+                    type="text"
                     id="nick"
-                    type="text"
                     placeholder="CS2 Nickname"
-                    maxlength="32"
                     required
                 >
+            </div>
 
+            <div class="input">
                 <input
-                    id="discord"
                     type="text"
+                    id="discord"
                     placeholder="Discord"
-                    maxlength="100"
                     required
                 >
+            </div>
 
+            <div class="input">
                 <input
-                    id="clip"
                     type="url"
+                    id="clip"
                     placeholder="Clip URL"
                     required
                 >
+            </div>
 
+            <div class="input">
                 <textarea
                     id="about"
                     placeholder="Tell us about yourself..."
-                    maxlength="1000"
                     required
                 ></textarea>
+            </div>
 
-                <button
-                    class="btn"
-                    type="submit"
-                    id="sendButton"
-                >
-                    SEND APPLICATION
-                </button>
-
-            </form>
-
-            <div
-                class="status"
-                id="joinStatus"
-            ></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- STAFF -->
-
-<section id="staff">
-
-    <div class="container">
-
-        <h2 class="section-title">
-            RÆVEN
-            <span>STAFF</span>
-        </h2>
-
-
-        <div
-            class="staff-login"
-            id="staffLogin"
-        >
-
-            <input
-                id="staffPassword"
-                type="password"
-                placeholder="Staff Password"
-            >
-
-            <button
-                class="btn"
-                onclick="loginStaff()"
-            >
-                LOGIN
+            <button class="btn" type="submit">
+                SEND APPLICATION
             </button>
 
-            <div
-                class="status"
-                id="loginStatus"
-            ></div>
+        </form>
+
+        <p id="joinStatus"
+           style="text-align:center;margin-top:15px;color:#777;">
+        </p>
+
+    </div>
+
+</section>
+
+<!-- STAFF -->
+<section id="staff">
+
+    <div class="section-title">
+        <h2><span>STAFF</span> PANEL</h2>
+        <p>RÆVEN administration.</p>
+    </div>
+
+    <div class="staff-login" id="staffLogin">
+
+        <input
+            type="password"
+            id="staffPassword"
+            placeholder="Staff password"
+        >
+
+        <button class="btn" onclick="loginStaff()">
+            LOGIN
+        </button>
+
+        <p id="loginStatus"
+           style="margin-top:12px;color:#777;">
+        </p>
+
+    </div>
+
+    <div class="staff-panel" id="staffPanel">
+
+        <div class="panel-box">
+
+            <h3>APPLICATIONS</h3>
+
+            <div id="applicationsList">
+                Loading...
+            </div>
 
         </div>
 
+        <div class="panel-box">
 
-        <div
-            class="staff-panel"
-            id="staffPanel"
-        >
+            <h3>MEMBERS</h3>
 
-            <div class="panel-box">
-
-                <h2>
-                    APPLICATIONS
-                </h2>
-
-                <br>
-
-                <div
-                    id="applicationsList"
-                ></div>
-
-            </div>
-
-
-            <div class="panel-box">
-
-                <h2>
-                    CLAN MEMBERS
-                </h2>
-
-                <br>
-
-                <div
-                    id="clanMembersList"
-                ></div>
-
+            <div id="staffMembersList">
+                Loading...
             </div>
 
         </div>
@@ -773,33 +614,24 @@ footer strong{
 
 </section>
 
-
 <footer>
-
-    <strong>
-        RÆVEN ON TOP
-    </strong>
-
-    <br>
-    <br>
-
-    CS2 CLAN
-
+    <span>RÆVEN</span> ON TOP
 </footer>
-
 
 <script>
 
-/* ==================================================
-   SUPABASE CONFIG
-================================================== */
+/* =========================================================
+   SUPABASE
+   ========================================================= */
 
 const SUPABASE_URL =
-    "SEM_PROJECT_URL";
+    "https://mrctqcrcbmbsamfevmii.supabase.co";
 
+/*
+   SEM VLOŽ SVŮJ SUPABASE PUBLISHABLE KEY
+*/
 const SUPABASE_KEY =
-    "SEM_PUBLISHABLE_KEY";
-
+    "SEM_VLOZ_SVŮJ_PUBLISHABLE_KEY";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -808,993 +640,724 @@ const supabaseClient =
     );
 
 
-/* ==================================================
-   STAFF PASSWORD
-================================================== */
-
-const STAFF_PASSWORD =
-    "raven123";
-
-
-/* ==================================================
+/* =========================================================
    BACKGROUND DOTS
-================================================== */
+   ========================================================= */
 
-const particles =
-    document.getElementById(
-        "particles"
-    );
+const background =
+    document.getElementById("background");
 
+for (let i = 0; i < 70; i++) {
 
-for(let i = 0; i < 90; i++){
+    const dot = document.createElement("div");
 
-    const dot =
-        document.createElement("div");
-
-    dot.className =
-        "dot";
+    dot.className = "dot";
 
     dot.style.left =
         Math.random() * 100 + "%";
 
-    dot.style.animationDelay =
-        Math.random() * 8 + "s";
-
     dot.style.animationDuration =
-        (5 + Math.random() * 8) + "s";
+        (5 + Math.random() * 12) + "s";
 
-    const size =
-        2 + Math.random() * 4;
+    dot.style.animationDelay =
+        Math.random() * 10 + "s";
 
-    dot.style.width =
-        size + "px";
+    dot.style.opacity =
+        0.2 + Math.random() * 0.6;
 
-    dot.style.height =
-        size + "px";
-
-    particles.appendChild(dot);
-
+    background.appendChild(dot);
 }
 
 
-/* ==================================================
-   ESCAPE HTML
-================================================== */
+/* =========================================================
+   MEMBER EMOJI
+   ========================================================= */
 
-function escapeHTML(text){
+function getEmoji(member) {
 
-    return String(text)
+    if (member.name.toUpperCase() === "MONARCH") {
+        return "👑";
+    }
 
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
+    if (
+        member.name.toUpperCase() === "RENOX" ||
+        member.name.toUpperCase() === "KASPIKK"
+    ) {
+        return "🗿";
+    }
 
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
-
+    return "💀";
 }
 
 
-/* ==================================================
-   MEMBERS
-================================================== */
+/* =========================================================
+   LOAD MEMBERS
+   ========================================================= */
 
-async function loadMembers(){
+async function loadMembers() {
 
     const list =
-        document.getElementById(
-            "membersList"
-        );
-
-    const status =
-        document.getElementById(
-            "membersStatus"
-        );
-
+        document.getElementById("membersList");
 
     const {
         data,
         error
     } = await supabaseClient
-
         .from("members")
-
         .select("*")
+        .order("id", {
+            ascending: true
+        });
 
-        .order(
-            "id",
-            {
-                ascending:true
-            }
-        );
-
-
-    if(error){
+    if (error) {
 
         console.error(error);
 
-        status.textContent =
-            "DATABASE ERROR: " +
-            error.message;
+        list.innerHTML =
+            `<p style="color:#ff3333;text-align:center;">
+                Failed to load members.
+            </p>`;
 
         return;
-
     }
 
+    if (!data || data.length === 0) {
+
+        list.innerHTML =
+            `<p style="color:#777;text-align:center;">
+                No members yet.
+            </p>`;
+
+        return;
+    }
 
     list.innerHTML = "";
-
 
     data.forEach(member => {
 
         const card =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-        card.className =
-            "member";
+        card.className = "member-card";
 
+        const emoji =
+            member.emoji || getEmoji(member);
 
         card.innerHTML = `
-
             <div class="member-emoji">
-
-                ${escapeHTML(
-                    member.emoji
-                )}
-
+                ${emoji}
             </div>
 
             <div class="member-name">
-
-                ${escapeHTML(
-                    member.name
-                )}
-
+                ${escapeHTML(member.name)}
             </div>
 
             <div class="member-role">
-
-                ${escapeHTML(
-                    member.role
-                )}
-
+                ${escapeHTML(member.role)}
             </div>
-
         `;
 
+        if (member.instagram) {
 
-        if(member.instagram){
-
-            card.onclick = () => {
-
-                window.open(
-                    member.instagram,
-                    "_blank",
-                    "noopener,noreferrer"
-                );
-
-            };
+            card.addEventListener(
+                "click",
+                () => {
+                    window.open(
+                        member.instagram,
+                        "_blank"
+                    );
+                }
+            );
 
         }
-
 
         list.appendChild(card);
 
     });
 
-
-    status.textContent =
-        data.length +
-        " RÆVEN members";
-
+    loadStaffMembers();
 }
 
 
-/* ==================================================
+/* =========================================================
    JOIN APPLICATION
-================================================== */
+   ========================================================= */
 
-document
-.getElementById("joinForm")
-.addEventListener(
+const joinForm =
+    document.getElementById("joinForm");
+
+joinForm.addEventListener(
     "submit",
-    async function(e){
+    async function(event) {
 
-        e.preventDefault();
-
-
-        const nick =
-            document
-            .getElementById("nick")
-            .value
-            .trim();
-
-
-        const discord =
-            document
-            .getElementById("discord")
-            .value
-            .trim();
-
-
-        const clip =
-            document
-            .getElementById("clip")
-            .value
-            .trim();
-
-
-        const about =
-            document
-            .getElementById("about")
-            .value
-            .trim();
-
+        event.preventDefault();
 
         const status =
-            document
-            .getElementById("joinStatus");
+            document.getElementById("joinStatus");
 
+        const nick =
+            document.getElementById("nick").value.trim();
 
-        const button =
-            document
-            .getElementById("sendButton");
+        const discord =
+            document.getElementById("discord").value.trim();
 
+        const clip =
+            document.getElementById("clip").value.trim();
 
-        button.disabled = true;
+        const about =
+            document.getElementById("about").value.trim();
 
-        button.textContent =
-            "SENDING...";
+        if (!nick || !discord || !clip || !about) {
 
+            status.style.color = "#ff3333";
+            status.textContent =
+                "Fill in everything.";
+
+            return;
+        }
+
+        status.style.color = "#aaa";
+        status.textContent =
+            "Sending application...";
 
         const {
             error
         } = await supabaseClient
-
             .from("applications")
-
             .insert({
-
-                nick:nick,
-
-                discord:discord,
-
-                clip:clip,
-
-                about:about
-
+                nick: nick,
+                discord: discord,
+                clip: clip,
+                about: about
             });
 
-
-        if(error){
+        if (error) {
 
             console.error(error);
 
+            status.style.color = "#ff3333";
             status.textContent =
-                "ERROR: " +
-                error.message;
-
-            button.disabled = false;
-
-            button.textContent =
-                "SEND APPLICATION";
+                "Something went wrong.";
 
             return;
-
         }
 
-
+        status.style.color = "#36ff75";
         status.textContent =
-            "APPLICATION SENT! 🔥";
+            "Application sent successfully!";
 
+        joinForm.reset();
 
-        document
-        .getElementById("joinForm")
-        .reset();
-
-
-        button.disabled = false;
-
-        button.textContent =
-            "SEND APPLICATION";
+        loadApplications();
 
     }
 );
 
 
-/* ==================================================
+/* =========================================================
    STAFF LOGIN
-================================================== */
+   ========================================================= */
 
-function loginStaff(){
+const STAFF_PASSWORD =
+    "raven123";
+
+function loginStaff() {
 
     const password =
-        document
-        .getElementById(
-            "staffPassword"
-        )
-        .value;
+        document.getElementById("staffPassword").value;
 
+    const status =
+        document.getElementById("loginStatus");
 
-    if(password !== STAFF_PASSWORD){
+    if (password === STAFF_PASSWORD) {
 
-        document
-        .getElementById(
-            "loginStatus"
-        )
-        .textContent =
-            "WRONG PASSWORD 💀";
+        document.getElementById("staffLogin")
+            .style.display = "none";
 
-        return;
+        document.getElementById("staffPanel")
+            .style.display = "block";
+
+        loadApplications();
+        loadStaffMembers();
+
+    } else {
+
+        status.style.color = "#ff3333";
+        status.textContent =
+            "Wrong password.";
 
     }
-
-
-    document
-    .getElementById(
-        "staffLogin"
-    )
-    .style.display =
-        "none";
-
-
-    document
-    .getElementById(
-        "staffPanel"
-    )
-    .style.display =
-        "block";
-
-
-    loadApplications();
-
-    loadStaffMembers();
-
 }
 
 
-/* ==================================================
-   APPLICATIONS
-================================================== */
+/* =========================================================
+   LOAD APPLICATIONS
+   ========================================================= */
 
-async function loadApplications(){
+async function loadApplications() {
 
-    const box =
-        document.getElementById(
-            "applicationsList"
-        );
+    const list =
+        document.getElementById("applicationsList");
 
+    if (!list) return;
 
     const {
         data,
         error
     } = await supabaseClient
-
         .from("applications")
-
         .select("*")
+        .order("created_at", {
+            ascending: false
+        });
 
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+    if (error) {
 
+        console.error(error);
 
-    if(error){
-
-        box.innerHTML =
-            `<p style="color:red">
-                ${escapeHTML(
-                    error.message
-                )}
+        list.innerHTML =
+            `<p style="color:#ff3333;">
+                Failed to load applications.
             </p>`;
 
         return;
-
     }
 
+    if (!data || data.length === 0) {
 
-    box.innerHTML = "";
-
-
-    if(data.length === 0){
-
-        box.innerHTML =
-            `<p style="color:#777">
+        list.innerHTML =
+            `<p style="color:#777;">
                 No applications.
             </p>`;
 
         return;
-
     }
 
+    list.innerHTML = "";
 
     data.forEach(app => {
 
-        const item =
-            document.createElement(
-                "div"
-            );
+        const box =
+            document.createElement("div");
 
-        item.className =
-            "application";
+        box.className = "application";
 
+        box.innerHTML = `
 
-        const date =
-            new Date(
-                app.created_at
-            ).toLocaleString(
-                "cs-CZ"
-            );
-
-
-        item.innerHTML = `
-
-            <h3>
-                ${escapeHTML(
-                    app.nick
-                )}
-            </h3>
+            <strong>
+                ${escapeHTML(app.nick)}
+            </strong>
 
             <p>
-                <b>Discord:</b>
-                ${escapeHTML(
-                    app.discord
-                )}
+                Discord:
+                ${escapeHTML(app.discord)}
             </p>
 
             <p>
-                <b>Clip:</b>
+                About:
+                ${escapeHTML(app.about)}
+            </p>
 
+            <p>
+                Clip:
                 <a
-                    href="${escapeHTML(
-                        app.clip
-                    )}"
+                    href="${safeURL(app.clip)}"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    OPEN CLIP
+                    Open Clip
                 </a>
             </p>
 
-            <p>
-                <b>About:</b>
-                ${escapeHTML(
-                    app.about
-                )}
-            </p>
+            <div class="actions">
 
-            <p style="
-                font-size:12px;
-                color:#555;
-            ">
-                ${escapeHTML(
-                    date
-                )}
-            </p>
+                <button
+                    class="accept"
+                    onclick="acceptApplication(${app.id})"
+                >
+                    ACCEPT
+                </button>
 
-            <button
-                class="small-btn accept"
-                onclick="acceptApplication(${app.id})"
-            >
-                ACCEPT
-            </button>
+                <button
+                    class="reject"
+                    onclick="rejectApplication(${app.id})"
+                >
+                    REJECT
+                </button>
 
-            <button
-                class="small-btn reject"
-                onclick="rejectApplication(${app.id})"
-            >
-                REJECT
-            </button>
-
+            </div>
         `;
 
-
-        box.appendChild(item);
+        list.appendChild(box);
 
     });
-
 }
 
 
-/* ==================================================
+/* =========================================================
    ACCEPT APPLICATION
-================================================== */
+   ========================================================= */
 
-async function acceptApplication(id){
+async function acceptApplication(id) {
 
     const {
-        data:app,
-        error
+        data: application,
+        error: getError
     } = await supabaseClient
-
         .from("applications")
-
         .select("*")
-
-        .eq(
-            "id",
-            id
-        )
-
+        .eq("id", id)
         .single();
 
+    if (getError || !application) {
 
-    if(error || !app){
+        alert("Application not found.");
 
-        alert(
-            "Application nenalezena."
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            `Accept ${application.nick} into RÆVEN?`
         );
 
-        return;
-
-    }
-
-
-    if(
-        !confirm(
-            "Přijmout " +
-            app.nick +
-            " do RÆVEN?"
-        )
-    ){
-
-        return;
-
-    }
-
+    if (!confirmed) return;
 
     const {
-        data:existing
+        error: memberError
     } = await supabaseClient
-
         .from("members")
+        .insert({
+            name: application.nick,
+            role: "MEMBER",
+            emoji: "💀",
+            protected: false,
+            instagram: ""
+        });
 
-        .select("id")
+    if (memberError) {
 
-        .ilike(
-            "name",
-            app.nick
-        );
+        console.error(memberError);
 
-
-    if(!existing || existing.length === 0){
-
-        const {
-            error:insertError
-        } = await supabaseClient
-
-            .from("members")
-
-            .insert({
-
-                name:app.nick,
-
-                role:"MEMBER",
-
-                emoji:"💀",
-
-                protected:false,
-
-                instagram:""
-
-            });
-
-
-        if(insertError){
-
+        if (
+            memberError.code === "23505"
+        ) {
             alert(
-                "Nelze přidat člena: " +
-                insertError.message
+                "This member already exists."
             );
-
-            return;
-
+        } else {
+            alert(
+                "Could not add member."
+            );
         }
 
+        return;
     }
 
-
     const {
-        error:deleteError
+        error: deleteError
     } = await supabaseClient
-
         .from("applications")
-
         .delete()
+        .eq("id", id);
 
-        .eq(
-            "id",
-            id
-        );
+    if (deleteError) {
 
-
-    if(deleteError){
+        console.error(deleteError);
 
         alert(
-            "Application se nepodařilo odstranit."
+            "Member added, but application could not be deleted."
         );
 
         return;
-
     }
 
-
     alert(
-        app.nick +
-        " je nyní člen RÆVEN! 🔥"
+        `${application.nick} is now a RÆVEN member!`
     );
 
-
-    await loadMembers();
-
-    await loadApplications();
-
-    await loadStaffMembers();
-
+    await refreshEverything();
 }
 
 
-/* ==================================================
-   REJECT
-================================================== */
+/* =========================================================
+   REJECT APPLICATION
+   ========================================================= */
 
-async function rejectApplication(id){
+async function rejectApplication(id) {
 
-    if(
-        !confirm(
-            "Odmítnout tuto application?"
-        )
-    ){
+    const confirmed =
+        confirm(
+            "Reject this application?"
+        );
 
-        return;
-
-    }
-
+    if (!confirmed) return;
 
     const {
         error
     } = await supabaseClient
-
         .from("applications")
-
         .delete()
+        .eq("id", id);
 
-        .eq(
-            "id",
-            id
-        );
+    if (error) {
 
-
-    if(error){
+        console.error(error);
 
         alert(
-            "ERROR: " +
-            error.message
+            "Could not reject application."
         );
 
         return;
-
     }
 
-
-    await loadApplications();
-
+    await refreshEverything();
 }
 
 
-/* ==================================================
-   STAFF MEMBERS
-================================================== */
+/* =========================================================
+   LOAD STAFF MEMBERS
+   ========================================================= */
 
-async function loadStaffMembers(){
+async function loadStaffMembers() {
 
-    const box =
+    const list =
         document.getElementById(
-            "clanMembersList"
+            "staffMembersList"
         );
 
+    if (!list) return;
 
     const {
         data,
         error
     } = await supabaseClient
-
         .from("members")
-
         .select("*")
+        .order("id", {
+            ascending: true
+        });
 
-        .order(
-            "id",
-            {
-                ascending:true
-            }
-        );
+    if (error) {
 
+        console.error(error);
 
-    if(error){
-
-        box.innerHTML =
-            `<p style="color:red">
-                ${escapeHTML(
-                    error.message
-                )}
+        list.innerHTML =
+            `<p style="color:#ff3333;">
+                Failed to load members.
             </p>`;
 
         return;
-
     }
 
+    if (!data || data.length === 0) {
 
-    box.innerHTML = "";
+        list.innerHTML =
+            `<p style="color:#777;">
+                No members.
+            </p>`;
 
+        return;
+    }
+
+    list.innerHTML = "";
 
     data.forEach(member => {
 
-        const item =
-            document.createElement(
-                "div"
-            );
+        const row =
+            document.createElement("div");
 
-        item.className =
-            "staff-member";
+        row.className = "staff-member";
 
+        const left =
+            document.createElement("div");
 
-        if(member.protected){
+        left.innerHTML = `
+            <span class="staff-member-name">
+                ${member.emoji || getEmoji(member)}
+                ${escapeHTML(member.name)}
+            </span>
 
-            item.innerHTML = `
+            <span class="staff-member-role">
+                ${escapeHTML(member.role)}
+            </span>
+        `;
 
-                <h3>
-                    ${escapeHTML(
-                        member.emoji
-                    )}
+        row.appendChild(left);
 
-                    ${escapeHTML(
-                        member.name
-                    )}
-                </h3>
+        if (!member.protected) {
 
-                <p style="
-                    color:#ff3030;
-                ">
-                    ${escapeHTML(
-                        member.role
-                    )}
-                </p>
+            const kick =
+                document.createElement("button");
 
-                <p style="
-                    color:#777;
-                    margin-top:8px;
-                ">
-                    OWNER — PROTECTED 👑
-                </p>
+            kick.className = "kick";
 
-            `;
+            kick.textContent = "KICK";
 
-        }else{
+            kick.onclick = () =>
+                kickMember(
+                    member.id,
+                    member.name
+                );
 
-            item.innerHTML = `
+            row.appendChild(kick);
 
-                <h3>
-                    ${escapeHTML(
-                        member.emoji
-                    )}
+        } else {
 
-                    ${escapeHTML(
-                        member.name
-                    )}
-                </h3>
+            const protectedText =
+                document.createElement("span");
 
-                <p style="
-                    color:#ff3030;
-                ">
-                    ${escapeHTML(
-                        member.role
-                    )}
-                </p>
+            protectedText.style.color =
+                "#777";
 
-                <button
-                    class="small-btn kick"
-                    onclick="kickMember(${member.id})"
-                >
-                    KICK
-                </button>
+            protectedText.style.fontSize =
+                "11px";
 
-            `;
+            protectedText.textContent =
+                "PROTECTED";
 
+            row.appendChild(protectedText);
         }
 
-
-        box.appendChild(item);
+        list.appendChild(row);
 
     });
-
 }
 
 
-/* ==================================================
-   KICK
-================================================== */
+/* =========================================================
+   KICK MEMBER
+   ========================================================= */
 
-async function kickMember(id){
+async function kickMember(id, name) {
 
-    const {
-        data:member,
-        error:findError
-    } = await supabaseClient
-
-        .from("members")
-
-        .select("*")
-
-        .eq(
-            "id",
-            id
-        )
-
-        .single();
-
-
-    if(findError || !member){
-
+    if (
+        name.toUpperCase() === "MONARCH"
+    ) {
         alert(
-            "Member nenalezen."
+            "MONARCH is protected and cannot be kicked."
         );
 
         return;
-
     }
 
-
-    if(member.protected){
-
-        alert(
-            "MONARCH NELZE VYHODIT 👑"
+    const confirmed =
+        confirm(
+            `Kick ${name} from RÆVEN?`
         );
 
-        return;
-
-    }
-
-
-    if(
-        !confirm(
-            "Vyhodit " +
-            member.name +
-            " z RÆVEN?"
-        )
-    ){
-
-        return;
-
-    }
-
+    if (!confirmed) return;
 
     const {
         error
     } = await supabaseClient
-
         .from("members")
-
         .delete()
+        .eq("id", id);
 
-        .eq(
-            "id",
-            id
-        );
+    if (error) {
 
-
-    if(error){
+        console.error(error);
 
         alert(
-            "ERROR: " +
-            error.message
+            "Could not kick member."
         );
 
         return;
-
     }
 
+    await refreshEverything();
+}
+
+
+/* =========================================================
+   REFRESH EVERYTHING
+   ========================================================= */
+
+async function refreshEverything() {
 
     await loadMembers();
-
+    await loadApplications();
     await loadStaffMembers();
 
 }
 
 
-/* ==================================================
+/* =========================================================
    REALTIME
-================================================== */
+   ========================================================= */
 
 supabaseClient
+    .channel("raven-members")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "members"
+        },
+        () => {
+            loadMembers();
+            loadStaffMembers();
+        }
+    )
+    .subscribe();
 
-.channel("raven-live")
 
-.on(
-    "postgres_changes",
-    {
-        event:"*",
-        schema:"public",
-        table:"members"
-    },
-    async () => {
+supabaseClient
+    .channel("raven-applications")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "applications"
+        },
+        () => {
+            loadApplications();
+        }
+    )
+    .subscribe();
 
-        await loadMembers();
 
-        const panel =
-            document
-            .getElementById(
-                "staffPanel"
-            );
+/* =========================================================
+   SECURITY / HTML HELPERS
+   ========================================================= */
 
-        if(
-            panel.style.display ===
-            "block"
-        ){
+function escapeHTML(value) {
 
-            await loadStaffMembers();
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
+
+function safeURL(value) {
+
+    try {
+
+        const url =
+            new URL(value);
+
+        if (
+            url.protocol === "http:" ||
+            url.protocol === "https:"
+        ) {
+            return url.href;
         }
 
-    }
-)
+    } catch (e) {}
 
-.on(
-    "postgres_changes",
-    {
-        event:"*",
-        schema:"public",
-        table:"applications"
-    },
-    async () => {
-
-        const panel =
-            document
-            .getElementById(
-                "staffPanel"
-            );
-
-        if(
-            panel.style.display ===
-            "block"
-        ){
-
-            await loadApplications();
-
-        }
-
-    }
-)
-
-.subscribe();
+    return "#";
+}
 
 
-/* ==================================================
+/* =========================================================
    START
-================================================== */
+   ========================================================= */
 
 loadMembers();
 
