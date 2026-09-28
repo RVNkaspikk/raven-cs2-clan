@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAVEN — CS2 CLAN</title>
+
+<title>RÆVEN — CS2 CLAN</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -24,6 +28,7 @@ body{
 }
 
 /* BACKGROUND */
+
 #particles{
     position:fixed;
     inset:0;
@@ -31,13 +36,16 @@ body{
     height:100%;
     z-index:-2;
     background:
-        radial-gradient(circle at 50% 20%,#220000 0%,#090000 30%,#050505 70%);
+    radial-gradient(
+        circle at 50% 20%,
+        #260000 0%,
+        #090000 32%,
+        #050505 75%
+    );
 }
 
 .dot{
     position:absolute;
-    width:4px;
-    height:4px;
     background:white;
     border-radius:50%;
     opacity:.7;
@@ -45,41 +53,61 @@ body{
 }
 
 @keyframes float{
+
     0%{
-        transform:translateY(100vh);
+        transform:translateY(105vh);
         opacity:0;
     }
-    15%{opacity:.8;}
-    85%{opacity:.8;}
+
+    15%{
+        opacity:.8;
+    }
+
+    85%{
+        opacity:.8;
+    }
+
     100%{
         transform:translateY(-10vh);
         opacity:0;
     }
+
 }
 
 /* NAV */
+
 nav{
     position:fixed;
     top:15px;
     left:50%;
     transform:translateX(-50%);
+
     width:92%;
     max-width:1100px;
+
     padding:15px 25px;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background:rgba(20,20,20,.72);
+
+    background:rgba(20,20,20,.75);
+
     border:1px solid rgba(255,255,255,.1);
+
     border-radius:18px;
+
     backdrop-filter:blur(15px);
+
     z-index:1000;
-    box-shadow:0 0 30px rgba(255,0,0,.12);
+
+    box-shadow:
+    0 0 30px rgba(255,0,0,.12);
 }
 
 .logo{
     font-size:25px;
-    font-weight:900;
+    font-weight:1000;
     letter-spacing:4px;
     color:#ff2020;
 }
@@ -98,63 +126,89 @@ nav a:hover{
 }
 
 /* HERO */
+
 .hero{
     min-height:100vh;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     text-align:center;
+
     padding:120px 20px 60px;
 }
 
 .hero-content{
-    max-width:900px;
+    max-width:950px;
 }
 
 .tag{
     color:#ff2929;
     font-weight:bold;
     letter-spacing:5px;
-    margin-bottom:15px;
+    margin-bottom:20px;
 }
 
 .hero h1{
     font-size:clamp(75px,17vw,190px);
     line-height:.8;
-    letter-spacing:15px;
+
+    letter-spacing:14px;
+
     font-weight:1000;
+
     text-shadow:
-        0 0 15px rgba(255,0,0,.8),
-        0 0 50px rgba(255,0,0,.35);
+    0 0 15px rgba(255,0,0,.8),
+    0 0 50px rgba(255,0,0,.35);
 }
 
 .hero p{
     margin:30px 0;
+
     color:#aaa;
+
     letter-spacing:3px;
 }
 
 .btn{
     display:inline-block;
+
     padding:15px 32px;
+
     background:#e50909;
+
     color:white;
+
     text-decoration:none;
+
     border-radius:10px;
+
     font-weight:900;
+
     border:1px solid #ff3b3b;
-    box-shadow:0 0 25px rgba(255,0,0,.35);
+
+    box-shadow:
+    0 0 25px rgba(255,0,0,.35);
+
     transition:.25s;
+
     cursor:pointer;
 }
 
 .btn:hover{
-    transform:translateY(-3px) scale(1.03);
+    transform:
+    translateY(-3px)
+    scale(1.03);
+
     background:#ff2020;
-    box-shadow:0 0 40px rgba(255,0,0,.6);
+
+    box-shadow:
+    0 0 40px rgba(255,0,0,.6);
 }
 
 /* SECTIONS */
+
 section{
     padding:100px 20px;
 }
@@ -166,8 +220,11 @@ section{
 
 .section-title{
     text-align:center;
+
     font-size:45px;
+
     margin-bottom:55px;
+
     letter-spacing:4px;
 }
 
@@ -176,89 +233,143 @@ section{
 }
 
 /* MEMBERS */
+
 .members{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
     gap:25px;
 }
 
 .member{
     position:relative;
+
     padding:35px 20px;
+
     text-align:center;
-    background:rgba(20,20,20,.72);
-    border:1px solid rgba(255,255,255,.09);
+
+    background:
+    rgba(20,20,20,.72);
+
+    border:
+    1px solid rgba(255,255,255,.09);
+
     border-radius:20px;
+
     backdrop-filter:blur(12px);
+
     transition:.3s;
+
     cursor:pointer;
+
     overflow:hidden;
 }
 
 .member:hover{
     transform:translateY(-8px);
+
     border-color:#ff2020;
-    box-shadow:0 15px 45px rgba(255,0,0,.18);
+
+    box-shadow:
+    0 15px 45px
+    rgba(255,0,0,.18);
 }
 
 .member::before{
     content:"";
+
     position:absolute;
+
     top:0;
     left:0;
     right:0;
+
     height:2px;
+
     background:#ff2020;
-    box-shadow:0 0 20px #ff2020;
+
+    box-shadow:
+    0 0 20px #ff2020;
 }
 
 .member-emoji{
-    font-size:40px;
+    font-size:42px;
     margin-bottom:10px;
 }
 
 .member-name{
     font-size:25px;
+
     font-weight:900;
+
     letter-spacing:2px;
 }
 
 .member-role{
     margin-top:8px;
+
     color:#ff2929;
+
     font-size:12px;
+
     font-weight:bold;
+
     letter-spacing:3px;
 }
 
 /* JOIN */
+
 .join-box{
     max-width:650px;
+
     margin:auto;
+
     padding:35px;
-    background:rgba(15,15,15,.82);
-    border:1px solid rgba(255,255,255,.1);
+
+    background:
+    rgba(15,15,15,.82);
+
+    border:
+    1px solid rgba(255,255,255,.1);
+
     border-radius:22px;
+
     backdrop-filter:blur(15px);
 }
 
 input,
 textarea{
+
     width:100%;
+
     margin-bottom:15px;
+
     padding:15px;
+
     border-radius:10px;
-    border:1px solid #292929;
+
+    border:
+    1px solid #292929;
+
     background:#090909;
+
     color:white;
+
     outline:none;
+
     font-size:15px;
 }
 
 input:focus,
 textarea:focus{
+
     border-color:#ff2020;
-    box-shadow:0 0 15px rgba(255,0,0,.15);
+
+    box-shadow:
+    0 0 15px
+    rgba(255,0,0,.15);
 }
 
 textarea{
@@ -267,6 +378,7 @@ textarea{
 }
 
 /* STAFF */
+
 .staff-login{
     max-width:450px;
     margin:auto;
@@ -275,24 +387,39 @@ textarea{
 
 .staff-panel{
     display:none;
+
     max-width:1000px;
+
     margin:30px auto 0;
 }
 
 .panel-box{
-    background:rgba(15,15,15,.88);
-    border:1px solid rgba(255,255,255,.1);
+
+    background:
+    rgba(15,15,15,.88);
+
+    border:
+    1px solid rgba(255,255,255,.1);
+
     border-radius:20px;
+
     padding:25px;
+
     margin-bottom:25px;
 }
 
 .application,
 .staff-member{
+
     background:#0b0b0b;
-    border:1px solid #222;
+
+    border:
+    1px solid #222;
+
     border-radius:14px;
+
     padding:18px;
+
     margin-bottom:15px;
 }
 
@@ -303,18 +430,32 @@ textarea{
 
 .application p{
     color:#aaa;
-    margin:5px 0;
+
+    margin:6px 0;
+
     word-break:break-word;
 }
 
+.application a{
+    color:#ff3030;
+}
+
 .small-btn{
+
     border:0;
+
     padding:10px 15px;
+
     border-radius:8px;
+
     cursor:pointer;
+
     color:white;
+
     font-weight:bold;
-    margin:10px 8px 0 0;
+
+    margin:
+    10px 8px 0 0;
 }
 
 .accept{
@@ -333,12 +474,28 @@ textarea{
     filter:brightness(1.25);
 }
 
-/* FOOTER */
-footer{
-    padding:50px 20px;
+.status{
     text-align:center;
+
+    margin-top:15px;
+
     color:#777;
-    border-top:1px solid #171717;
+
+    font-size:13px;
+}
+
+/* FOOTER */
+
+footer{
+
+    padding:50px 20px;
+
+    text-align:center;
+
+    color:#777;
+
+    border-top:
+    1px solid #171717;
 }
 
 footer strong{
@@ -346,14 +503,16 @@ footer strong{
 }
 
 /* MOBILE */
+
 @media(max-width:700px){
+
     nav{
         padding:12px 15px;
     }
 
     nav a{
         margin-left:9px;
-        font-size:11px;
+        font-size:10px;
     }
 
     .logo{
@@ -371,7 +530,9 @@ footer strong{
     .join-box{
         padding:20px;
     }
+
 }
+
 </style>
 </head>
 
@@ -380,48 +541,102 @@ footer strong{
 <div id="particles"></div>
 
 <nav>
-    <div class="logo">RAVEN</div>
+
+    <div class="logo">
+        RÆVEN
+    </div>
 
     <div>
-        <a href="#home">HOME</a>
-        <a href="#members">MEMBERS</a>
-        <a href="#join">JOIN</a>
-        <a href="#staff">STAFF</a>
+
+        <a href="#home">
+            HOME
+        </a>
+
+        <a href="#members">
+            MEMBERS
+        </a>
+
+        <a href="#join">
+            JOIN
+        </a>
+
+        <a href="#staff">
+            STAFF
+        </a>
+
     </div>
+
 </nav>
 
+
 <!-- HOME -->
-<section class="hero" id="home">
+
+<section
+    class="hero"
+    id="home"
+>
+
     <div class="hero-content">
-        <div class="tag">CS2 CLAN</div>
 
-        <h1>RAVEN</h1>
+        <div class="tag">
+            CS2 CLAN
+        </div>
 
-        <p>PLAY HARD. AIM HARDER.</p>
+        <h1>
+            RÆVEN
+        </h1>
 
-        <a href="#join" class="btn">JOIN RAVEN</a>
+        <p>
+            PLAY HARD. AIM HARDER.
+        </p>
+
+        <a
+            href="#join"
+            class="btn"
+        >
+            JOIN RÆVEN
+        </a>
+
     </div>
+
 </section>
+
 
 <!-- MEMBERS -->
+
 <section id="members">
+
     <div class="container">
 
         <h2 class="section-title">
-            RAVEN <span>MEMBERS</span>
+            RÆVEN
+            <span>MEMBERS</span>
         </h2>
 
-        <div class="members" id="membersList"></div>
+        <div
+            class="members"
+            id="membersList"
+        ></div>
+
+        <div
+            class="status"
+            id="membersStatus"
+        ></div>
 
     </div>
+
 </section>
 
+
 <!-- JOIN -->
+
 <section id="join">
+
     <div class="container">
 
         <h2 class="section-title">
-            JOIN <span>RAVEN</span>
+            JOIN
+            <span>RÆVEN</span>
         </h2>
 
         <div class="join-box">
@@ -432,6 +647,7 @@ footer strong{
                     id="nick"
                     type="text"
                     placeholder="CS2 Nickname"
+                    maxlength="32"
                     required
                 >
 
@@ -439,6 +655,7 @@ footer strong{
                     id="discord"
                     type="text"
                     placeholder="Discord"
+                    maxlength="100"
                     required
                 >
 
@@ -452,28 +669,48 @@ footer strong{
                 <textarea
                     id="about"
                     placeholder="Tell us about yourself..."
+                    maxlength="1000"
                     required
                 ></textarea>
 
-                <button class="btn" type="submit">
+                <button
+                    class="btn"
+                    type="submit"
+                    id="sendButton"
+                >
                     SEND APPLICATION
                 </button>
 
             </form>
 
+            <div
+                class="status"
+                id="joinStatus"
+            ></div>
+
         </div>
+
     </div>
+
 </section>
 
+
 <!-- STAFF -->
+
 <section id="staff">
+
     <div class="container">
 
         <h2 class="section-title">
-            RAVEN <span>STAFF</span>
+            RÆVEN
+            <span>STAFF</span>
         </h2>
 
-        <div class="staff-login" id="staffLogin">
+
+        <div
+            class="staff-login"
+            id="staffLogin"
+        >
 
             <input
                 id="staffPassword"
@@ -481,248 +718,270 @@ footer strong{
                 placeholder="Staff Password"
             >
 
-            <button class="btn" onclick="loginStaff()">
+            <button
+                class="btn"
+                onclick="loginStaff()"
+            >
                 LOGIN
             </button>
 
+            <div
+                class="status"
+                id="loginStatus"
+            ></div>
+
         </div>
 
-        <div class="staff-panel" id="staffPanel">
+
+        <div
+            class="staff-panel"
+            id="staffPanel"
+        >
 
             <div class="panel-box">
-                <h2>APPLICATIONS</h2>
+
+                <h2>
+                    APPLICATIONS
+                </h2>
+
                 <br>
-                <div id="applicationsList"></div>
+
+                <div
+                    id="applicationsList"
+                ></div>
+
             </div>
 
+
             <div class="panel-box">
-                <h2>CLAN MEMBERS</h2>
+
+                <h2>
+                    CLAN MEMBERS
+                </h2>
+
                 <br>
-                <div id="clanMembersList"></div>
+
+                <div
+                    id="clanMembersList"
+                ></div>
+
             </div>
 
         </div>
 
     </div>
+
 </section>
 
+
 <footer>
-    <strong>RAVEN ON TOP</strong><br><br>
+
+    <strong>
+        RÆVEN ON TOP
+    </strong>
+
+    <br>
+    <br>
+
     CS2 CLAN
+
 </footer>
 
 
 <script>
 
-/* =========================
+/* ==================================================
+   SUPABASE CONFIG
+================================================== */
+
+const SUPABASE_URL =
+    "SEM_PROJECT_URL";
+
+const SUPABASE_KEY =
+    "SEM_PUBLISHABLE_KEY";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* ==================================================
+   STAFF PASSWORD
+================================================== */
+
+const STAFF_PASSWORD =
+    "raven123";
+
+
+/* ==================================================
    BACKGROUND DOTS
-========================= */
+================================================== */
 
-const particles = document.getElementById("particles");
+const particles =
+    document.getElementById(
+        "particles"
+    );
 
-for(let i = 0; i < 80; i++){
 
-    const dot = document.createElement("div");
+for(let i = 0; i < 90; i++){
 
-    dot.className = "dot";
+    const dot =
+        document.createElement("div");
 
-    dot.style.left = Math.random() * 100 + "%";
-    dot.style.animationDelay = Math.random() * 8 + "s";
+    dot.className =
+        "dot";
+
+    dot.style.left =
+        Math.random() * 100 + "%";
+
+    dot.style.animationDelay =
+        Math.random() * 8 + "s";
+
     dot.style.animationDuration =
         (5 + Math.random() * 8) + "s";
 
-    const size = 2 + Math.random() * 4;
+    const size =
+        2 + Math.random() * 4;
 
-    dot.style.width = size + "px";
-    dot.style.height = size + "px";
+    dot.style.width =
+        size + "px";
+
+    dot.style.height =
+        size + "px";
 
     particles.appendChild(dot);
+
 }
 
 
-/* =========================
-   DEFAULT MEMBERS
-========================= */
-
-const defaultMembers = [
-
-    {
-        id:1,
-        name:"MONARCH",
-        role:"OWNER",
-        emoji:"👑",
-        protected:true,
-        instagram:"https://www.instagram.com/owner_monarch._fihh/"
-    },
-
-    {
-        id:2,
-        name:"RENOX",
-        role:"MEMBER",
-        emoji:"🗿",
-        protected:false,
-        instagram:"https://www.instagram.com/member_rvn_renox/"
-    },
-
-    {
-        id:3,
-        name:"KASPIKK",
-        role:"MEMBER",
-        emoji:"🗿",
-        protected:false,
-        instagram:"https://www.instagram.com/RVN_kaspikk/"
-    }
-
-];
-
-
-/* =========================
-   STORAGE
-========================= */
-
-function getMembers(){
-
-    let data =
-        localStorage.getItem("RAVEN_MEMBERS");
-
-    if(!data){
-
-        localStorage.setItem(
-            "RAVEN_MEMBERS",
-            JSON.stringify(defaultMembers)
-        );
-
-        return [...defaultMembers];
-    }
-
-    try{
-        return JSON.parse(data);
-    }catch{
-
-        localStorage.setItem(
-            "RAVEN_MEMBERS",
-            JSON.stringify(defaultMembers)
-        );
-
-        return [...defaultMembers];
-    }
-}
-
-
-function saveMembers(members){
-
-    localStorage.setItem(
-        "RAVEN_MEMBERS",
-        JSON.stringify(members)
-    );
-}
-
-
-function getApplications(){
-
-    let data =
-        localStorage.getItem("RAVEN_APPLICATIONS");
-
-    if(!data){
-        return [];
-    }
-
-    try{
-        return JSON.parse(data);
-    }catch{
-        return [];
-    }
-}
-
-
-function saveApplications(applications){
-
-    localStorage.setItem(
-        "RAVEN_APPLICATIONS",
-        JSON.stringify(applications)
-    );
-}
-
-
-/* =========================
-   EMOJIS
-========================= */
-
-function getEmoji(member){
-
-    const name =
-        member.name.toUpperCase();
-
-    if(name === "MONARCH"){
-        return "👑";
-    }
-
-    if(name === "RENOX"){
-        return "🗿";
-    }
-
-    if(name === "KASPIKK"){
-        return "🗿";
-    }
-
-    return "💀";
-}
-
-
-/* =========================
+/* ==================================================
    ESCAPE HTML
-========================= */
+================================================== */
 
 function escapeHTML(text){
 
     return String(text)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
 }
 
 
-/* =========================
-   SHOW MEMBERS
-========================= */
+/* ==================================================
+   MEMBERS
+================================================== */
 
-function showMembers(){
+async function loadMembers(){
 
     const list =
-        document.getElementById("membersList");
+        document.getElementById(
+            "membersList"
+        );
 
-    const members =
-        getMembers();
+    const status =
+        document.getElementById(
+            "membersStatus"
+        );
+
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+
+        .from("members")
+
+        .select("*")
+
+        .order(
+            "id",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        status.textContent =
+            "DATABASE ERROR: " +
+            error.message;
+
+        return;
+
+    }
+
 
     list.innerHTML = "";
 
-    members.forEach(member => {
+
+    data.forEach(member => {
 
         const card =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        card.className = "member";
+        card.className =
+            "member";
 
-        const emoji =
-            getEmoji(member);
 
         card.innerHTML = `
 
             <div class="member-emoji">
-                ${emoji}
+
+                ${escapeHTML(
+                    member.emoji
+                )}
+
             </div>
 
             <div class="member-name">
-                ${escapeHTML(member.name)}
+
+                ${escapeHTML(
+                    member.name
+                )}
+
             </div>
 
             <div class="member-role">
-                ${escapeHTML(member.role)}
+
+                ${escapeHTML(
+                    member.role
+                )}
+
             </div>
 
         `;
+
 
         if(member.instagram){
 
@@ -730,160 +989,291 @@ function showMembers(){
 
                 window.open(
                     member.instagram,
-                    "_blank"
+                    "_blank",
+                    "noopener,noreferrer"
                 );
 
             };
 
         }
 
+
         list.appendChild(card);
 
     });
+
+
+    status.textContent =
+        data.length +
+        " RÆVEN members";
+
 }
 
 
-/* =========================
+/* ==================================================
    JOIN APPLICATION
-========================= */
+================================================== */
 
 document
 .getElementById("joinForm")
-.addEventListener("submit", function(e){
+.addEventListener(
+    "submit",
+    async function(e){
 
-    e.preventDefault();
+        e.preventDefault();
 
-    const nick =
-        document.getElementById("nick").value.trim();
 
-    const discord =
-        document.getElementById("discord").value.trim();
+        const nick =
+            document
+            .getElementById("nick")
+            .value
+            .trim();
 
-    const clip =
-        document.getElementById("clip").value.trim();
 
-    const about =
-        document.getElementById("about").value.trim();
+        const discord =
+            document
+            .getElementById("discord")
+            .value
+            .trim();
 
-    if(!nick || !discord || !clip || !about){
 
-        alert("Vyplň všechna pole!");
+        const clip =
+            document
+            .getElementById("clip")
+            .value
+            .trim();
 
-        return;
-    }
 
-    const applications =
-        getApplications();
+        const about =
+            document
+            .getElementById("about")
+            .value
+            .trim();
 
-    applications.push({
 
-        id:Date.now(),
+        const status =
+            document
+            .getElementById("joinStatus");
 
-        nick:nick,
 
-        discord:discord,
+        const button =
+            document
+            .getElementById("sendButton");
 
-        clip:clip,
 
-        about:about,
+        button.disabled = true;
 
-        date:new Date().toLocaleString("cs-CZ")
+        button.textContent =
+            "SENDING...";
 
-    });
 
-    saveApplications(applications);
+        const {
+            error
+        } = await supabaseClient
 
-    alert(
-        "APPLICATION SENT! 🔥"
-    );
+            .from("applications")
 
-    document
+            .insert({
+
+                nick:nick,
+
+                discord:discord,
+
+                clip:clip,
+
+                about:about
+
+            });
+
+
+        if(error){
+
+            console.error(error);
+
+            status.textContent =
+                "ERROR: " +
+                error.message;
+
+            button.disabled = false;
+
+            button.textContent =
+                "SEND APPLICATION";
+
+            return;
+
+        }
+
+
+        status.textContent =
+            "APPLICATION SENT! 🔥";
+
+
+        document
         .getElementById("joinForm")
         .reset();
 
-});
+
+        button.disabled = false;
+
+        button.textContent =
+            "SEND APPLICATION";
+
+    }
+);
 
 
-/* =========================
+/* ==================================================
    STAFF LOGIN
-========================= */
+================================================== */
 
 function loginStaff(){
 
     const password =
         document
-        .getElementById("staffPassword")
+        .getElementById(
+            "staffPassword"
+        )
         .value;
 
-    if(password === "raven123"){
+
+    if(password !== STAFF_PASSWORD){
 
         document
-            .getElementById("staffLogin")
-            .style.display = "none";
+        .getElementById(
+            "loginStatus"
+        )
+        .textContent =
+            "WRONG PASSWORD 💀";
 
-        document
-            .getElementById("staffPanel")
-            .style.display = "block";
-
-        showApplications();
-        showClanMembers();
-
-    }else{
-
-        alert("ŠPATNÉ HESLO 💀");
+        return;
 
     }
+
+
+    document
+    .getElementById(
+        "staffLogin"
+    )
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById(
+        "staffPanel"
+    )
+    .style.display =
+        "block";
+
+
+    loadApplications();
+
+    loadStaffMembers();
+
 }
 
 
-/* =========================
-   SHOW APPLICATIONS
-========================= */
+/* ==================================================
+   APPLICATIONS
+================================================== */
 
-function showApplications(){
+async function loadApplications(){
 
     const box =
         document.getElementById(
             "applicationsList"
         );
 
-    const applications =
-        getApplications();
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+
+        .from("applications")
+
+        .select("*")
+
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        box.innerHTML =
+            `<p style="color:red">
+                ${escapeHTML(
+                    error.message
+                )}
+            </p>`;
+
+        return;
+
+    }
+
 
     box.innerHTML = "";
 
-    if(applications.length === 0){
+
+    if(data.length === 0){
 
         box.innerHTML =
-            "<p style='color:#777'>No applications.</p>";
+            `<p style="color:#777">
+                No applications.
+            </p>`;
 
         return;
+
     }
 
-    applications.forEach(app => {
+
+    data.forEach(app => {
 
         const item =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        item.className = "application";
+        item.className =
+            "application";
+
+
+        const date =
+            new Date(
+                app.created_at
+            ).toLocaleString(
+                "cs-CZ"
+            );
+
 
         item.innerHTML = `
 
             <h3>
-                ${escapeHTML(app.nick)}
+                ${escapeHTML(
+                    app.nick
+                )}
             </h3>
 
             <p>
                 <b>Discord:</b>
-                ${escapeHTML(app.discord)}
+                ${escapeHTML(
+                    app.discord
+                )}
             </p>
 
             <p>
                 <b>Clip:</b>
+
                 <a
-                    href="${escapeHTML(app.clip)}"
+                    href="${escapeHTML(
+                        app.clip
+                    )}"
                     target="_blank"
-                    style="color:#ff3030"
+                    rel="noopener noreferrer"
                 >
                     OPEN CLIP
                 </a>
@@ -891,11 +1281,18 @@ function showApplications(){
 
             <p>
                 <b>About:</b>
-                ${escapeHTML(app.about)}
+                ${escapeHTML(
+                    app.about
+                )}
             </p>
 
-            <p style="font-size:12px;color:#555">
-                ${escapeHTML(app.date)}
+            <p style="
+                font-size:12px;
+                color:#555;
+            ">
+                ${escapeHTML(
+                    date
+                )}
             </p>
 
             <button
@@ -914,205 +1311,362 @@ function showApplications(){
 
         `;
 
+
         box.appendChild(item);
 
     });
+
 }
 
 
-/* =========================
-   ACCEPT
-========================= */
+/* ==================================================
+   ACCEPT APPLICATION
+================================================== */
 
-function acceptApplication(id){
+async function acceptApplication(id){
 
-    const applications =
-        getApplications();
+    const {
+        data:app,
+        error
+    } = await supabaseClient
 
-    const app =
-        applications.find(
-            x => x.id === id
+        .from("applications")
+
+        .select("*")
+
+        .eq(
+            "id",
+            id
+        )
+
+        .single();
+
+
+    if(error || !app){
+
+        alert(
+            "Application nenalezena."
         );
 
-    if(!app) return;
-
-    const confirmAccept =
-        confirm(
-            "Přijmout " +
-            app.nick +
-            " do RAVEN?"
-        );
-
-    if(!confirmAccept) return;
-
-    const members =
-        getMembers();
-
-    const exists =
-        members.some(
-            m =>
-            m.name.toLowerCase()
-            === app.nick.toLowerCase()
-        );
-
-    if(!exists){
-
-        members.push({
-
-            id:Date.now(),
-
-            name:app.nick,
-
-            role:"MEMBER",
-
-            emoji:"💀",
-
-            protected:false,
-
-            instagram:""
-
-        });
-
-        saveMembers(members);
+        return;
 
     }
 
-    const newApplications =
-        applications.filter(
-            x => x.id !== id
+
+    if(
+        !confirm(
+            "Přijmout " +
+            app.nick +
+            " do RÆVEN?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const {
+        data:existing
+    } = await supabaseClient
+
+        .from("members")
+
+        .select("id")
+
+        .ilike(
+            "name",
+            app.nick
         );
 
-    saveApplications(
-        newApplications
-    );
 
-    showMembers();
-    showApplications();
-    showClanMembers();
+    if(!existing || existing.length === 0){
+
+        const {
+            error:insertError
+        } = await supabaseClient
+
+            .from("members")
+
+            .insert({
+
+                name:app.nick,
+
+                role:"MEMBER",
+
+                emoji:"💀",
+
+                protected:false,
+
+                instagram:""
+
+            });
+
+
+        if(insertError){
+
+            alert(
+                "Nelze přidat člena: " +
+                insertError.message
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    const {
+        error:deleteError
+    } = await supabaseClient
+
+        .from("applications")
+
+        .delete()
+
+        .eq(
+            "id",
+            id
+        );
+
+
+    if(deleteError){
+
+        alert(
+            "Application se nepodařilo odstranit."
+        );
+
+        return;
+
+    }
+
 
     alert(
         app.nick +
-        " je nyní člen RAVEN! 🔥"
+        " je nyní člen RÆVEN! 🔥"
     );
+
+
+    await loadMembers();
+
+    await loadApplications();
+
+    await loadStaffMembers();
+
 }
 
 
-/* =========================
+/* ==================================================
    REJECT
-========================= */
+================================================== */
 
-function rejectApplication(id){
+async function rejectApplication(id){
 
-    const applications =
-        getApplications();
+    if(
+        !confirm(
+            "Odmítnout tuto application?"
+        )
+    ){
 
-    const app =
-        applications.find(
-            x => x.id === id
+        return;
+
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+
+        .from("applications")
+
+        .delete()
+
+        .eq(
+            "id",
+            id
         );
 
-    if(!app) return;
 
-    if(!confirm(
-        "Odmítnout " +
-        app.nick +
-        "?"
-    )) return;
+    if(error){
 
-    const newApplications =
-        applications.filter(
-            x => x.id !== id
+        alert(
+            "ERROR: " +
+            error.message
         );
 
-    saveApplications(
-        newApplications
-    );
+        return;
 
-    showApplications();
+    }
+
+
+    await loadApplications();
 
 }
 
 
-/* =========================
-   SHOW STAFF MEMBERS
-========================= */
+/* ==================================================
+   STAFF MEMBERS
+================================================== */
 
-function showClanMembers(){
+async function loadStaffMembers(){
 
     const box =
         document.getElementById(
             "clanMembersList"
         );
 
-    const members =
-        getMembers();
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+
+        .from("members")
+
+        .select("*")
+
+        .order(
+            "id",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        box.innerHTML =
+            `<p style="color:red">
+                ${escapeHTML(
+                    error.message
+                )}
+            </p>`;
+
+        return;
+
+    }
+
 
     box.innerHTML = "";
 
-    members.forEach(member => {
+
+    data.forEach(member => {
 
         const item =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         item.className =
             "staff-member";
 
-        const emoji =
-            getEmoji(member);
 
-        item.innerHTML = `
+        if(member.protected){
 
-            <h3>
-                ${emoji}
-                ${escapeHTML(member.name)}
-            </h3>
+            item.innerHTML = `
 
-            <p style="color:#ff3030">
-                ${escapeHTML(member.role)}
-            </p>
+                <h3>
+                    ${escapeHTML(
+                        member.emoji
+                    )}
 
-            ${
-                member.protected
-                ?
-                `
-                <p style="color:#777">
-                    OWNER — PROTECTED
+                    ${escapeHTML(
+                        member.name
+                    )}
+                </h3>
+
+                <p style="
+                    color:#ff3030;
+                ">
+                    ${escapeHTML(
+                        member.role
+                    )}
                 </p>
-                `
-                :
-                `
+
+                <p style="
+                    color:#777;
+                    margin-top:8px;
+                ">
+                    OWNER — PROTECTED 👑
+                </p>
+
+            `;
+
+        }else{
+
+            item.innerHTML = `
+
+                <h3>
+                    ${escapeHTML(
+                        member.emoji
+                    )}
+
+                    ${escapeHTML(
+                        member.name
+                    )}
+                </h3>
+
+                <p style="
+                    color:#ff3030;
+                ">
+                    ${escapeHTML(
+                        member.role
+                    )}
+                </p>
+
                 <button
                     class="small-btn kick"
                     onclick="kickMember(${member.id})"
                 >
                     KICK
                 </button>
-                `
-            }
 
-        `;
+            `;
+
+        }
+
 
         box.appendChild(item);
 
     });
+
 }
 
 
-/* =========================
-   KICK MEMBER
-========================= */
+/* ==================================================
+   KICK
+================================================== */
 
-function kickMember(id){
+async function kickMember(id){
 
-    const members =
-        getMembers();
+    const {
+        data:member,
+        error:findError
+    } = await supabaseClient
 
-    const member =
-        members.find(
-            x => x.id === id
+        .from("members")
+
+        .select("*")
+
+        .eq(
+            "id",
+            id
+        )
+
+        .single();
+
+
+    if(findError || !member){
+
+        alert(
+            "Member nenalezen."
         );
 
-    if(!member) return;
+        return;
+
+    }
+
 
     if(member.protected){
 
@@ -1121,36 +1675,128 @@ function kickMember(id){
         );
 
         return;
+
     }
 
-    if(!confirm(
-        "Vyhodit " +
-        member.name +
-        " z RAVEN?"
-    )) return;
 
-    const newMembers =
-        members.filter(
-            x => x.id !== id
+    if(
+        !confirm(
+            "Vyhodit " +
+            member.name +
+            " z RÆVEN?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+
+        .from("members")
+
+        .delete()
+
+        .eq(
+            "id",
+            id
         );
 
-    saveMembers(newMembers);
 
-    showMembers();
-    showClanMembers();
+    if(error){
 
-    alert(
-        member.name +
-        " byl vyhozen z RAVEN."
-    );
+        alert(
+            "ERROR: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    await loadMembers();
+
+    await loadStaffMembers();
+
 }
 
 
-/* =========================
-   START
-========================= */
+/* ==================================================
+   REALTIME
+================================================== */
 
-showMembers();
+supabaseClient
+
+.channel("raven-live")
+
+.on(
+    "postgres_changes",
+    {
+        event:"*",
+        schema:"public",
+        table:"members"
+    },
+    async () => {
+
+        await loadMembers();
+
+        const panel =
+            document
+            .getElementById(
+                "staffPanel"
+            );
+
+        if(
+            panel.style.display ===
+            "block"
+        ){
+
+            await loadStaffMembers();
+
+        }
+
+    }
+)
+
+.on(
+    "postgres_changes",
+    {
+        event:"*",
+        schema:"public",
+        table:"applications"
+    },
+    async () => {
+
+        const panel =
+            document
+            .getElementById(
+                "staffPanel"
+            );
+
+        if(
+            panel.style.display ===
+            "block"
+        ){
+
+            await loadApplications();
+
+        }
+
+    }
+)
+
+.subscribe();
+
+
+/* ==================================================
+   START
+================================================== */
+
+loadMembers();
 
 </script>
 
