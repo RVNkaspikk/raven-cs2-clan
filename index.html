@@ -20,19 +20,18 @@ html {
 
 body {
     background: #050505;
-    color: white;
+    color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
 }
 
-/* BACKGROUND */
 .background {
     position: fixed;
     inset: 0;
-    z-index: -10;
+    z-index: -5;
     overflow: hidden;
     background:
-        radial-gradient(circle at 50% 15%, rgba(255,0,0,.15), transparent 35%),
+        radial-gradient(circle at 50% 15%, rgba(255,0,0,.18), transparent 35%),
         #050505;
 }
 
@@ -43,19 +42,16 @@ body {
     background: white;
     border-radius: 50%;
     opacity: .5;
-    animation: moveDot linear infinite;
+    animation: float linear infinite;
 }
 
-@keyframes moveDot {
-    from {
-        transform: translateY(110vh);
-    }
-    to {
-        transform: translateY(-10vh);
-    }
+@keyframes float {
+    from { transform: translateY(110vh); }
+    to { transform: translateY(-10vh); }
 }
 
-/* NAV */
+/* NAVBAR */
+
 nav {
     position: fixed;
     top: 18px;
@@ -67,7 +63,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(15,15,15,.75);
+    background: rgba(15,15,15,.78);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 18px;
@@ -81,7 +77,7 @@ nav {
 }
 
 .logo span {
-    color: #ff1515;
+    color: #ff1616;
 }
 
 nav a {
@@ -89,16 +85,17 @@ nav a {
     text-decoration: none;
     margin-left: 22px;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: 1px;
     transition: .2s;
 }
 
 nav a:hover {
-    color: #ff2020;
+    color: #ff1b1b;
 }
 
 /* HERO */
+
 .hero {
     min-height: 100vh;
     display: flex;
@@ -114,7 +111,7 @@ nav a:hover {
     font-weight: 1000;
     letter-spacing: -8px;
     text-shadow:
-        0 0 25px rgba(255,0,0,.25),
+        0 0 25px rgba(255,0,0,.3),
         0 0 80px rgba(255,0,0,.1);
 }
 
@@ -126,21 +123,20 @@ nav a:hover {
     margin-top: 30px;
     color: #888;
     letter-spacing: 5px;
-    font-size: 14px;
 }
 
 .btn {
     display: inline-block;
     margin-top: 35px;
     padding: 15px 32px;
-    border: none;
-    border-radius: 10px;
     background: #ff1717;
     color: white;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
     font-weight: 900;
     letter-spacing: 2px;
     cursor: pointer;
-    text-decoration: none;
     transition: .25s;
     box-shadow: 0 0 30px rgba(255,0,0,.25);
 }
@@ -148,11 +144,12 @@ nav a:hover {
 .btn:hover {
     transform: translateY(-3px);
     background: #ff3030;
-    box-shadow: 0 0 45px rgba(255,0,0,.4);
 }
 
 /* SECTIONS */
+
 section {
+    width: 100%;
     max-width: 1150px;
     margin: auto;
     padding: 110px 25px;
@@ -174,11 +171,12 @@ section {
 }
 
 .section-title p {
-    color: #777;
     margin-top: 10px;
+    color: #777;
 }
 
 /* MEMBERS */
+
 .members {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -188,7 +186,7 @@ section {
 .member-card {
     padding: 35px 20px;
     text-align: center;
-    background: rgba(20,20,20,.7);
+    background: rgba(20,20,20,.72);
     border: 1px solid rgba(255,255,255,.07);
     border-radius: 18px;
     backdrop-filter: blur(15px);
@@ -198,12 +196,12 @@ section {
 
 .member-card:hover {
     transform: translateY(-7px);
-    border-color: rgba(255,0,0,.4);
-    box-shadow: 0 15px 50px rgba(255,0,0,.12);
+    border-color: rgba(255,0,0,.45);
+    box-shadow: 0 15px 50px rgba(255,0,0,.13);
 }
 
 .member-emoji {
-    font-size: 36px;
+    font-size: 38px;
     margin-bottom: 12px;
 }
 
@@ -214,14 +212,15 @@ section {
 }
 
 .member-role {
-    color: #ff2020;
     margin-top: 8px;
+    color: #ff2020;
     font-size: 11px;
     font-weight: bold;
     letter-spacing: 2px;
 }
 
 /* JOIN */
+
 .join-box {
     max-width: 650px;
     margin: auto;
@@ -263,6 +262,7 @@ section {
 }
 
 /* STAFF */
+
 .staff-login {
     max-width: 400px;
     margin: auto;
@@ -272,6 +272,7 @@ section {
 .staff-login input {
     width: 100%;
     padding: 15px;
+    margin-bottom: 10px;
     background: #0b0b0b;
     color: white;
     border: 1px solid #222;
@@ -348,7 +349,6 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
     padding: 15px;
     margin-bottom: 10px;
     background: #0b0b0b;
@@ -376,6 +376,7 @@ footer span {
 }
 
 @media(max-width:650px) {
+
     nav {
         width: calc(100% - 20px);
         padding: 12px 15px;
@@ -421,15 +422,17 @@ footer span {
 </nav>
 
 <!-- HOME -->
+
 <div class="hero" id="home">
     <div>
         <h1>R<span>Æ</span>VEN</h1>
         <p>CS2 CLAN • NO MERCY</p>
-        <a href="#join" class="btn">JOIN RÆVEN</a>
+        <a class="btn" href="#join">JOIN RÆVEN</a>
     </div>
 </div>
 
 <!-- MEMBERS -->
+
 <section id="members">
 
     <div class="section-title">
@@ -438,14 +441,41 @@ footer span {
     </div>
 
     <div class="members" id="membersList">
-        <p style="text-align:center;color:#777;">
-            Loading members...
-        </p>
+
+        <!-- FALLBACK MEMBERS -->
+        <div class="member-card"
+             onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')">
+
+            <div class="member-emoji">👑</div>
+            <div class="member-name">MONARCH</div>
+            <div class="member-role">OWNER</div>
+
+        </div>
+
+        <div class="member-card"
+             onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')">
+
+            <div class="member-emoji">🗿</div>
+            <div class="member-name">RENOX</div>
+            <div class="member-role">MEMBER</div>
+
+        </div>
+
+        <div class="member-card"
+             onclick="openInstagram('https://www.instagram.com/rvn_kaspikk/')">
+
+            <div class="member-emoji">🗿</div>
+            <div class="member-name">KASPIKK</div>
+            <div class="member-role">MEMBER</div>
+
+        </div>
+
     </div>
 
 </section>
 
 <!-- JOIN -->
+
 <section id="join">
 
     <div class="section-title">
@@ -508,6 +538,7 @@ footer span {
 </section>
 
 <!-- STAFF -->
+
 <section id="staff">
 
     <div class="section-title">
@@ -530,10 +561,7 @@ footer span {
             LOGIN
         </button>
 
-        <p
-            id="loginStatus"
-            style="margin-top:12px;color:#777;"
-        ></p>
+        <p id="loginStatus"></p>
 
     </div>
 
@@ -570,8 +598,8 @@ footer span {
 <script>
 
 /* =====================================================
-   SUPABASE CONNECTION
-   ===================================================== */
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
     "https://mrctqcrcbmbsamfevmii.supabase.co";
@@ -588,7 +616,7 @@ const supabaseClient =
 
 /* =====================================================
    BACKGROUND
-   ===================================================== */
+===================================================== */
 
 const background =
     document.getElementById("background");
@@ -604,7 +632,7 @@ for (let i = 0; i < 80; i++) {
         Math.random() * 100 + "%";
 
     dot.style.animationDuration =
-        (5 + Math.random() * 12) + "s";
+        5 + Math.random() * 12 + "s";
 
     dot.style.animationDelay =
         Math.random() * 10 + "s";
@@ -614,8 +642,36 @@ for (let i = 0; i < 80; i++) {
 
 
 /* =====================================================
-   EMOJI
-   ===================================================== */
+   INSTAGRAM
+===================================================== */
+
+function openInstagram(url) {
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =====================================================
+   MEMBER EMOJI
+===================================================== */
 
 function getEmoji(member) {
 
@@ -636,144 +692,116 @@ function getEmoji(member) {
 
 
 /* =====================================================
-   ESCAPE HTML
-   ===================================================== */
-
-function escapeHTML(value) {
-
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-
-/* =====================================================
-   LOAD MEMBERS
-   ===================================================== */
+   LOAD MEMBERS FROM SUPABASE
+===================================================== */
 
 async function loadMembers() {
 
     const list =
-        document.getElementById("membersList");
+        document.getElementById(
+            "membersList"
+        );
 
-    list.innerHTML =
-        `<p style="text-align:center;color:#777;">
-            Loading members...
-        </p>`;
+    try {
 
-    const result =
-        await supabaseClient
+        const {
+            data,
+            error
+        } = await supabaseClient
             .from("members")
             .select("*")
             .order("id", {
                 ascending: true
             });
 
-    console.log("MEMBERS RESULT:", result);
-
-    if (result.error) {
-
-        console.error(
-            "SUPABASE MEMBERS ERROR:",
-            result.error
+        console.log(
+            "SUPABASE MEMBERS:",
+            data
         );
 
-        list.innerHTML = `
-            <div style="
-                grid-column:1/-1;
-                text-align:center;
-                color:#ff3333;
-                padding:30px;
-            ">
-                <b>Could not load members.</b>
-                <br><br>
-                ${escapeHTML(result.error.message)}
-            </div>
-        `;
+        if (error) {
 
-        return;
-    }
+            console.error(
+                "MEMBERS ERROR:",
+                error
+            );
 
-    const members =
-        result.data || [];
-
-    if (members.length === 0) {
-
-        list.innerHTML = `
-            <div style="
-                grid-column:1/-1;
-                text-align:center;
-                color:#777;
-            ">
-                No members yet.
-            </div>
-        `;
-
-        return;
-    }
-
-    list.innerHTML = "";
-
-    members.forEach(member => {
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "member-card";
-
-        card.innerHTML = `
-            <div class="member-emoji">
-                ${escapeHTML(
-                    member.emoji || getEmoji(member)
-                )}
-            </div>
-
-            <div class="member-name">
-                ${escapeHTML(member.name)}
-            </div>
-
-            <div class="member-role">
-                ${escapeHTML(member.role)}
-            </div>
-        `;
-
-        if (member.instagram) {
-
-            card.style.cursor = "pointer";
-
-            card.onclick = () => {
-
-                window.open(
-                    member.instagram,
-                    "_blank",
-                    "noopener,noreferrer"
-                );
-
-            };
+            /*
+             * Pokud databáze nejde,
+             * necháme základní členy.
+             */
+            return;
         }
 
-        list.appendChild(card);
+        if (!data || data.length === 0) {
+            return;
+        }
 
-    });
+        list.innerHTML = "";
 
+        data.forEach(member => {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "member-card";
+
+            card.innerHTML = `
+
+                <div class="member-emoji">
+                    ${escapeHTML(
+                        member.emoji ||
+                        getEmoji(member)
+                    )}
+                </div>
+
+                <div class="member-name">
+                    ${escapeHTML(member.name)}
+                </div>
+
+                <div class="member-role">
+                    ${escapeHTML(member.role)}
+                </div>
+
+            `;
+
+            if (member.instagram) {
+
+                card.onclick = () => {
+                    openInstagram(
+                        member.instagram
+                    );
+                };
+
+            }
+
+            list.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "MEMBERS LOAD FAILED:",
+            error
+        );
+
+    }
 }
 
 
 /* =====================================================
    JOIN APPLICATION
-   ===================================================== */
+===================================================== */
 
 document
     .getElementById("joinForm")
     .addEventListener(
         "submit",
-        async function(e) {
+        async function(event) {
 
-            e.preventDefault();
+            event.preventDefault();
 
             const status =
                 document.getElementById(
@@ -781,47 +809,48 @@ document
                 );
 
             const nick =
-                document.getElementById("nick")
-                    .value.trim();
+                document.getElementById(
+                    "nick"
+                ).value.trim();
 
             const discord =
-                document.getElementById("discord")
-                    .value.trim();
+                document.getElementById(
+                    "discord"
+                ).value.trim();
 
             const clip =
-                document.getElementById("clip")
-                    .value.trim();
+                document.getElementById(
+                    "clip"
+                ).value.trim();
 
             const about =
-                document.getElementById("about")
-                    .value.trim();
+                document.getElementById(
+                    "about"
+                ).value.trim();
 
-            status.style.color = "#aaa";
             status.textContent =
                 "Sending application...";
 
-            const result =
-                await supabaseClient
-                    .from("applications")
-                    .insert({
-                        nick: nick,
-                        discord: discord,
-                        clip: clip,
-                        about: about
-                    });
+            const {
+                error
+            } = await supabaseClient
+                .from("applications")
+                .insert({
+                    nick,
+                    discord,
+                    clip,
+                    about
+                });
 
-            console.log(
-                "APPLICATION RESULT:",
-                result
-            );
+            if (error) {
 
-            if (result.error) {
+                console.error(error);
 
                 status.style.color =
                     "#ff3333";
 
                 status.textContent =
-                    result.error.message;
+                    error.message;
 
                 return;
             }
@@ -830,21 +859,19 @@ document
                 "#36ff75";
 
             status.textContent =
-                "Application sent successfully!";
+                "Application sent!";
 
             document
                 .getElementById("joinForm")
                 .reset();
-
-            loadApplications();
 
         }
     );
 
 
 /* =====================================================
-   STAFF
-   ===================================================== */
+   STAFF LOGIN
+===================================================== */
 
 const STAFF_PASSWORD =
     "raven123";
@@ -852,41 +879,36 @@ const STAFF_PASSWORD =
 function loginStaff() {
 
     const password =
-        document
-            .getElementById("staffPassword")
-            .value;
+        document.getElementById(
+            "staffPassword"
+        ).value;
 
-    const status =
-        document
-            .getElementById("loginStatus");
+    if (password !== STAFF_PASSWORD) {
 
-    if (password === STAFF_PASSWORD) {
-
-        document
-            .getElementById("staffLogin")
-            .style.display = "none";
-
-        document
-            .getElementById("staffPanel")
-            .style.display = "block";
-
-        loadApplications();
-        loadStaffMembers();
-
-    } else {
-
-        status.style.color =
-            "#ff3333";
-
-        status.textContent =
+        document.getElementById(
+            "loginStatus"
+        ).textContent =
             "Wrong password.";
+
+        return;
     }
+
+    document.getElementById(
+        "staffLogin"
+    ).style.display = "none";
+
+    document.getElementById(
+        "staffPanel"
+    ).style.display = "block";
+
+    loadApplications();
+    loadStaffMembers();
 }
 
 
 /* =====================================================
    APPLICATIONS
-   ===================================================== */
+===================================================== */
 
 async function loadApplications() {
 
@@ -895,37 +917,27 @@ async function loadApplications() {
             "applicationsList"
         );
 
-    if (!list) return;
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("applications")
+        .select("*")
+        .order("created_at", {
+            ascending: false
+        });
 
-    const result =
-        await supabaseClient
-            .from("applications")
-            .select("*")
-            .order("created_at", {
-                ascending: false
-            });
-
-    console.log(
-        "APPLICATIONS RESULT:",
-        result
-    );
-
-    if (result.error) {
+    if (error) {
 
         list.innerHTML =
             `<p style="color:#ff3333;">
-                ${escapeHTML(
-                    result.error.message
-                )}
+                ${escapeHTML(error.message)}
             </p>`;
 
         return;
     }
 
-    const applications =
-        result.data || [];
-
-    if (applications.length === 0) {
+    if (!data || data.length === 0) {
 
         list.innerHTML =
             `<p style="color:#777;">
@@ -937,7 +949,7 @@ async function loadApplications() {
 
     list.innerHTML = "";
 
-    applications.forEach(app => {
+    data.forEach(app => {
 
         const box =
             document.createElement("div");
@@ -964,9 +976,8 @@ async function loadApplications() {
             <p>
                 Clip:
                 <a
-                    href="${safeURL(app.clip)}"
+                    href="${escapeHTML(app.clip)}"
                     target="_blank"
-                    rel="noopener noreferrer"
                 >
                     Open Clip
                 </a>
@@ -999,29 +1010,25 @@ async function loadApplications() {
 
 /* =====================================================
    ACCEPT
-   ===================================================== */
+===================================================== */
 
 async function acceptApplication(id) {
 
-    const result =
-        await supabaseClient
-            .from("applications")
-            .select("*")
-            .eq("id", id)
-            .single();
+    const {
+        data: app,
+        error
+    } = await supabaseClient
+        .from("applications")
+        .select("*")
+        .eq("id", id)
+        .single();
 
-    if (result.error ||
-        !result.data) {
+    if (error || !app) {
 
-        alert(
-            "Application not found."
-        );
+        alert("Application not found.");
 
         return;
     }
-
-    const app =
-        result.data;
 
     if (
         !confirm(
@@ -1029,48 +1036,31 @@ async function acceptApplication(id) {
         )
     ) return;
 
-    const insertResult =
-        await supabaseClient
-            .from("members")
-            .insert({
-                name: app.nick,
-                role: "MEMBER",
-                emoji: "💀",
-                protected: false,
-                instagram: ""
-            });
+    const {
+        error: memberError
+    } = await supabaseClient
+        .from("members")
+        .insert({
+            name: app.nick,
+            role: "MEMBER",
+            emoji: "💀",
+            protected: false,
+            instagram: ""
+        });
 
-    if (insertResult.error) {
-
-        console.error(
-            insertResult.error
-        );
+    if (memberError) {
 
         alert(
-            insertResult.error.message
+            memberError.message
         );
 
         return;
     }
 
-    const deleteResult =
-        await supabaseClient
-            .from("applications")
-            .delete()
-            .eq("id", id);
-
-    if (deleteResult.error) {
-
-        alert(
-            "Member added, but application was not deleted."
-        );
-
-        return;
-    }
-
-    alert(
-        `${app.nick} joined RÆVEN!`
-    );
+    await supabaseClient
+        .from("applications")
+        .delete()
+        .eq("id", id);
 
     loadMembers();
     loadApplications();
@@ -1080,7 +1070,7 @@ async function acceptApplication(id) {
 
 /* =====================================================
    REJECT
-   ===================================================== */
+===================================================== */
 
 async function rejectApplication(id) {
 
@@ -1090,20 +1080,10 @@ async function rejectApplication(id) {
         )
     ) return;
 
-    const result =
-        await supabaseClient
-            .from("applications")
-            .delete()
-            .eq("id", id);
-
-    if (result.error) {
-
-        alert(
-            result.error.message
-        );
-
-        return;
-    }
+    await supabaseClient
+        .from("applications")
+        .delete()
+        .eq("id", id);
 
     loadApplications();
 }
@@ -1111,7 +1091,7 @@ async function rejectApplication(id) {
 
 /* =====================================================
    STAFF MEMBERS
-   ===================================================== */
+===================================================== */
 
 async function loadStaffMembers() {
 
@@ -1120,34 +1100,29 @@ async function loadStaffMembers() {
             "staffMembersList"
         );
 
-    if (!list) return;
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("members")
+        .select("*")
+        .order("id", {
+            ascending: true
+        });
 
-    const result =
-        await supabaseClient
-            .from("members")
-            .select("*")
-            .order("id", {
-                ascending: true
-            });
-
-    if (result.error) {
+    if (error) {
 
         list.innerHTML =
             `<p style="color:#ff3333;">
-                ${escapeHTML(
-                    result.error.message
-                )}
+                ${escapeHTML(error.message)}
             </p>`;
 
         return;
     }
 
-    const members =
-        result.data || [];
-
     list.innerHTML = "";
 
-    members.forEach(member => {
+    data.forEach(member => {
 
         const row =
             document.createElement("div");
@@ -1158,7 +1133,8 @@ async function loadStaffMembers() {
         row.innerHTML = `
             <div>
                 ${escapeHTML(
-                    member.emoji || getEmoji(member)
+                    member.emoji ||
+                    getEmoji(member)
                 )}
 
                 <b>
@@ -1214,7 +1190,7 @@ async function loadStaffMembers() {
 
 /* =====================================================
    KICK
-   ===================================================== */
+===================================================== */
 
 async function kickMember(id, name) {
 
@@ -1224,7 +1200,7 @@ async function kickMember(id, name) {
     ) {
 
         alert(
-            "MONARCH is protected."
+            "MONARCH cannot be kicked."
         );
 
         return;
@@ -1236,16 +1212,17 @@ async function kickMember(id, name) {
         )
     ) return;
 
-    const result =
-        await supabaseClient
-            .from("members")
-            .delete()
-            .eq("id", id);
+    const {
+        error
+    } = await supabaseClient
+        .from("members")
+        .delete()
+        .eq("id", id);
 
-    if (result.error) {
+    if (error) {
 
         alert(
-            result.error.message
+            error.message
         );
 
         return;
@@ -1257,32 +1234,8 @@ async function kickMember(id, name) {
 
 
 /* =====================================================
-   SAFE URL
-   ===================================================== */
-
-function safeURL(value) {
-
-    try {
-
-        const url =
-            new URL(value);
-
-        if (
-            url.protocol === "http:" ||
-            url.protocol === "https:"
-        ) {
-            return url.href;
-        }
-
-    } catch(e) {}
-
-    return "#";
-}
-
-
-/* =====================================================
    REALTIME
-   ===================================================== */
+===================================================== */
 
 supabaseClient
     .channel("raven-members")
@@ -1294,8 +1247,10 @@ supabaseClient
             table: "members"
         },
         () => {
+
             loadMembers();
             loadStaffMembers();
+
         }
     )
     .subscribe();
@@ -1310,7 +1265,9 @@ supabaseClient
             table: "applications"
         },
         () => {
+
             loadApplications();
+
         }
     )
     .subscribe();
@@ -1318,7 +1275,7 @@ supabaseClient
 
 /* =====================================================
    START
-   ===================================================== */
+===================================================== */
 
 loadMembers();
 
