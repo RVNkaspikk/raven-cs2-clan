@@ -50,8 +50,6 @@ body {
     to { transform: translateY(-10vh); }
 }
 
-/* NAVBAR */
-
 nav {
     position: fixed;
     top: 18px;
@@ -93,8 +91,6 @@ nav a {
 nav a:hover {
     color: #ff1b1b;
 }
-
-/* HERO */
 
 .hero {
     min-height: 100vh;
@@ -146,8 +142,6 @@ nav a:hover {
     background: #ff3030;
 }
 
-/* SECTIONS */
-
 section {
     width: 100%;
     max-width: 1150px;
@@ -174,8 +168,6 @@ section {
     margin-top: 10px;
     color: #777;
 }
-
-/* MEMBERS */
 
 .members {
     display: grid;
@@ -219,8 +211,6 @@ section {
     letter-spacing: 2px;
 }
 
-/* JOIN */
-
 .join-box {
     max-width: 650px;
     margin: auto;
@@ -260,8 +250,6 @@ section {
 .join-box .btn {
     width: 100%;
 }
-
-/* STAFF */
 
 .staff-login {
     max-width: 400px;
@@ -376,7 +364,6 @@ footer span {
 }
 
 @media(max-width:650px) {
-
     nav {
         width: calc(100% - 20px);
         padding: 12px 15px;
@@ -421,8 +408,6 @@ footer span {
     </div>
 </nav>
 
-<!-- HOME -->
-
 <div class="hero" id="home">
     <div>
         <h1>R<span>Æ</span>VEN</h1>
@@ -430,8 +415,6 @@ footer span {
         <a class="btn" href="#join">JOIN RÆVEN</a>
     </div>
 </div>
-
-<!-- MEMBERS -->
 
 <section id="members">
 
@@ -442,39 +425,29 @@ footer span {
 
     <div class="members" id="membersList">
 
-        <!-- FALLBACK MEMBERS -->
         <div class="member-card"
              onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')">
-
             <div class="member-emoji">👑</div>
             <div class="member-name">MONARCH</div>
             <div class="member-role">OWNER</div>
-
         </div>
 
         <div class="member-card"
              onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')">
-
             <div class="member-emoji">🗿</div>
             <div class="member-name">RENOX</div>
             <div class="member-role">MEMBER</div>
-
         </div>
 
         <div class="member-card"
              onclick="openInstagram('https://www.instagram.com/rvn_kaspikk/')">
-
             <div class="member-emoji">🗿</div>
             <div class="member-name">KASPIKK</div>
             <div class="member-role">MEMBER</div>
-
         </div>
 
     </div>
-
 </section>
-
-<!-- JOIN -->
 
 <section id="join">
 
@@ -488,38 +461,24 @@ footer span {
         <form id="joinForm">
 
             <div class="input">
-                <input
-                    id="nick"
-                    type="text"
-                    placeholder="CS2 Nickname"
-                    required
-                >
+                <input id="nick" type="text"
+                       placeholder="CS2 Nickname" required>
             </div>
 
             <div class="input">
-                <input
-                    id="discord"
-                    type="text"
-                    placeholder="Discord"
-                    required
-                >
+                <input id="discord" type="text"
+                       placeholder="Discord" required>
             </div>
 
             <div class="input">
-                <input
-                    id="clip"
-                    type="url"
-                    placeholder="Clip URL"
-                    required
-                >
+                <input id="clip" type="url"
+                       placeholder="Clip URL" required>
             </div>
 
             <div class="input">
-                <textarea
-                    id="about"
-                    placeholder="Tell us about yourself..."
-                    required
-                ></textarea>
+                <textarea id="about"
+                          placeholder="Tell us about yourself..."
+                          required></textarea>
             </div>
 
             <button class="btn" type="submit">
@@ -528,16 +487,12 @@ footer span {
 
         </form>
 
-        <p
-            id="joinStatus"
-            style="text-align:center;margin-top:15px;color:#777;"
-        ></p>
+        <p id="joinStatus"
+           style="text-align:center;margin-top:15px;color:#777;">
+        </p>
 
     </div>
-
 </section>
-
-<!-- STAFF -->
 
 <section id="staff">
 
@@ -548,16 +503,11 @@ footer span {
 
     <div class="staff-login" id="staffLogin">
 
-        <input
-            id="staffPassword"
-            type="password"
-            placeholder="Staff password"
-        >
+        <input id="staffPassword"
+               type="password"
+               placeholder="Staff password">
 
-        <button
-            class="btn"
-            onclick="loginStaff()"
-        >
+        <button class="btn" onclick="loginStaff()">
             LOGIN
         </button>
 
@@ -588,7 +538,6 @@ footer span {
         </div>
 
     </div>
-
 </section>
 
 <footer>
@@ -623,8 +572,7 @@ const background =
 
 for (let i = 0; i < 80; i++) {
 
-    const dot =
-        document.createElement("div");
+    const dot = document.createElement("div");
 
     dot.className = "dot";
 
@@ -646,6 +594,7 @@ for (let i = 0; i < 80; i++) {
 ===================================================== */
 
 function openInstagram(url) {
+
     window.open(
         url,
         "_blank",
@@ -676,7 +625,7 @@ function escapeHTML(value) {
 function getEmoji(member) {
 
     const name =
-        member.name.toUpperCase();
+        String(member.name || "").toUpperCase();
 
     if (name === "MONARCH")
         return "👑";
@@ -692,15 +641,13 @@ function getEmoji(member) {
 
 
 /* =====================================================
-   LOAD MEMBERS FROM SUPABASE
+   LOAD MEMBERS
 ===================================================== */
 
 async function loadMembers() {
 
     const list =
-        document.getElementById(
-            "membersList"
-        );
+        document.getElementById("membersList");
 
     try {
 
@@ -726,10 +673,6 @@ async function loadMembers() {
                 error
             );
 
-            /*
-             * Pokud databáze nejde,
-             * necháme základní členy.
-             */
             return;
         }
 
@@ -786,7 +729,6 @@ async function loadMembers() {
             "MEMBERS LOAD FAILED:",
             error
         );
-
     }
 }
 
@@ -828,6 +770,7 @@ document
                     "about"
                 ).value.trim();
 
+            status.style.color = "#777";
             status.textContent =
                 "Sending application...";
 
@@ -883,15 +826,23 @@ function loginStaff() {
             "staffPassword"
         ).value;
 
-    if (password !== STAFF_PASSWORD) {
-
+    const status =
         document.getElementById(
             "loginStatus"
-        ).textContent =
+        );
+
+    if (password !== STAFF_PASSWORD) {
+
+        status.style.color =
+            "#ff3333";
+
+        status.textContent =
             "Wrong password.";
 
         return;
     }
+
+    status.textContent = "";
 
     document.getElementById(
         "staffLogin"
@@ -908,6 +859,7 @@ function loginStaff() {
 
 /* =====================================================
    APPLICATIONS
+   NO created_at HERE
 ===================================================== */
 
 async function loadApplications() {
@@ -923,7 +875,7 @@ async function loadApplications() {
     } = await supabaseClient
         .from("applications")
         .select("*")
-        .order("created_at", {
+        .order("id", {
             ascending: false
         });
 
@@ -978,6 +930,7 @@ async function loadApplications() {
                 <a
                     href="${escapeHTML(app.clip)}"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
                     Open Clip
                 </a>
@@ -1057,10 +1010,21 @@ async function acceptApplication(id) {
         return;
     }
 
-    await supabaseClient
+    const {
+        error: deleteError
+    } = await supabaseClient
         .from("applications")
         .delete()
         .eq("id", id);
+
+    if (deleteError) {
+
+        alert(
+            deleteError.message
+        );
+
+        return;
+    }
 
     loadMembers();
     loadApplications();
@@ -1080,10 +1044,21 @@ async function rejectApplication(id) {
         )
     ) return;
 
-    await supabaseClient
+    const {
+        error
+    } = await supabaseClient
         .from("applications")
         .delete()
         .eq("id", id);
+
+    if (error) {
+
+        alert(
+            error.message
+        );
+
+        return;
+    }
 
     loadApplications();
 }
@@ -1120,6 +1095,16 @@ async function loadStaffMembers() {
         return;
     }
 
+    if (!data || data.length === 0) {
+
+        list.innerHTML =
+            `<p style="color:#777;">
+                No members.
+            </p>`;
+
+        return;
+    }
+
     list.innerHTML = "";
 
     data.forEach(member => {
@@ -1132,6 +1117,7 @@ async function loadStaffMembers() {
 
         row.innerHTML = `
             <div>
+
                 ${escapeHTML(
                     member.emoji ||
                     getEmoji(member)
@@ -1144,6 +1130,7 @@ async function loadStaffMembers() {
                 <span class="staff-member-role">
                     ${escapeHTML(member.role)}
                 </span>
+
             </div>
         `;
 
@@ -1249,11 +1236,19 @@ supabaseClient
         () => {
 
             loadMembers();
-            loadStaffMembers();
+
+            if (
+                document.getElementById(
+                    "staffPanel"
+                ).style.display === "block"
+            ) {
+                loadStaffMembers();
+            }
 
         }
     )
     .subscribe();
+
 
 supabaseClient
     .channel("raven-applications")
@@ -1266,7 +1261,13 @@ supabaseClient
         },
         () => {
 
-            loadApplications();
+            if (
+                document.getElementById(
+                    "staffPanel"
+                ).style.display === "block"
+            ) {
+                loadApplications();
+            }
 
         }
     )
