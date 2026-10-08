@@ -1,393 +1,349 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RÆVEN — CS2 Clan</title>
+<title>RÆVEN — CS2 CLAN</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    background: #050505;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow-x: hidden;
+body{
+    background:#050505;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
 }
 
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: -5;
-    overflow: hidden;
+.background{
+    position:fixed;
+    inset:0;
     background:
-        radial-gradient(circle at 50% 15%, rgba(255,0,0,.18), transparent 35%),
-        #050505;
+        radial-gradient(circle at 20% 20%,rgba(255,0,0,.12),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(255,0,0,.08),transparent 30%);
+    z-index:-2;
 }
 
-.dot {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: white;
-    border-radius: 50%;
-    opacity: .5;
-    animation: float linear infinite;
+.dot{
+    position:fixed;
+    width:3px;
+    height:3px;
+    background:#ff1a1a;
+    border-radius:50%;
+    opacity:.45;
+    animation:float 8s linear infinite;
+    z-index:-1;
 }
 
-@keyframes float {
-    from { transform: translateY(110vh); }
-    to { transform: translateY(-10vh); }
+@keyframes float{
+    0%{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+    20%{
+        opacity:.5;
+    }
+    80%{
+        opacity:.5;
+    }
+    100%{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
 }
 
-nav {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 1100px;
-    padding: 15px 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(15,15,15,.78);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 18px;
-    z-index: 1000;
+nav{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:calc(100% - 40px);
+    max-width:1100px;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(10,10,10,.75);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(15px);
+    border-radius:15px;
+    z-index:100;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: 900;
-    letter-spacing: 4px;
+.logo{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:3px;
 }
 
-.logo span {
-    color: #ff1616;
+.logo span,
+h1 span{
+    color:#ff1616;
 }
 
-nav a {
-    color: #aaa;
-    text-decoration: none;
-    margin-left: 22px;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    transition: .2s;
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:13px;
+    font-weight:bold;
+    transition:.2s;
 }
 
-nav a:hover {
-    color: #ff1b1b;
+nav a:hover{
+    color:#ff2020;
 }
 
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 100px 20px 40px;
+section{
+    max-width:1100px;
+    margin:auto;
+    padding:100px 20px;
 }
 
-.hero h1 {
-    font-size: clamp(75px, 15vw, 190px);
-    line-height: .8;
-    font-weight: 1000;
-    letter-spacing: -8px;
-    text-shadow:
-        0 0 25px rgba(255,0,0,.3),
-        0 0 80px rgba(255,0,0,.1);
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
 }
 
-.hero h1 span {
-    color: #ff1717;
+.hero h1{
+    font-size:clamp(70px,15vw,170px);
+    font-weight:1000;
+    letter-spacing:15px;
+    line-height:.9;
 }
 
-.hero p {
-    margin-top: 30px;
-    color: #888;
-    letter-spacing: 5px;
+.hero p{
+    margin-top:25px;
+    color:#777;
+    letter-spacing:7px;
+    font-size:13px;
 }
 
-.btn {
-    display: inline-block;
-    margin-top: 35px;
-    padding: 15px 32px;
-    background: #ff1717;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 900;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: .25s;
-    box-shadow: 0 0 30px rgba(255,0,0,.25);
+.btn{
+    display:inline-block;
+    margin-top:35px;
+    padding:15px 30px;
+    background:#ff1616;
+    color:white;
+    border:none;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.btn:hover {
-    transform: translateY(-3px);
-    background: #ff3030;
+.btn:hover{
+    background:#d90000;
+    transform:translateY(-2px);
 }
 
-section {
-    width: 100%;
-    max-width: 1150px;
-    margin: auto;
-    padding: 110px 25px;
+.section-title{
+    font-size:35px;
+    margin-bottom:40px;
+    letter-spacing:2px;
 }
 
-.section-title {
-    text-align: center;
-    margin-bottom: 55px;
+.members-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:20px;
 }
 
-.section-title h2 {
-    font-size: 45px;
-    font-weight: 1000;
-    letter-spacing: 3px;
+.member{
+    padding:30px;
+    background:rgba(15,15,15,.8);
+    border:1px solid #222;
+    border-radius:15px;
+    text-align:center;
+    cursor:pointer;
+    transition:.25s;
 }
 
-.section-title h2 span {
-    color: #ff1717;
+.member:hover{
+    border-color:#ff1616;
+    transform:translateY(-5px);
 }
 
-.section-title p {
-    margin-top: 10px;
-    color: #777;
+.member .emoji{
+    font-size:45px;
+    margin-bottom:15px;
 }
 
-.members {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+.member h3{
+    font-size:20px;
 }
 
-.member-card {
-    padding: 35px 20px;
-    text-align: center;
-    background: rgba(20,20,20,.72);
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 18px;
-    backdrop-filter: blur(15px);
-    cursor: pointer;
-    transition: .3s;
+.member p{
+    margin-top:7px;
+    color:#777;
+    font-size:12px;
+    letter-spacing:2px;
 }
 
-.member-card:hover {
-    transform: translateY(-7px);
-    border-color: rgba(255,0,0,.45);
-    box-shadow: 0 15px 50px rgba(255,0,0,.13);
+.join-box{
+    max-width:600px;
+    margin:auto;
+    padding:35px;
+    background:rgba(15,15,15,.85);
+    border:1px solid #222;
+    border-radius:15px;
 }
 
-.member-emoji {
-    font-size: 38px;
-    margin-bottom: 12px;
+input,
+textarea{
+    width:100%;
+    margin-bottom:15px;
+    padding:15px;
+    background:#080808;
+    border:1px solid #292929;
+    color:white;
+    border-radius:8px;
+    outline:none;
+    font-family:inherit;
 }
 
-.member-name {
-    font-size: 24px;
-    font-weight: 900;
-    letter-spacing: 2px;
+input:focus,
+textarea:focus{
+    border-color:#ff1616;
 }
 
-.member-role {
-    margin-top: 8px;
-    color: #ff2020;
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 2px;
+textarea{
+    min-height:130px;
+    resize:vertical;
 }
 
-.join-box {
-    max-width: 650px;
-    margin: auto;
-    padding: 35px;
-    background: rgba(15,15,15,.75);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
+.status{
+    margin-top:15px;
+    font-size:13px;
 }
 
-.input {
-    margin-bottom: 15px;
+.staff-login{
+    max-width:500px;
+    margin:auto;
+    text-align:center;
 }
 
-.input input,
-.input textarea {
-    width: 100%;
-    padding: 15px;
-    background: #0b0b0b;
-    color: white;
-    border: 1px solid #222;
-    border-radius: 9px;
-    outline: none;
-    font-family: inherit;
+.staff-panel{
+    display:none;
+    margin-top:50px;
 }
 
-.input textarea {
-    min-height: 130px;
-    resize: vertical;
+.panel-box{
+    background:rgba(15,15,15,.85);
+    border:1px solid #222;
+    border-radius:15px;
+    padding:30px;
+    margin-bottom:25px;
 }
 
-.input input:focus,
-.input textarea:focus {
-    border-color: #ff1717;
+.panel-box h3{
+    margin-bottom:25px;
+    letter-spacing:2px;
 }
 
-.join-box .btn {
-    width: 100%;
+.application{
+    padding:20px 0;
+    border-bottom:1px solid #222;
 }
 
-.staff-login {
-    max-width: 400px;
-    margin: auto;
-    text-align: center;
+.application:last-child{
+    border-bottom:none;
 }
 
-.staff-login input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 10px;
-    background: #0b0b0b;
-    color: white;
-    border: 1px solid #222;
-    border-radius: 9px;
-    outline: none;
+.application strong{
+    color:#fff;
 }
 
-.staff-panel {
-    display: none;
+.application p{
+    color:#999;
+    margin:7px 0;
 }
 
-.panel-box {
-    padding: 25px;
-    margin-bottom: 25px;
-    background: rgba(15,15,15,.75);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 18px;
+.application a{
+    color:#ff2222;
 }
 
-.panel-box h3 {
-    color: #ff1717;
-    margin-bottom: 20px;
-}
-
-.application {
-    padding: 20px;
-    margin-bottom: 15px;
-    background: #0b0b0b;
-    border: 1px solid #222;
-    border-radius: 12px;
-}
-
-.application strong {
-    color: #ff2222;
-}
-
-.application p {
-    color: #aaa;
-    margin: 7px 0;
-    word-break: break-word;
-}
-
-.application a {
-    color: #ff4444;
-}
-
-.actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
 }
 
 .accept,
 .reject,
-.kick {
-    border: none;
-    padding: 10px 15px;
-    border-radius: 7px;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
+.kick{
+    border:none;
+    padding:9px 15px;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
 }
 
-.accept {
-    background: #15803d;
+.accept{
+    background:#159447;
 }
 
-.reject,
-.kick {
-    background: #b91c1c;
+.reject{
+    background:#b71919;
 }
 
-.staff-member {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    margin-bottom: 10px;
-    background: #0b0b0b;
-    border: 1px solid #222;
-    border-radius: 10px;
+.kick{
+    background:#b71919;
 }
 
-.staff-member-role {
-    color: #ff2222;
-    font-size: 11px;
-    margin-left: 6px;
+.staff-member{
+    padding:15px 0;
+    border-bottom:1px solid #222;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-footer {
-    padding: 80px 20px;
-    text-align: center;
-    color: #555;
-    letter-spacing: 5px;
-    font-weight: 900;
-    border-top: 1px solid #151515;
+.staff-member:last-child{
+    border-bottom:none;
 }
 
-footer span {
-    color: #ff1717;
+footer{
+    text-align:center;
+    padding:50px 20px;
+    color:#444;
+    font-size:12px;
+    letter-spacing:2px;
 }
 
-@media(max-width:650px) {
-    nav {
-        width: calc(100% - 20px);
-        padding: 12px 15px;
+@media(max-width:700px){
+    nav{
+        padding:15px;
     }
 
-    nav a {
-        margin-left: 8px;
-        font-size: 9px;
+    nav a{
+        margin-left:10px;
+        font-size:10px;
     }
 
-    .logo {
-        font-size: 18px;
+    .hero h1{
+        letter-spacing:7px;
     }
 
-    .hero h1 {
-        letter-spacing: -4px;
-    }
-
-    .join-box {
-        padding: 20px;
-    }
-
-    .actions {
-        flex-direction: column;
+    .join-box,
+    .panel-box{
+        padding:20px;
     }
 }
 </style>
@@ -395,7 +351,7 @@ footer span {
 
 <body>
 
-<div class="background" id="background"></div>
+<div class="background"></div>
 
 <nav>
     <div class="logo">R<span>Æ</span>VEN</div>
@@ -408,106 +364,168 @@ footer span {
     </div>
 </nav>
 
-<div class="hero" id="home">
-    <div>
-        <h1>R<span>Æ</span>VEN</h1>
-        <p>CS2 CLAN • NO MERCY</p>
-        <a class="btn" href="#join">JOIN RÆVEN</a>
-    </div>
-</div>
+<section class="hero" id="home">
+
+    <h1>R<span>Æ</span>VEN</h1>
+
+    <p>CS2 CLAN • NO MERCY</p>
+
+    <a class="btn" href="#join">
+        JOIN RÆVEN
+    </a>
+
+</section>
+
 
 <section id="members">
 
-    <div class="section-title">
-        <h2>OUR <span>MEMBERS</span></h2>
-        <p>Meet the RÆVEN squad.</p>
+    <h2 class="section-title">
+        MEMBERS
+    </h2>
+
+    <div
+        class="members-grid"
+        id="membersList"
+    >
+
+        <div
+            class="member"
+            onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')"
+        >
+
+            <div class="emoji">
+                👑
+            </div>
+
+            <h3>
+                MONARCH
+            </h3>
+
+            <p>
+                OWNER
+            </p>
+
+        </div>
+
+
+        <div
+            class="member"
+            onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')"
+        >
+
+            <div class="emoji">
+                🗿
+            </div>
+
+            <h3>
+                RENOX
+            </h3>
+
+            <p>
+                MEMBER
+            </p>
+
+        </div>
+
+
+        <div
+            class="member"
+            onclick="openInstagram('https://www.instagram.com/rvn_kaspikkk/')"
+        >
+
+            <div class="emoji">
+                🗿
+            </div>
+
+            <h3>
+                KASPIKK
+            </h3>
+
+            <p>
+                MEMBER
+            </p>
+
+        </div>
+
     </div>
 
-    <div class="members" id="membersList">
-
-        <div class="member-card"
-             onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')">
-            <div class="member-emoji">👑</div>
-            <div class="member-name">MONARCH</div>
-            <div class="member-role">OWNER</div>
-        </div>
-
-        <div class="member-card"
-             onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')">
-            <div class="member-emoji">🗿</div>
-            <div class="member-name">RENOX</div>
-            <div class="member-role">MEMBER</div>
-        </div>
-
-        <div class="member-card"
-             onclick="openInstagram('https://www.instagram.com/rvn_kaspikk/')">
-            <div class="member-emoji">🗿</div>
-            <div class="member-name">KASPIKK</div>
-            <div class="member-role">MEMBER</div>
-        </div>
-
-    </div>
 </section>
+
 
 <section id="join">
 
-    <div class="section-title">
-        <h2>JOIN <span>RÆVEN</span></h2>
-        <p>Think you have what it takes?</p>
-    </div>
+    <h2 class="section-title">
+        JOIN RÆVEN
+    </h2>
 
     <div class="join-box">
 
-        <form id="joinForm">
+        <input
+            id="nick"
+            type="text"
+            placeholder="Nickname"
+            required
+        >
 
-            <div class="input">
-                <input id="nick" type="text"
-                       placeholder="CS2 Nickname" required>
-            </div>
+        <input
+            id="discord"
+            type="text"
+            placeholder="Discord"
+            required
+        >
 
-            <div class="input">
-                <input id="discord" type="text"
-                       placeholder="Discord" required>
-            </div>
+        <input
+            id="clip"
+            type="url"
+            placeholder="Clip URL"
+            required
+        >
 
-            <div class="input">
-                <input id="clip" type="url"
-                       placeholder="Clip URL" required>
-            </div>
+        <textarea
+            id="about"
+            placeholder="Something about you"
+            required
+        ></textarea>
 
-            <div class="input">
-                <textarea id="about"
-                          placeholder="Tell us about yourself..."
-                          required></textarea>
-            </div>
+        <button
+            class="btn"
+            onclick="sendApplication()"
+        >
+            SEND APPLICATION
+        </button>
 
-            <button class="btn" type="submit">
-                SEND APPLICATION
-            </button>
-
-        </form>
-
-        <p id="joinStatus"
-           style="text-align:center;margin-top:15px;color:#777;">
-        </p>
+        <p
+            class="status"
+            id="joinStatus"
+        ></p>
 
     </div>
+
 </section>
+
 
 <section id="staff">
 
-    <div class="section-title">
-        <h2><span>STAFF</span> PANEL</h2>
-        <p>RÆVEN administration.</p>
-    </div>
+    <h2 class="section-title">
+        STAFF
+    </h2>
 
-    <div class="staff-login" id="staffLogin">
 
-        <input id="staffPassword"
-               type="password"
-               placeholder="Staff password">
+    <div
+        class="staff-login"
+        id="staffLogin"
+    >
 
-        <button class="btn" onclick="loginStaff()">
+        <input
+            id="staffPassword"
+            type="password"
+            placeholder="Staff password"
+        >
+
+        <button
+            class="btn"
+            onclick="loginStaff()"
+        >
             LOGIN
         </button>
 
@@ -515,11 +533,17 @@ footer span {
 
     </div>
 
-    <div class="staff-panel" id="staffPanel">
+
+    <div
+        class="staff-panel"
+        id="staffPanel"
+    >
 
         <div class="panel-box">
 
-            <h3>APPLICATIONS</h3>
+            <h3>
+                APPLICATIONS
+            </h3>
 
             <div id="applicationsList">
                 Loading...
@@ -527,9 +551,12 @@ footer span {
 
         </div>
 
+
         <div class="panel-box">
 
-            <h3>MEMBERS</h3>
+            <h3>
+                MEMBERS
+            </h3>
 
             <div id="staffMembersList">
                 Loading...
@@ -538,23 +565,22 @@ footer span {
         </div>
 
     </div>
+
 </section>
 
+
 <footer>
-    <span>RÆVEN</span> ON TOP
+    RÆVEN © 2026
 </footer>
 
-<script>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+<script>
 
 const SUPABASE_URL =
     "https://mrctqcrcbmbsamfevmii.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_jdrEHYNZqzor4qleQxQ3Aw_M-SyWoWA";
+    "sb_publishable_jdrEHYNZqzor4qleQX3Aw_M-SyWoWA";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -563,263 +589,266 @@ const supabaseClient =
     );
 
 
-/* =====================================================
-   BACKGROUND
-===================================================== */
+/* BACKGROUND */
 
-const background =
-    document.getElementById("background");
+for(let i = 0; i < 80; i++){
 
-for (let i = 0; i < 80; i++) {
-
-    const dot = document.createElement("div");
+    const dot =
+        document.createElement("div");
 
     dot.className = "dot";
 
     dot.style.left =
         Math.random() * 100 + "%";
 
-    dot.style.animationDuration =
-        5 + Math.random() * 12 + "s";
-
     dot.style.animationDelay =
-        Math.random() * 10 + "s";
+        Math.random() * 8 + "s";
 
-    background.appendChild(dot);
+    dot.style.animationDuration =
+        5 + Math.random() * 8 + "s";
+
+    document.body.appendChild(dot);
 }
 
 
-/* =====================================================
-   INSTAGRAM
-===================================================== */
+/* INSTAGRAM */
 
-function openInstagram(url) {
+function openInstagram(url){
 
     window.open(
         url,
         "_blank",
         "noopener,noreferrer"
     );
+
 }
 
 
-/* =====================================================
-   HTML ESCAPE
-===================================================== */
+/* ESCAPE HTML */
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
     return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
 }
 
 
-/* =====================================================
-   MEMBER EMOJI
-===================================================== */
+/* EMOJI */
 
-function getEmoji(member) {
+function getEmoji(member){
 
-    const name =
-        String(member.name || "").toUpperCase();
-
-    if (name === "MONARCH")
+    if(member.name === "MONARCH")
         return "👑";
 
-    if (
-        name === "RENOX" ||
-        name === "KASPIKK"
+    if(
+        member.name === "RENOX" ||
+        member.name === "KASPIKK"
     )
         return "🗿";
 
-    return "💀";
+    return member.emoji || "💀";
+
 }
 
 
-/* =====================================================
-   LOAD MEMBERS
-===================================================== */
+/* LOAD MEMBERS */
 
-async function loadMembers() {
+async function loadMembers(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("members")
+        .select("*")
+        .order("id",{ascending:true});
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    if(!data || data.length === 0)
+        return;
+
 
     const list =
-        document.getElementById("membersList");
-
-    try {
-
-        const {
-            data,
-            error
-        } = await supabaseClient
-            .from("members")
-            .select("*")
-            .order("id", {
-                ascending: true
-            });
-
-        console.log(
-            "SUPABASE MEMBERS:",
-            data
+        document.getElementById(
+            "membersList"
         );
 
-        if (error) {
 
-            console.error(
-                "MEMBERS ERROR:",
-                error
-            );
+    list.innerHTML = "";
 
-            return;
+
+    data.forEach(member => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "member";
+
+
+        div.innerHTML = `
+
+            <div class="emoji">
+                ${escapeHTML(
+                    getEmoji(member)
+                )}
+            </div>
+
+            <h3>
+                ${escapeHTML(member.name)}
+            </h3>
+
+            <p>
+                ${escapeHTML(
+                    member.role || "MEMBER"
+                )}
+            </p>
+
+        `;
+
+
+        if(member.instagram){
+
+            div.onclick = () =>
+                openInstagram(
+                    member.instagram
+                );
+
         }
 
-        if (!data || data.length === 0) {
-            return;
-        }
 
-        list.innerHTML = "";
+        list.appendChild(div);
 
-        data.forEach(member => {
+    });
 
-            const card =
-                document.createElement("div");
+}
 
-            card.className =
-                "member-card";
 
-            card.innerHTML = `
+/* SEND APPLICATION */
 
-                <div class="member-emoji">
-                    ${escapeHTML(
-                        member.emoji ||
-                        getEmoji(member)
-                    )}
-                </div>
+async function sendApplication(){
 
-                <div class="member-name">
-                    ${escapeHTML(member.name)}
-                </div>
+    const nick =
+        document.getElementById(
+            "nick"
+        ).value.trim();
 
-                <div class="member-role">
-                    ${escapeHTML(member.role)}
-                </div>
+    const discord =
+        document.getElementById(
+            "discord"
+        ).value.trim();
 
-            `;
+    const clip =
+        document.getElementById(
+            "clip"
+        ).value.trim();
 
-            if (member.instagram) {
+    const about =
+        document.getElementById(
+            "about"
+        ).value.trim();
 
-                card.onclick = () => {
-                    openInstagram(
-                        member.instagram
-                    );
-                };
+    const status =
+        document.getElementById(
+            "joinStatus"
+        );
 
-            }
 
-            list.appendChild(card);
+    if(
+        !nick ||
+        !discord ||
+        !clip ||
+        !about
+    ){
+
+        status.style.color =
+            "#ff3333";
+
+        status.textContent =
+            "Please fill everything out.";
+
+        return;
+
+    }
+
+
+    status.style.color = "#777";
+
+    status.textContent =
+        "Sending application...";
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("applications")
+        .insert({
+
+            nick,
+            discord,
+            clip,
+            about
 
         });
 
-    } catch (error) {
 
-        console.error(
-            "MEMBERS LOAD FAILED:",
-            error
-        );
+    if(error){
+
+        console.error(error);
+
+        status.style.color =
+            "#ff3333";
+
+        status.textContent =
+            "Something went wrong.";
+
+        return;
+
     }
+
+
+    status.style.color =
+        "#32d66b";
+
+    status.textContent =
+        "Application sent!";
+
+
+    document.getElementById(
+        "nick"
+    ).value = "";
+
+    document.getElementById(
+        "discord"
+    ).value = "";
+
+    document.getElementById(
+        "clip"
+    ).value = "";
+
+    document.getElementById(
+        "about"
+    ).value = "";
+
 }
 
 
-/* =====================================================
-   JOIN APPLICATION
-===================================================== */
+/* STAFF LOGIN */
 
-document
-    .getElementById("joinForm")
-    .addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
-
-            const status =
-                document.getElementById(
-                    "joinStatus"
-                );
-
-            const nick =
-                document.getElementById(
-                    "nick"
-                ).value.trim();
-
-            const discord =
-                document.getElementById(
-                    "discord"
-                ).value.trim();
-
-            const clip =
-                document.getElementById(
-                    "clip"
-                ).value.trim();
-
-            const about =
-                document.getElementById(
-                    "about"
-                ).value.trim();
-
-            status.style.color = "#777";
-            status.textContent =
-                "Sending application...";
-
-            const {
-                error
-            } = await supabaseClient
-                .from("applications")
-                .insert({
-                    nick,
-                    discord,
-                    clip,
-                    about
-                });
-
-            if (error) {
-
-                console.error(error);
-
-                status.style.color =
-                    "#ff3333";
-
-                status.textContent =
-                    error.message;
-
-                return;
-            }
-
-            status.style.color =
-                "#36ff75";
-
-            status.textContent =
-                "Application sent!";
-
-            document
-                .getElementById("joinForm")
-                .reset();
-
-        }
-    );
-
-
-/* =====================================================
-   STAFF LOGIN
-===================================================== */
-
-const STAFF_PASSWORD =
-    "raven123";
-
-function loginStaff() {
+async function loginStaff(){
 
     const password =
         document.getElementById(
@@ -831,43 +860,84 @@ function loginStaff() {
             "loginStatus"
         );
 
-    if (password !== STAFF_PASSWORD) {
+
+    status.style.color = "#777";
+
+    status.textContent =
+        "Logging in...";
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.functions.invoke(
+                "staff-login",
+                {
+                    body:{
+                        password:password
+                    }
+                }
+            );
+
+
+        if(
+            error ||
+            !data ||
+            data.success !== true
+        ){
+
+            console.error(error);
+
+            status.style.color =
+                "#ff3333";
+
+            status.textContent =
+                "Wrong password.";
+
+            return;
+
+        }
+
+
+        status.textContent = "";
+
+
+        document.getElementById(
+            "staffLogin"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "staffPanel"
+        ).style.display = "block";
+
+
+        loadApplications();
+
+        loadStaffMembers();
+
+    }
+    catch(error){
+
+        console.error(error);
 
         status.style.color =
             "#ff3333";
 
         status.textContent =
-            "Wrong password.";
+            "Login failed.";
 
-        return;
     }
 
-    status.textContent = "";
-
-    document.getElementById(
-        "staffLogin"
-    ).style.display = "none";
-
-    document.getElementById(
-        "staffPanel"
-    ).style.display = "block";
-
-    loadApplications();
-    loadStaffMembers();
 }
 
 
-/* =====================================================
-   APPLICATIONS
-   NO created_at HERE
-===================================================== */
+/* LOAD APPLICATIONS */
 
-async function loadApplications() {
-
-    const list =
-        document.getElementById(
-            "applicationsList"
-        );
+async function loadApplications(){
 
     const {
         data,
@@ -875,41 +945,53 @@ async function loadApplications() {
     } = await supabaseClient
         .from("applications")
         .select("*")
-        .order("id", {
-            ascending: false
-        });
+        .order("id",{ascending:false});
 
-    if (error) {
 
-        list.innerHTML =
-            `<p style="color:#ff3333;">
-                ${escapeHTML(error.message)}
-            </p>`;
+    const list =
+        document.getElementById(
+            "applicationsList"
+        );
 
-        return;
-    }
 
-    if (!data || data.length === 0) {
+    if(error){
+
+        console.error(error);
 
         list.innerHTML =
-            `<p style="color:#777;">
-                No applications.
-            </p>`;
+            "<p>Failed to load applications.</p>";
 
         return;
+
     }
+
+
+    if(
+        !data ||
+        data.length === 0
+    ){
+
+        list.innerHTML =
+            "<p>No applications.</p>";
+
+        return;
+
+    }
+
 
     list.innerHTML = "";
 
+
     data.forEach(app => {
 
-        const box =
+        const div =
             document.createElement("div");
 
-        box.className =
+        div.className =
             "application";
 
-        box.innerHTML = `
+
+        div.innerHTML = `
 
             <strong>
                 ${escapeHTML(app.nick)}
@@ -926,15 +1008,17 @@ async function loadApplications() {
             </p>
 
             <p>
-                Clip:
+
                 <a
                     href="${escapeHTML(app.clip)}"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Open Clip
+                    VIEW CLIP
                 </a>
+
             </p>
+
 
             <div class="actions">
 
@@ -945,6 +1029,7 @@ async function loadApplications() {
                     ACCEPT
                 </button>
 
+
                 <button
                     class="reject"
                     onclick="rejectApplication(${app.id})"
@@ -953,127 +1038,152 @@ async function loadApplications() {
                 </button>
 
             </div>
+
         `;
 
-        list.appendChild(box);
+
+        list.appendChild(div);
 
     });
+
 }
 
 
-/* =====================================================
-   ACCEPT
-===================================================== */
+/* ACCEPT */
 
-async function acceptApplication(id) {
+async function acceptApplication(id){
 
     const {
         data: app,
-        error
+        error: fetchError
     } = await supabaseClient
         .from("applications")
         .select("*")
-        .eq("id", id)
+        .eq("id",id)
         .single();
 
-    if (error || !app) {
 
-        alert("Application not found.");
-
-        return;
-    }
-
-    if (
-        !confirm(
-            `Accept ${app.nick} into RÆVEN?`
-        )
-    ) return;
-
-    const {
-        error: memberError
-    } = await supabaseClient
-        .from("members")
-        .insert({
-            name: app.nick,
-            role: "MEMBER",
-            emoji: "💀",
-            protected: false,
-            instagram: ""
-        });
-
-    if (memberError) {
+    if(
+        fetchError ||
+        !app
+    ){
 
         alert(
-            memberError.message
+            "Application not found."
         );
 
         return;
+
     }
+
+
+    if(
+        !confirm(
+            `Accept ${app.nick} into RÆVEN?`
+        )
+    )
+        return;
+
+
+    const {
+        error: insertError
+    } = await supabaseClient
+        .from("members")
+        .insert({
+
+            name:app.nick,
+
+            role:"MEMBER",
+
+            emoji:"💀",
+
+            protected:false,
+
+            instagram:""
+
+        });
+
+
+    if(insertError){
+
+        console.error(insertError);
+
+        alert(
+            "Could not add member."
+        );
+
+        return;
+
+    }
+
 
     const {
         error: deleteError
     } = await supabaseClient
         .from("applications")
         .delete()
-        .eq("id", id);
+        .eq("id",id);
 
-    if (deleteError) {
 
-        alert(
-            deleteError.message
-        );
+    if(deleteError){
+
+        console.error(deleteError);
 
         return;
+
     }
 
+
     loadMembers();
+
     loadApplications();
+
     loadStaffMembers();
+
 }
 
 
-/* =====================================================
-   REJECT
-===================================================== */
+/* REJECT */
 
-async function rejectApplication(id) {
+async function rejectApplication(id){
 
-    if (
+    if(
         !confirm(
             "Reject this application?"
         )
-    ) return;
+    )
+        return;
+
 
     const {
         error
     } = await supabaseClient
         .from("applications")
         .delete()
-        .eq("id", id);
+        .eq("id",id);
 
-    if (error) {
+
+    if(error){
+
+        console.error(error);
 
         alert(
-            error.message
+            "Could not reject application."
         );
 
         return;
+
     }
 
+
     loadApplications();
+
 }
 
 
-/* =====================================================
-   STAFF MEMBERS
-===================================================== */
+/* STAFF MEMBERS */
 
-async function loadStaffMembers() {
-
-    const list =
-        document.getElementById(
-            "staffMembersList"
-        );
+async function loadStaffMembers(){
 
     const {
         data,
@@ -1081,168 +1191,192 @@ async function loadStaffMembers() {
     } = await supabaseClient
         .from("members")
         .select("*")
-        .order("id", {
-            ascending: true
-        });
+        .order("id",{ascending:true});
 
-    if (error) {
 
-        list.innerHTML =
-            `<p style="color:#ff3333;">
-                ${escapeHTML(error.message)}
-            </p>`;
+    const list =
+        document.getElementById(
+            "staffMembersList"
+        );
 
-        return;
-    }
 
-    if (!data || data.length === 0) {
+    if(error){
+
+        console.error(error);
 
         list.innerHTML =
-            `<p style="color:#777;">
-                No members.
-            </p>`;
+            "<p>Failed to load members.</p>";
 
         return;
+
     }
+
+
+    if(
+        !data ||
+        data.length === 0
+    ){
+
+        list.innerHTML =
+            "<p>No members.</p>";
+
+        return;
+
+    }
+
 
     list.innerHTML = "";
 
+
     data.forEach(member => {
 
-        const row =
+        const div =
             document.createElement("div");
 
-        row.className =
+        div.className =
             "staff-member";
 
-        row.innerHTML = `
+
+        let action = "";
+
+
+        if(member.protected){
+
+            action =
+                "<span>PROTECTED</span>";
+
+        }
+        else{
+
+            action = `
+
+                <button
+                    class="kick"
+                    onclick="kickMember(
+                        ${member.id},
+                        '${escapeHTML(member.name)}'
+                    )"
+                >
+                    KICK
+                </button>
+
+            `;
+
+        }
+
+
+        div.innerHTML = `
+
             <div>
 
                 ${escapeHTML(
-                    member.emoji ||
                     getEmoji(member)
                 )}
 
-                <b>
+                <strong>
                     ${escapeHTML(member.name)}
-                </b>
+                </strong>
 
-                <span class="staff-member-role">
-                    ${escapeHTML(member.role)}
+                <span
+                    style="
+                        color:#666;
+                        margin-left:8px;
+                    "
+                >
+                    ${escapeHTML(
+                        member.role || "MEMBER"
+                    )}
                 </span>
 
             </div>
+
+            ${action}
+
         `;
 
-        if (member.protected) {
 
-            const protectedText =
-                document.createElement("span");
-
-            protectedText.style.color =
-                "#777";
-
-            protectedText.textContent =
-                "PROTECTED";
-
-            row.appendChild(
-                protectedText
-            );
-
-        } else {
-
-            const kick =
-                document.createElement("button");
-
-            kick.className =
-                "kick";
-
-            kick.textContent =
-                "KICK";
-
-            kick.onclick = () =>
-                kickMember(
-                    member.id,
-                    member.name
-                );
-
-            row.appendChild(kick);
-        }
-
-        list.appendChild(row);
+        list.appendChild(div);
 
     });
+
 }
 
 
-/* =====================================================
-   KICK
-===================================================== */
+/* KICK */
 
-async function kickMember(id, name) {
+async function kickMember(id,name){
 
-    if (
-        name.toUpperCase() ===
-        "MONARCH"
-    ) {
+    if(name === "MONARCH"){
 
         alert(
             "MONARCH cannot be kicked."
         );
 
         return;
+
     }
 
-    if (
+
+    if(
         !confirm(
             `Kick ${name} from RÆVEN?`
         )
-    ) return;
+    )
+        return;
+
 
     const {
         error
     } = await supabaseClient
         .from("members")
         .delete()
-        .eq("id", id);
+        .eq("id",id);
 
-    if (error) {
+
+    if(error){
+
+        console.error(error);
 
         alert(
-            error.message
+            "Could not kick member."
         );
 
         return;
+
     }
 
+
     loadMembers();
+
     loadStaffMembers();
+
 }
 
 
-/* =====================================================
-   REALTIME
-===================================================== */
+/* REALTIME */
 
 supabaseClient
-    .channel("raven-members")
+    .channel("public-members")
     .on(
         "postgres_changes",
         {
-            event: "*",
-            schema: "public",
-            table: "members"
+            event:"*",
+            schema:"public",
+            table:"members"
         },
         () => {
 
             loadMembers();
 
-            if (
+
+            if(
                 document.getElementById(
                     "staffPanel"
                 ).style.display === "block"
-            ) {
+            ){
+
                 loadStaffMembers();
+
             }
 
         }
@@ -1251,22 +1385,24 @@ supabaseClient
 
 
 supabaseClient
-    .channel("raven-applications")
+    .channel("public-applications")
     .on(
         "postgres_changes",
         {
-            event: "*",
-            schema: "public",
-            table: "applications"
+            event:"*",
+            schema:"public",
+            table:"applications"
         },
         () => {
 
-            if (
+            if(
                 document.getElementById(
                     "staffPanel"
                 ).style.display === "block"
-            ) {
+            ){
+
                 loadApplications();
+
             }
 
         }
@@ -1274,9 +1410,7 @@ supabaseClient
     .subscribe();
 
 
-/* =====================================================
-   START
-===================================================== */
+/* START */
 
 loadMembers();
 
