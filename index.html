@@ -376,81 +376,23 @@ footer{
 
 </section>
 
-
 <section id="members">
 
     <h2 class="section-title">
         MEMBERS
     </h2>
 
-    <div
-        class="members-grid"
-        id="membersList"
-    >
+    <div class="members-grid" id="membersList">
 
-        <div
-            class="member"
-            onclick="openInstagram('https://www.instagram.com/owner_monarch._fihh/')"
-        >
-
-            <div class="emoji">
-                👑
-            </div>
-
-            <h3>
-                MONARCH
-            </h3>
-
-            <p>
-                OWNER
-            </p>
-
-        </div>
-
-
-        <div
-            class="member"
-            onclick="openInstagram('https://www.instagram.com/member_rvn_renox/')"
-        >
-
-            <div class="emoji">
-                🗿
-            </div>
-
-            <h3>
-                RENOX
-            </h3>
-
-            <p>
-                MEMBER
-            </p>
-
-        </div>
-
-
-        <div
-            class="member"
-            onclick="openInstagram('https://www.instagram.com/rvn_kaspikkk/')"
-        >
-
-            <div class="emoji">
-                🗿
-            </div>
-
-            <h3>
-                KASPIKK
-            </h3>
-
-            <p>
-                MEMBER
-            </p>
-
+        <div class="member">
+            <div class="emoji">⏳</div>
+            <h3>LOADING</h3>
+            <p>MEMBERS</p>
         </div>
 
     </div>
 
 </section>
-
 
 <section id="join">
 
@@ -494,15 +436,11 @@ footer{
             SEND APPLICATION
         </button>
 
-        <p
-            class="status"
-            id="joinStatus"
-        ></p>
+        <p class="status" id="joinStatus"></p>
 
     </div>
 
 </section>
-
 
 <section id="staff">
 
@@ -510,11 +448,7 @@ footer{
         STAFF
     </h2>
 
-
-    <div
-        class="staff-login"
-        id="staffLogin"
-    >
+    <div class="staff-login" id="staffLogin">
 
         <input
             id="staffPassword"
@@ -533,11 +467,7 @@ footer{
 
     </div>
 
-
-    <div
-        class="staff-panel"
-        id="staffPanel"
-    >
+    <div class="staff-panel" id="staffPanel">
 
         <div class="panel-box">
 
@@ -550,7 +480,6 @@ footer{
             </div>
 
         </div>
-
 
         <div class="panel-box">
 
@@ -568,11 +497,9 @@ footer{
 
 </section>
 
-
 <footer>
     RÆVEN © 2026
 </footer>
-
 
 <script>
 
@@ -593,8 +520,7 @@ const supabaseClient =
 
 for(let i = 0; i < 80; i++){
 
-    const dot =
-        document.createElement("div");
+    const dot = document.createElement("div");
 
     dot.className = "dot";
 
@@ -614,6 +540,9 @@ for(let i = 0; i < 80; i++){
 /* INSTAGRAM */
 
 function openInstagram(url){
+
+    if(!url)
+        return;
 
     window.open(
         url,
@@ -642,12 +571,17 @@ function escapeHTML(value){
 
 function getEmoji(member){
 
-    if(member.name === "MONARCH")
+    const name =
+        String(member.name || "")
+            .trim()
+            .toUpperCase();
+
+    if(name === "MONARCH")
         return "👑";
 
     if(
-        member.name === "RENOX" ||
-        member.name === "KASPIKK"
+        name === "RENOX" ||
+        name === "KASPIKK"
     )
         return "🗿";
 
@@ -660,32 +594,62 @@ function getEmoji(member){
 
 async function loadMembers(){
 
+    const list =
+        document.getElementById("membersList");
+
+    list.innerHTML = `
+        <p style="color:#777;">
+            Loading members...
+        </p>
+    `;
+
     const {
         data,
         error
     } = await supabaseClient
         .from("members")
-        .select("*")
+        .select(
+            "id,name,role,emoji,protected,instagram"
+        )
         .order("id",{ascending:true});
 
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "MEMBERS ERROR:",
+            error
+        );
+
+        list.innerHTML = `
+            <p style="color:#ff3333;">
+                Failed to load members.<br>
+                ${escapeHTML(error.message)}
+            </p>
+        `;
 
         return;
 
     }
 
 
-    if(!data || data.length === 0)
+    console.log(
+        "MEMBERS FROM SUPABASE:",
+        data
+    );
+
+
+    if(!data || data.length === 0){
+
+        list.innerHTML = `
+            <p style="color:#777;">
+                No members found.
+            </p>
+        `;
+
         return;
 
-
-    const list =
-        document.getElementById(
-            "membersList"
-        );
+    }
 
 
     list.innerHTML = "";
@@ -708,7 +672,9 @@ async function loadMembers(){
             </div>
 
             <h3>
-                ${escapeHTML(member.name)}
+                ${escapeHTML(
+                    member.name
+                )}
             </h3>
 
             <p>
@@ -720,12 +686,18 @@ async function loadMembers(){
         `;
 
 
-        if(member.instagram){
+        if(
+            member.instagram &&
+            member.instagram.trim() !== ""
+        ){
 
-            div.onclick = () =>
+            div.onclick = () => {
+
                 openInstagram(
                     member.instagram
                 );
+
+            };
 
         }
 
@@ -742,29 +714,23 @@ async function loadMembers(){
 async function sendApplication(){
 
     const nick =
-        document.getElementById(
-            "nick"
-        ).value.trim();
+        document.getElementById("nick")
+            .value.trim();
 
     const discord =
-        document.getElementById(
-            "discord"
-        ).value.trim();
+        document.getElementById("discord")
+            .value.trim();
 
     const clip =
-        document.getElementById(
-            "clip"
-        ).value.trim();
+        document.getElementById("clip")
+            .value.trim();
 
     const about =
-        document.getElementById(
-            "about"
-        ).value.trim();
+        document.getElementById("about")
+            .value.trim();
 
     const status =
-        document.getElementById(
-            "joinStatus"
-        );
+        document.getElementById("joinStatus");
 
 
     if(
@@ -827,21 +793,17 @@ async function sendApplication(){
         "Application sent!";
 
 
-    document.getElementById(
-        "nick"
-    ).value = "";
+    document.getElementById("nick")
+        .value = "";
 
-    document.getElementById(
-        "discord"
-    ).value = "";
+    document.getElementById("discord")
+        .value = "";
 
-    document.getElementById(
-        "clip"
-    ).value = "";
+    document.getElementById("clip")
+        .value = "";
 
-    document.getElementById(
-        "about"
-    ).value = "";
+    document.getElementById("about")
+        .value = "";
 
 }
 
@@ -861,6 +823,19 @@ async function loginStaff(){
         );
 
 
+    if(!password){
+
+        status.style.color =
+            "#ff3333";
+
+        status.textContent =
+            "Enter the staff password.";
+
+        return;
+
+    }
+
+
     status.style.color = "#777";
 
     status.textContent =
@@ -877,10 +852,17 @@ async function loginStaff(){
                 "staff-login",
                 {
                     body:{
-                        password:password
+                        password: password
                     }
                 }
             );
+
+
+        console.log(
+            "STAFF LOGIN:",
+            data,
+            error
+        );
 
 
         if(
@@ -889,7 +871,10 @@ async function loginStaff(){
             data.success !== true
         ){
 
-            console.error(error);
+            console.error(
+                "STAFF LOGIN ERROR:",
+                error
+            );
 
             status.style.color =
                 "#ff3333";
@@ -904,11 +889,9 @@ async function loginStaff(){
 
         status.textContent = "";
 
-
         document.getElementById(
             "staffLogin"
         ).style.display = "none";
-
 
         document.getElementById(
             "staffPanel"
@@ -922,7 +905,10 @@ async function loginStaff(){
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "LOGIN FAILED:",
+            error
+        );
 
         status.style.color =
             "#ff3333";
@@ -956,7 +942,10 @@ async function loadApplications(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "APPLICATION ERROR:",
+            error
+        );
 
         list.innerHTML =
             "<p>Failed to load applications.</p>";
@@ -1019,7 +1008,6 @@ async function loadApplications(){
 
             </p>
 
-
             <div class="actions">
 
                 <button
@@ -1028,7 +1016,6 @@ async function loadApplications(){
                 >
                     ACCEPT
                 </button>
-
 
                 <button
                     class="reject"
@@ -1091,22 +1078,25 @@ async function acceptApplication(id){
         .from("members")
         .insert({
 
-            name:app.nick,
+            name: app.nick,
 
-            role:"MEMBER",
+            role: "MEMBER",
 
-            emoji:"💀",
+            emoji: "💀",
 
-            protected:false,
+            protected: false,
 
-            instagram:""
+            instagram: ""
 
         });
 
 
     if(insertError){
 
-        console.error(insertError);
+        console.error(
+            "ADD MEMBER ERROR:",
+            insertError
+        );
 
         alert(
             "Could not add member."
@@ -1127,7 +1117,10 @@ async function acceptApplication(id){
 
     if(deleteError){
 
-        console.error(deleteError);
+        console.error(
+            "DELETE APPLICATION ERROR:",
+            deleteError
+        );
 
         return;
 
@@ -1202,7 +1195,10 @@ async function loadStaffMembers(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "STAFF MEMBERS ERROR:",
+            error
+        );
 
         list.innerHTML =
             "<p>Failed to load members.</p>";
@@ -1254,7 +1250,11 @@ async function loadStaffMembers(){
                     class="kick"
                     onclick="kickMember(
                         ${member.id},
-                        '${escapeHTML(member.name)}'
+                        '${String(
+                            member.name || ""
+                        )
+                        .replace(/\\/g,"\\\\")
+                        .replace(/'/g,"\\'")}'
                     )"
                 >
                     KICK
@@ -1274,7 +1274,9 @@ async function loadStaffMembers(){
                 )}
 
                 <strong>
-                    ${escapeHTML(member.name)}
+                    ${escapeHTML(
+                        member.name
+                    )}
                 </strong>
 
                 <span
@@ -1306,7 +1308,11 @@ async function loadStaffMembers(){
 
 async function kickMember(id,name){
 
-    if(name === "MONARCH"){
+    if(
+        String(name)
+            .trim()
+            .toUpperCase() === "MONARCH"
+    ){
 
         alert(
             "MONARCH cannot be kicked."
@@ -1335,7 +1341,10 @@ async function kickMember(id,name){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "KICK ERROR:",
+            error
+        );
 
         alert(
             "Could not kick member."
